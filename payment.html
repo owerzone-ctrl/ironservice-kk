@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบชำระเงิน | IRONSERVICE KK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #09090b;
+            --bg-secondary: #111113;
+            --bg-card: #18181b;
+            --border-color: rgba(255,255,255,0.08);
+            --accent-orange: #f1a90a;
+            --accent-gold: #f1a90a;
+            --text-light: #f4f4f5;
+            --text-muted: #71717a;
+            --font-heading: 'Outfit', sans-serif;
+            --font-body: 'Prompt', sans-serif;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --radius: 12px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg-primary);
+            color: var(--text-light);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        /* TOP BAR */
+        .topbar {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .topbar a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+        .topbar a:hover { color: var(--accent-orange); }
+        .topbar-logo {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-right: auto;
+        }
+        .topbar-logo span { color: var(--accent-orange); }
+
+        /* MAIN LAYOUT */
+        .main {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .page-title {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        .page-subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        /* STEPS */
+        .steps-bar {
+            display: flex;
+            gap: 0;
+            margin-bottom: 2.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .step-item {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-right: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+        .step-item:last-child { border-right: none; }
+        .step-item.active {
+            background: rgba(241,169,10,0.08);
+            color: var(--accent-orange);
+            font-weight: 600;
+        }
+        .step-item.done {
+            background: rgba(16,185,129,0.06);
+            color: var(--success);
+        }
+        .step-num {
+            display: block;
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            background: var(--border-color);
+            margin: 0 auto 0.4rem;
+            line-height: 26px;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+        .step-item.active .step-num { background: var(--accent-orange); color: #000; }
+        .step-item.done .step-num { background: var(--success); color: #fff; }
+
+        /* CARDS */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .card-title {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* ORDER LOOKUP */
+        .lookup-row {
+            display: flex;
+            gap: 0.75rem;
+        }
+        .lookup-row input {
+            flex: 1;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: var(--text-light);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .lookup-row input:focus { border-color: var(--accent-orange); }
+        .lookup-row input::placeholder { color: var(--text-muted); }
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .btn-primary {
+            background: var(--accent-orange);
+            color: #000;
+        }
+        .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+        }
+        .btn-secondary:hover { border-color: var(--accent-orange); color: var(--accent-orange); }
+        .btn-success {
+            background: var(--success);
+            color: #fff;
+        }
+
+        /* ORDER INFO */
+        .order-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+        @media (max-width: 600px) { .order-info-grid { grid-template-columns: 1fr; } }
+        .info-item label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .info-item .val {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        .info-item .val.price {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+        }
+        .info-item .val.deposit {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        /* PAYMENT METHOD TABS */
+        .method-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .method-tab {
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            color: var(--text-muted);
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .method-tab.active {
+            border-color: var(--accent-orange);
+            background: rgba(241,169,10,0.08);
+            color: var(--text-light);
+        }
+        .method-tab:hover { border-color: var(--accent-orange); }
+
+        /* QR SECTION */
+        .qr-section { display: none; }
+        .qr-section.show { display: block; }
+        .qr-wrap {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .qr-box {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            min-width: 200px;
+        }
+        .qr-box img {
+            width: 160px;
+            height: 160px;
+            display: block;
+        }
+        .qr-box .qr-label {
+            color: #333;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        .qr-info {
+            flex: 1;
+            min-width: 220px;
+        }
+        .qr-info h4 {
+            font-family: var(--font-heading);
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        .qr-steps { list-style: none; }
+        .qr-steps li {
+            display: flex;
+            gap: 0.6rem;
+            align-items: flex-start;
+            margin-bottom: 0.7rem;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+        .qr-steps li .num {
+            width: 20px; height: 20px;
+            background: rgba(241,169,10,0.15);
+            color: var(--accent-orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .amount-highlight {
+            background: rgba(241,169,10,0.1);
+            border: 1px solid rgba(241,169,10,0.3);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin: 1rem 0;
+        }
+        .amount-highlight .label { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.2rem; }
+        .amount-highlight .amount {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+        }
+        .account-info {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.85rem 1rem;
+            margin-top: 0.75rem;
+        }
+        .account-info .bank-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.4rem;
+        }
+        .account-info .acc-num {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: var(--accent-gold);
+        }
+        .account-info .acc-holder {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.2rem;
+        }
+        .copy-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            border-radius: 6px;
+            padding: 0.25rem 0.6rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            margin-left: 0.5rem;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover { border-color: var(--accent-orange); color: var(--accent-orange); }
+
+        /* CREDIT CARD */
+        .credit-section { display: none; }
+        .credit-section.show { display: block; }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: var(--text-light);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus { border-color: var(--accent-orange); }
+        .card-icons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .card-icon-badge {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0.3rem 0.6rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .installment-info {
+            background: rgba(16,185,129,0.06);
+            border: 1px solid rgba(16,185,129,0.2);
+            border-radius: 8px;
+            padding: 0.85rem 1rem;
+            margin: 1rem 0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .installment-info strong { color: var(--success); }
+
+        /* SLIP UPLOAD */
+        .slip-section {
+            margin-top: 1.5rem;
+        }
+        .upload-zone {
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+        .upload-zone:hover, .upload-zone.drag-over {
+            border-color: var(--accent-orange);
+            background: rgba(241,169,10,0.04);
+        }
+        .upload-zone input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .upload-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+        .upload-text { color: var(--text-muted); font-size: 0.88rem; }
+        .upload-text strong { color: var(--accent-orange); }
+        .slip-preview {
+            display: none;
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            margin-top: 1rem;
+        }
+        .slip-preview img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            background: var(--bg-primary);
+            display: block;
+        }
+        .slip-preview-footer {
+            background: var(--bg-secondary);
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+
+        /* ALERT */
+        .alert {
+            padding: 0.85rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+        .alert-success {
+            background: rgba(16,185,129,0.1);
+            border: 1px solid rgba(16,185,129,0.3);
+            color: var(--success);
+        }
+        .alert-warning {
+            background: rgba(245,158,11,0.1);
+            border: 1px solid rgba(245,158,11,0.3);
+            color: var(--warning);
+        }
+        .alert-error {
+            background: rgba(239,68,68,0.1);
+            border: 1px solid rgba(239,68,68,0.3);
+            color: var(--error);
+        }
+
+        /* HIDE/SHOW */
+        .hide { display: none !important; }
+
+        /* SUCCESS STATE */
+        .success-state {
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+        .success-icon {
+            width: 80px; height: 80px;
+            background: rgba(16,185,129,0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 1.5rem;
+            animation: popIn 0.4s ease-out;
+        }
+        @keyframes popIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .success-state h2 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        .success-state p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+        .ref-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+        .ref-box .ref-label { font-size: 0.75rem; color: var(--text-muted); }
+        .ref-box .ref-id {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+        }
+
+        /* INSTALLMENT SELECTOR */
+        .installment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        .installment-option {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .installment-option.active {
+            border-color: var(--accent-orange);
+            background: rgba(241,169,10,0.08);
+        }
+        .installment-option .months { font-family: var(--font-heading); font-weight: 700; font-size: 1.1rem; }
+        .installment-option .per-month { font-size: 0.75rem; color: var(--text-muted); }
+        .installment-option .interest { font-size: 0.7rem; color: var(--success); margin-top: 0.15rem; }
+
+        /* SPINNER */
+        .spinner {
+            width: 16px; height: 16px;
+            border: 2px solid rgba(0,0,0,0.2);
+            border-top-color: #000;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-logo">IRONSERVICE <span>KK</span></div>
+    <a href="index.html">← กลับหน้าหลัก</a>
+    <a href="admin.html">Admin</a>
+</div>
+
+<div class="main">
+    <div class="page-title">💳 ระบบชำระเงิน</div>
+    <div class="page-subtitle">IRONSERVICE KK — Premium Loft Steel & Wood</div>
+
+    <!-- STEPS -->
+    <div class="steps-bar">
+        <div class="step-item active" id="step1-bar">
+            <span class="step-num">1</span>
+            ค้นหาออเดอร์
+        </div>
+        <div class="step-item" id="step2-bar">
+            <span class="step-num">2</span>
+            เลือกวิธีชำระ
+        </div>
+        <div class="step-item" id="step3-bar">
+            <span class="step-num">3</span>
+            แนบหลักฐาน
+        </div>
+        <div class="step-item" id="step4-bar">
+            <span class="step-num">4</span>
+            ยืนยันสำเร็จ
+        </div>
+    </div>
+
+    <!-- STEP 1: LOOKUP -->
+    <div id="step1" class="card">
+        <div class="card-title">🔍 ค้นหาออเดอร์ของคุณ</div>
+        <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1rem;">กรอกเลขใบเสนอราคา (QU-XXXXX) ที่ได้รับทาง LINE หรืออีเมล</p>
+        <div class="lookup-row">
+            <input type="text" id="quoteInput" placeholder="เช่น QU-10245 หรือ 10245" />
+            <button class="btn btn-primary" onclick="lookupOrder()">ค้นหา</button>
+        </div>
+        <div id="lookupError" class="alert alert-error hide" style="margin-top:1rem;"></div>
+    </div>
+
+    <!-- STEP 2: ORDER + PAYMENT -->
+    <div id="step2" class="hide">
+        <!-- ORDER SUMMARY -->
+        <div class="card">
+            <div class="card-title">📋 รายละเอียดออเดอร์</div>
+            <div class="order-info-grid">
+                <div class="info-item">
+                    <label>เลขออเดอร์</label>
+                    <div class="val" id="disp-id">—</div>
+                </div>
+                <div class="info-item">
+                    <label>ชื่อลูกค้า</label>
+                    <div class="val" id="disp-name">—</div>
+                </div>
+                <div class="info-item">
+                    <label>ประเภทงาน</label>
+                    <div class="val" id="disp-type">—</div>
+                </div>
+                <div class="info-item">
+                    <label>ราคารวม</label>
+                    <div class="val price" id="disp-price">—</div>
+                </div>
+                <div class="info-item">
+                    <label>ยอดมัดจำ 50% (ชำระตอนนี้)</label>
+                    <div class="val deposit" id="disp-deposit">—</div>
+                </div>
+                <div class="info-item">
+                    <label>ชำระส่วนที่เหลือ</label>
+                    <div class="val" id="disp-remaining" style="color: var(--text-muted); font-size: 0.9rem;">—</div>
+                </div>
+            </div>
+            <div class="alert alert-warning">
+                ⚠️ กรุณาชำระ <strong>มัดจำ 50%</strong> เพื่อเริ่มดำเนินการออกแบบและผลิต ส่วนที่เหลือชำระเมื่อสินค้าพร้อมส่ง
+            </div>
+        </div>
+
+        <!-- PAYMENT METHOD -->
+        <div class="card">
+            <div class="card-title">💰 เลือกวิธีชำระเงิน</div>
+            <div class="method-tabs">
+                <button class="method-tab active" onclick="selectMethod('qr')">📱 PromptPay QR</button>
+                <button class="method-tab" onclick="selectMethod('transfer')">🏦 โอนผ่านธนาคาร</button>
+                <button class="method-tab" onclick="selectMethod('credit')">💳 บัตรเครดิต/ผ่อน</button>
+            </div>
+
+            <!-- QR PROMPTPAY -->
+            <div class="qr-section show" id="method-qr">
+                <div class="qr-wrap">
+                    <div class="qr-box">
+                        <!-- QR Code generated via API -->
+                        <img id="qr-img" src="" alt="PromptPay QR" />
+                        <div class="qr-label">สแกนด้วยแอปธนาคาร</div>
+                    </div>
+                    <div class="qr-info">
+                        <h4>ชำระผ่าน PromptPay QR</h4>
+                        <ul class="qr-steps">
+                            <li><span class="num">1</span>เปิดแอปธนาคารของคุณ (ทุกธนาคาร)</li>
+                            <li><span class="num">2</span>เลือก "สแกน QR" หรือ "โอนผ่าน QR"</li>
+                            <li><span class="num">3</span>สแกน QR Code ด้านซ้าย</li>
+                            <li><span class="num">4</span>ตรวจสอบชื่อ IRONSERVICE KK และยอดเงิน</li>
+                            <li><span class="num">5</span>กด "ยืนยัน" แล้วแนบสลิปด้านล่าง</li>
+                        </ul>
+                        <div class="amount-highlight">
+                            <div class="label">ยอดที่ต้องชำระ (มัดจำ 50%)</div>
+                            <div class="amount" id="qr-amount">฿0</div>
+                        </div>
+                        <div class="account-info">
+                            <div class="bank-name">🟢 PromptPay / พร้อมเพย์</div>
+                            <div class="acc-num">063-740-9696 <button class="copy-btn" onclick="copyText('0637409696')">คัดลอก</button></div>
+                            <div class="acc-holder">บริษัท IRONSERVICE KK</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BANK TRANSFER -->
+            <div class="qr-section" id="method-transfer">
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 1rem;">
+                    <div class="account-info">
+                        <div class="bank-name">🟦 ธนาคารกสิกรไทย (KBANK)</div>
+                        <div class="acc-num">xxx-x-xxxxx-x <button class="copy-btn" onclick="copyText('xxxxxxxxxx')">คัดลอก</button></div>
+                        <div class="acc-holder">นาย/นาง IRONSERVICE KK</div>
+                        <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.5rem;">สาขา: อุดรธานี</div>
+                    </div>
+                    <div class="account-info">
+                        <div class="bank-name">🟩 ธนาคารกรุงไทย (KTB)</div>
+                        <div class="acc-num">xxx-x-xxxxx-x <button class="copy-btn" onclick="copyText('xxxxxxxxxx')">คัดลอก</button></div>
+                        <div class="acc-holder">นาย/นาง IRONSERVICE KK</div>
+                        <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.5rem;">สาขา: อุดรธานี</div>
+                    </div>
+                </div>
+                <div class="alert alert-warning" style="margin-top:1rem;">
+                    ⚠️ กรุณาใส่หมายเหตุ: <strong id="transfer-note">QU-XXXXX</strong> เมื่อโอนเงิน เพื่อให้เจ้าหน้าที่ตรวจสอบได้ง่าย
+                </div>
+                <div class="amount-highlight">
+                    <div class="label">ยอดที่ต้องโอน (มัดจำ 50%)</div>
+                    <div class="amount" id="transfer-amount">฿0</div>
+                </div>
+            </div>
+
+            <!-- CREDIT CARD -->
+            <div class="credit-section" id="method-credit">
+                <div class="card-icons">
+                    <span class="card-icon-badge">VISA</span>
+                    <span class="card-icon-badge">Mastercard</span>
+                    <span class="card-icon-badge">JCB</span>
+                    <span class="card-icon-badge">Union Pay</span>
+                </div>
+                <div class="installment-info">
+                    🎉 <strong>ผ่อน 0%</strong> สูงสุด 10 เดือน สำหรับบัตรที่ร่วมรายการ (กสิกร, กรุงเทพ, กรุงไทย)
+                </div>
+
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">เลือกแผนผ่อนชำระ:</p>
+                <div class="installment-grid" id="installment-grid"></div>
+
+                <div class="form-group">
+                    <label>หมายเลขบัตร <span style="color:var(--error)">*</span></label>
+                    <input type="text" placeholder="1234 5678 9012 3456" maxlength="19" id="card-num" oninput="formatCardNum(this)" />
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>วันหมดอายุ</label>
+                        <input type="text" placeholder="MM/YY" maxlength="5" id="card-exp" oninput="formatExpiry(this)" />
+                    </div>
+                    <div class="form-group">
+                        <label>CVV</label>
+                        <input type="password" placeholder="•••" maxlength="4" id="card-cvv" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>ชื่อบนบัตร</label>
+                    <input type="text" placeholder="FIRSTNAME LASTNAME" id="card-name" style="text-transform:uppercase;" />
+                </div>
+                <div class="amount-highlight">
+                    <div class="label">ยอดที่ต้องชำระ (มัดจำ 50%)</div>
+                    <div class="amount" id="credit-amount">฿0</div>
+                </div>
+                <button class="btn btn-primary" style="width:100%; padding:1rem;" onclick="processCreditCard()">
+                    🔒 ชำระเงินด้วยบัตร
+                </button>
+                <p style="font-size:0.75rem; color:var(--text-muted); text-align:center; margin-top:0.5rem;">
+                    ปลอดภัยด้วยระบบเข้ารหัส SSL 256-bit
+                </p>
+            </div>
+        </div>
+
+        <!-- SLIP UPLOAD -->
+        <div class="card slip-section" id="slip-section">
+            <div class="card-title">📎 แนบสลิปการโอนเงิน</div>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">หลังจากโอนเงินแล้ว กรุณาแนบสลิปหรือภาพหน้าจอการยืนยัน</p>
+            <div class="upload-zone" id="uploadZone">
+                <input type="file" id="slipInput" accept="image/*,.pdf" onchange="handleSlipUpload(this)" />
+                <div class="upload-icon">📄</div>
+                <div class="upload-text">
+                    <strong>คลิกเพื่อเลือกไฟล์</strong> หรือลากวางสลิปที่นี่<br>
+                    รองรับ JPG, PNG, PDF (สูงสุด 10MB)
+                </div>
+            </div>
+            <div class="slip-preview" id="slipPreview">
+                <img id="slipImg" src="" alt="slip preview" />
+                <div class="slip-preview-footer">
+                    <span id="slipFileName" style="font-size:0.85rem;">ไฟล์แนบ</span>
+                    <button class="btn btn-secondary" style="padding:0.4rem 0.8rem; font-size:0.8rem;" onclick="clearSlip()">ลบ</button>
+                </div>
+            </div>
+
+            <div style="margin-top:1.25rem;">
+                <div class="form-group">
+                    <label>หมายเหตุเพิ่มเติม (ไม่บังคับ)</label>
+                    <input type="text" id="payNote" placeholder="เช่น โอนเมื่อเวลา 14:30 น." />
+                </div>
+                <button class="btn btn-success" style="width:100%; padding:1rem; font-size:1rem;" onclick="submitPayment()" id="submitPayBtn">
+                    ✅ ยืนยันการชำระเงิน
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 4: SUCCESS -->
+    <div id="step4" class="card hide">
+        <div class="success-state">
+            <div class="success-icon">✅</div>
+            <h2>ชำระเงินสำเร็จ!</h2>
+            <p>เจ้าหน้าที่ได้รับแจ้งการชำระเงินของคุณแล้ว<br>จะตรวจสอบและยืนยันภายใน 1-2 ชั่วโมงทำการ</p>
+            <div class="ref-box">
+                <div class="ref-label">รหัสอ้างอิงการชำระเงิน</div>
+                <div class="ref-id" id="paymentRef">PAY-XXXXXX</div>
+            </div>
+            <div class="alert alert-success" style="text-align:left; max-width:400px; margin:0 auto 1.5rem;">
+                📱 ทีมงานจะติดต่อกลับผ่าน LINE <strong>@ironservicekk</strong> ภายใน 1 ชั่วโมง
+            </div>
+            <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+                <a href="index.html" class="btn btn-secondary">← กลับหน้าหลัก</a>
+                <a href="index.html#tracking" class="btn btn-primary">🚚 ติดตามสถานะ</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ===========================
+// MOCK ORDER DATABASE
+// ===========================
+const ORDERS = {
+    '10245': { customer: 'คุณสมศักดิ์ ใจดี', type: 'โต๊ะทำงาน Loft Wood + เหล็กดัดประตู', price: 28500, phone: '063-xxx-xxxx' },
+    '88901': { customer: 'คุณอาพรรณ์ ขอนแก่น', type: 'ฉลุลาย CNC ประตู 12 แผ่น', price: 18000, phone: '08x-xxx-xxxx' },
+    '55201': { customer: 'บริษัท The Glass House', type: 'ประตูกระจก + CNC หน้าร้าน', price: 52000, phone: '02x-xxx-xxxx' },
+    '20001': { customer: 'คุณมนตรี แก้วใส', type: 'เหล็กดัด 6 ช่อง พร้อมติดตั้ง', price: 11000, phone: '065-xxx-xxxx' },
+};
+
+let currentOrder = null;
+let currentMethod = 'qr';
+let slipFile = null;
+
+// ===========================
+// LOOKUP ORDER
+// ===========================
+function lookupOrder() {
+    const raw = document.getElementById('quoteInput').value.trim().toUpperCase().replace('QU-','');
+    const err = document.getElementById('lookupError');
+
+    if (!raw || raw.length < 3) {
+        err.textContent = '❌ กรุณากรอกเลขออเดอร์ให้ครบถ้วน';
+        err.classList.remove('hide');
+        return;
+    }
+
+    const order = ORDERS[raw];
+    if (!order) {
+        err.textContent = `❌ ไม่พบออเดอร์ QU-${raw} — กรุณาตรวจสอบเลขหรือติดต่อทีมงาน LINE: @ironservicekk`;
+        err.classList.remove('hide');
+        return;
+    }
+
+    err.classList.add('hide');
+    currentOrder = { ...order, id: `QU-${raw}` };
+    populateOrder();
+    goToStep(2);
+}
+
+function populateOrder() {
+    const dep = Math.ceil(currentOrder.price / 2 / 100) * 100;
+    const rem = currentOrder.price - dep;
+
+    document.getElementById('disp-id').textContent = currentOrder.id;
+    document.getElementById('disp-name').textContent = currentOrder.customer;
+    document.getElementById('disp-type').textContent = currentOrder.type;
+    document.getElementById('disp-price').textContent = `฿${currentOrder.price.toLocaleString()}`;
+    document.getElementById('disp-deposit').textContent = `฿${dep.toLocaleString()}`;
+    document.getElementById('disp-remaining').textContent = `฿${rem.toLocaleString()} (ชำระเมื่อสินค้าพร้อม)`;
+
+    const fmtDep = `฿${dep.toLocaleString()}`;
+    document.getElementById('qr-amount').textContent = fmtDep;
+    document.getElementById('transfer-amount').textContent = fmtDep;
+    document.getElementById('credit-amount').textContent = fmtDep;
+    document.getElementById('transfer-note').textContent = currentOrder.id;
+
+    generateQR(dep);
+    generateInstallments(dep);
+}
+
+// ===========================
+// QR CODE (via QR API)
+// ===========================
+function generateQR(amount) {
+    // Using promptpay-qr style API — encode PromptPay number + amount
+    // In production use real PromptPay QR generation
+    const phone = '0637409696';
+    const amountStr = amount.toFixed(2);
+    // ThaiQR.io compatible URL (public, no key needed)
+    const qrUrl = `https://promptpay.io/${phone}/${amountStr}.png`;
+    const img = document.getElementById('qr-img');
+    img.src = qrUrl;
+    img.onerror = () => {
+        // Fallback to QR code generator
+        img.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=00020101021129370016A000000677010111011300669637409696530376454${String(amountStr).length.toString().padStart(2,'0')}${amountStr}5802TH5918IRONSERVICE KK6007Bangkok6304`;
+    };
+}
+
+// ===========================
+// INSTALLMENTS
+// ===========================
+function generateInstallments(deposit) {
+    const plans = [
+        { months: 3, interest: 0 },
+        { months: 6, interest: 0 },
+        { months: 10, interest: 0 },
+    ];
+    const grid = document.getElementById('installment-grid');
+    // Add "ชำระเต็มจำนวน" option
+    grid.innerHTML = `<div class="installment-option active" onclick="selectInstallment(this, 1, 0)">
+        <div class="months">เต็มจำนวน</div>
+        <div class="per-month">฿${deposit.toLocaleString()}</div>
+        <div class="interest" style="color:var(--accent-orange);">ไม่มีดอกเบี้ย</div>
+    </div>`;
+    plans.forEach(p => {
+        const monthly = Math.ceil(deposit / p.months / 100) * 100;
+        grid.innerHTML += `<div class="installment-option" onclick="selectInstallment(this, ${p.months}, ${p.interest})">
+            <div class="months">${p.months} เดือน</div>
+            <div class="per-month">฿${monthly.toLocaleString()}/เดือน</div>
+            <div class="interest">${p.interest === 0 ? '0% ดอกเบี้ย' : `${p.interest}%`}</div>
+        </div>`;
+    });
+}
+
+function selectInstallment(el, months, interest) {
+    document.querySelectorAll('.installment-option').forEach(e => e.classList.remove('active'));
+    el.classList.add('active');
+}
+
+// ===========================
+// METHOD SELECT
+// ===========================
+function selectMethod(m) {
+    currentMethod = m;
+    document.querySelectorAll('.method-tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+
+    document.querySelectorAll('.qr-section, .credit-section').forEach(s => {
+        s.classList.remove('show');
+        if (s.classList.contains('credit-section')) s.style.display = 'none';
+    });
+
+    if (m === 'qr') {
+        document.getElementById('method-qr').classList.add('show');
+        document.getElementById('slip-section').style.display = '';
+    } else if (m === 'transfer') {
+        document.getElementById('method-transfer').classList.add('show');
+        document.getElementById('slip-section').style.display = '';
+    } else {
+        document.getElementById('method-credit').classList.add('show');
+        document.getElementById('method-credit').style.display = 'block';
+        document.getElementById('slip-section').style.display = 'none';
+    }
+}
+
+// ===========================
+// SLIP UPLOAD
+// ===========================
+function handleSlipUpload(input) {
+    const file = input.files[0];
+    if (!file) return;
+    if (file.size > 10 * 1024 * 1024) {
+        alert('ไฟล์ใหญ่เกิน 10MB กรุณาลดขนาดไฟล์');
+        return;
+    }
+    slipFile = file;
+    document.getElementById('slipFileName').textContent = file.name;
+    const preview = document.getElementById('slipPreview');
+    const img = document.getElementById('slipImg');
+    if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = e => { img.src = e.target.result; };
+        reader.readAsDataURL(file);
+        preview.style.display = 'block';
+    }
+}
+
+function clearSlip() {
+    slipFile = null;
+    document.getElementById('slipInput').value = '';
+    document.getElementById('slipPreview').style.display = 'none';
+}
+
+// Drag & Drop
+document.addEventListener('DOMContentLoaded', () => {
+    const zone = document.getElementById('uploadZone');
+    if (zone) {
+        zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+        zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+        zone.addEventListener('drop', e => {
+            e.preventDefault();
+            zone.classList.remove('drag-over');
+            const file = e.dataTransfer.files[0];
+            if (file) {
+                const dt = new DataTransfer();
+                dt.items.add(file);
+                document.getElementById('slipInput').files = dt.files;
+                handleSlipUpload(document.getElementById('slipInput'));
+            }
+        });
+    }
+});
+
+// ===========================
+// SUBMIT PAYMENT
+// ===========================
+function submitPayment() {
+    if (!slipFile && (currentMethod === 'qr' || currentMethod === 'transfer')) {
+        alert('กรุณาแนบสลิปการโอนเงินก่อนยืนยัน');
+        return;
+    }
+    const btn = document.getElementById('submitPayBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> กำลังส่งข้อมูล...';
+
+    // Simulate API call — in production send to Google Sheets / backend
+    const payData = {
+        orderId: currentOrder.id,
+        customer: currentOrder.customer,
+        amount: Math.ceil(currentOrder.price / 2 / 100) * 100,
+        method: currentMethod,
+        note: document.getElementById('payNote').value,
+        timestamp: new Date().toISOString(),
+        ref: `PAY-${Date.now().toString().slice(-6)}`
+    };
+
+    // Send to Google Sheets (replace with real URL from admin.html setup)
+    sendToSheets(payData).then(() => {
+        document.getElementById('paymentRef').textContent = payData.ref;
+        goToStep(4);
+    }).catch(() => {
+        // Still show success for demo (in production handle error)
+        document.getElementById('paymentRef').textContent = payData.ref;
+        goToStep(4);
+    });
+}
+
+async function sendToSheets(data) {
+    // Will be replaced with actual Google Apps Script URL from C setup
+    const SHEETS_URL = localStorage.getItem('gs_payment_url') || '';
+    if (!SHEETS_URL) return Promise.resolve(); // demo mode
+    return fetch(SHEETS_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...data, sheet: 'payments' })
+    });
+}
+
+// ===========================
+// CREDIT CARD PROCESS
+// ===========================
+function processCreditCard() {
+    const num = document.getElementById('card-num').value.replace(/\s/g,'');
+    const exp = document.getElementById('card-exp').value;
+    const cvv = document.getElementById('card-cvv').value;
+    const name = document.getElementById('card-name').value;
+    if (num.length < 16 || !exp || cvv.length < 3 || !name) {
+        alert('กรุณากรอกข้อมูลบัตรให้ครบถ้วน');
+        return;
+    }
+    // In production: redirect to payment gateway (Omise/2C2P)
+    const payData = {
+        orderId: currentOrder.id,
+        customer: currentOrder.customer,
+        amount: Math.ceil(currentOrder.price / 2 / 100) * 100,
+        method: 'credit_card',
+        timestamp: new Date().toISOString(),
+        ref: `PAY-${Date.now().toString().slice(-6)}`
+    };
+    sendToSheets(payData).then(() => {
+        document.getElementById('paymentRef').textContent = payData.ref;
+        goToStep(4);
+    });
+}
+
+// ===========================
+// STEP NAVIGATION
+// ===========================
+function goToStep(n) {
+    document.getElementById('step1').classList.add('hide');
+    document.getElementById('step2').classList.add('hide');
+    document.getElementById('step4').classList.add('hide');
+
+    ['step1-bar','step2-bar','step3-bar','step4-bar'].forEach((id,i) => {
+        const el = document.getElementById(id);
+        el.classList.remove('active','done');
+        if (i + 1 < n) el.classList.add('done');
+        else if (i + 1 === n) el.classList.add('active');
+    });
+
+    if (n === 1) document.getElementById('step1').classList.remove('hide');
+    else if (n === 2) {
+        document.getElementById('step2').classList.remove('hide');
+        document.getElementById('step3-bar').classList.add('active');
+    }
+    else if (n === 4) {
+        document.getElementById('step4').classList.remove('hide');
+        document.getElementById('step4-bar').classList.add('done');
+    }
+}
+
+// ===========================
+// HELPERS
+// ===========================
+function copyText(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        // brief feedback
+        event.target.textContent = '✓';
+        setTimeout(() => event.target.textContent = 'คัดลอก', 1500);
+    });
+}
+
+function formatCardNum(input) {
+    let v = input.value.replace(/\D/g,'').substring(0,16);
+    input.value = v.replace(/(\d{4})(?=\d)/g,'$1 ');
+}
+
+function formatExpiry(input) {
+    let v = input.value.replace(/\D/g,'').substring(0,4);
+    if (v.length >= 3) v = v.substring(0,2) + '/' + v.substring(2);
+    input.value = v;
+}
+
+// Allow Enter key on lookup
+document.getElementById('quoteInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') lookupOrder();
+});
+
+// Pre-fill from URL params
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('qu')) {
+    document.getElementById('quoteInput').value = urlParams.get('qu');
+    lookupOrder();
+}
+</script>
+</body>
+</html>

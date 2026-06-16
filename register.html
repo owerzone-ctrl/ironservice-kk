@@ -204,6 +204,27 @@
             </div>
 
             <button type="submit" class="btn-submit" id="submit-btn">📝 ลงทะเบียนสมาชิก</button>
+
+            <div style="margin: 20px 0 10px; display: flex; align-items: center; justify-content: center; gap: 10px; color: var(--text-muted); font-size: 0.8rem; grid-column: span 2;">
+                <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.08);"></div>
+                <span>หรือสมัครสมาชิกด้วย</span>
+                <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.08);"></div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px; grid-column: span 2;">
+                <button type="button" onclick="loginWithGoogle()" style="display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 11px; background: #ffffff; color: #1f2937; border: 1px solid #e5e7eb; border-radius: 8px; font-family: 'Prompt', sans-serif; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+                    <svg viewBox="0 0 24 24" width="16" height="16">
+                        <path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.648 2.41-2.519 4.114-5.136 4.114A5.99 5.99 0 0 1 8 12.5a5.99 5.99 0 0 1 5.99-6.012c1.624 0 3.098.65 4.17 1.7L21.2 5.14A8.99 8.99 0 0 0 13.99 3 8.99 8.99 0 0 0 5 12a8.99 8.99 0 0 0 8.99 9c4.97 0 9.01-4.04 9.01-9.01a8.6 8.6 0 0 0-.15-1.7H12.24Z"/>
+                    </svg>
+                    Google
+                </button>
+                <button type="button" onclick="loginWithFacebook()" style="display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 11px; background: #1877F2; color: #ffffff; border: none; border-radius: 8px; font-family: 'Prompt', sans-serif; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                        <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75Z"/>
+                    </svg>
+                    Facebook
+                </button>
+            </div>
         </form>
 
         <div class="footer-links">
@@ -271,6 +292,38 @@
                 submitBtn.disabled = false;
                 console.error(err);
             });
+        }
+
+        function loginWithGoogle() {
+            // Simulated registration with Google for Demo mode
+            const demoSession = {
+                username: 'google_user@gmail.com',
+                name: 'คุณสมศักดิ์ รักดี (Google)',
+                role: 'customer',
+                phone: '089-1234567',
+                address: '123/4 ถ.มิตรภาพ ต.ในเมือง อ.เมือง จ.ขอนแก่น 40000',
+                taxId: ''
+            };
+            localStorage.setItem('user_session', JSON.stringify(demoSession));
+
+            alert('🔐 ลงทะเบียนด้วยบัญชี Google สำเร็จ! (ระบบจำลองการลงทะเบียนความปลอดภัยสูง)');
+            window.location.href = 'dashboard.html';
+        }
+
+        function loginWithFacebook() {
+            // Simulated registration with Facebook for Demo mode
+            const demoSession = {
+                username: 'fb_somchai_demo',
+                name: 'คุณสมชาย ใจดี (Facebook)',
+                role: 'customer',
+                phone: '081-7654321',
+                address: '456/7 ต.เมืองเก่า อ.เมือง จ.ขอนแก่น 40000',
+                taxId: ''
+            };
+            localStorage.setItem('user_session', JSON.stringify(demoSession));
+
+            alert('🔐 ลงทะเบียนด้วยบัญชี Facebook สำเร็จ! (ระบบจำลองการลงทะเบียนความปลอดภัยสูง)');
+            window.location.href = 'dashboard.html';
         }
     </script>
 </body>

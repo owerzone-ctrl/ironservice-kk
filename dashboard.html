@@ -401,9 +401,10 @@
         </div>
 
         <!-- Tab Navigation (Admin Only) -->
-        <div class="tabs-navigation" id="admin-tabs" style="display: none; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 12px; gap: 12px;">
+        <div class="tabs-navigation" id="admin-tabs" style="display: none; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 12px; gap: 12px; flex-wrap: wrap;">
             <button class="btn btn-primary" id="tab-quotes-btn" onclick="switchTab('quotes')">📋 จัดการใบเสนอราคา</button>
-            <button class="btn btn-secondary" id="tab-products-btn" onclick="switchTab('products')">📦 จัดการรายการสินค้าขายดี</button>
+            <button class="btn btn-secondary" id="tab-customers-btn" onclick="switchTab('customers')">👥 จัดการข้อมูลลูกค้า</button>
+            <button class="btn btn-secondary" id="tab-products-btn" onclick="switchTab('products')">📦 จัดการคลังสินค้า & สต็อก</button>
         </div>
 
         <!-- Main Quotations Panel -->
@@ -457,6 +458,41 @@
             </div>
         </div>
 
+        <!-- Main Customers Panel (Admin Only) -->
+        <div class="panel" id="customers-panel-wrapper" style="display: none;">
+            <div class="panel-header">
+                <div class="panel-title">
+                    👥 <span>รายชื่อข้อมูลลูกค้าทั้งหมดที่ลงทะเบียน</span>
+                </div>
+                <div class="controls-group">
+                    <input type="text" class="search-input" id="search-customer" placeholder="ค้นหาชื่อ/เบอร์โทร..." oninput="filterCustomers()">
+                </div>
+            </div>
+
+            <div id="loader-spinner-cust" class="loader" style="display: none; padding: 20px; text-align: center; color: var(--text-muted);">
+                <div class="spinner" style="margin: 0 auto 10px; border: 4px solid rgba(255,255,255,0.1); border-top-color: var(--primary); width: 30px; height: 30px; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                กำลังดึงรายชื่อลูกค้าจาก Google Sheets...
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 140px;">วันที่สมัคร</th>
+                            <th>ชื่อผู้ใช้ (Email)</th>
+                            <th>ชื่อลูกค้า / บริษัท</th>
+                            <th>เบอร์โทรศัพท์</th>
+                            <th>เลขผู้เสียภาษี</th>
+                            <th>ที่อยู่สำหรับจัดส่ง</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customers-table-body">
+                        <!-- Customer rows will be injected dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <!-- Main Products Panel (Admin Only) -->
         <div class="panel" id="products-panel-wrapper" style="display: none;">
             <div class="panel-header">
@@ -469,16 +505,23 @@
                 </div>
             </div>
 
+            <div id="loader-spinner-prod" class="loader" style="display: none; padding: 20px; text-align: center; color: var(--text-muted);">
+                <div class="spinner" style="margin: 0 auto 10px; border: 4px solid rgba(255,255,255,0.1); border-top-color: var(--primary); width: 30px; height: 30px; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                กำลังดึงข้อมูลสินค้าจาก Google Sheets...
+            </div>
+
             <div class="table-responsive">
                 <table>
                     <thead>
                         <tr>
-                            <th style="width: 80px;">รูปภาพ</th>
+                            <th style="width: 70px;">รูปภาพ</th>
+                            <th style="width: 110px;">รหัสสินค้า</th>
                             <th>ชื่อสินค้า</th>
                             <th>ราคาเริ่มต้น</th>
                             <th>หมวดหมู่</th>
-                            <th>ป้ายแนะนำ</th>
-                            <th>สถานะการผลิต</th>
+                            <th>รายละเอียดการผลิต / ป้าย</th>
+                            <th>สถานะสต็อก</th>
+                            <th style="text-align: center; width: 120px;">บาร์โค้ด</th>
                             <th style="text-align: center; width: 150px;">เครื่องมือจัดการ</th>
                         </tr>
                     </thead>
@@ -502,9 +545,15 @@
             <form id="product-form" onsubmit="handleProductSubmit(event)">
                 <input type="hidden" id="edit-product-id">
                 
-                <div style="margin-bottom: 14px;">
-                    <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">ชื่อสินค้า</label>
-                    <input type="text" id="prod-title" required style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; color: #fff; outline: none; border-color: var(--border);" placeholder="เช่น โต๊ะอาหารลอฟท์ X-Shape">
+                <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 14px; margin-bottom: 14px;">
+                    <div>
+                        <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">ชื่อสินค้า</label>
+                        <input type="text" id="prod-title" required style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; color: #fff; outline: none; border-color: var(--border);" placeholder="เช่น โต๊ะอาหารลอฟท์ X-Shape">
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">รหัสสินค้า *</label>
+                        <input type="text" id="prod-id" required style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; color: #fff; outline: none; border-color: var(--border);" placeholder="เช่น P1001">
+                    </div>
                 </div>
                 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
@@ -523,7 +572,7 @@
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 14px;">
                     <div>
                         <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">ป้ายแท็กแนะนำ</label>
                         <input type="text" id="prod-badge" style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; color: #fff; outline: none; border-color: var(--border);" placeholder="เช่น สั่งตัดตามพื้นที่, ออกแบบฟรี">
@@ -531,6 +580,10 @@
                     <div>
                         <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">รายละเอียดการผลิต</label>
                         <input type="text" id="prod-sold" style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; color: #fff; outline: none; border-color: var(--border);" placeholder="เช่น ผลิต 7-14 วัน (มัดจำ 50%)">
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">จำนวนในสต็อก *</label>
+                        <input type="number" id="prod-stock" min="0" required style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; color: #fff; outline: none; border-color: var(--border);" placeholder="0 = ผลิตตามสั่ง">
                     </div>
                 </div>
 
@@ -807,30 +860,129 @@
         // ==========================================
         // Product Catalog Management Functions (Admin Only)
         // ==========================================
+        // Tab switching controller
+        let customersData = []; // Global customer list
+
         function switchTab(tab) {
             const quotesBtn = document.getElementById('tab-quotes-btn');
+            const customersBtn = document.getElementById('tab-customers-btn');
             const productsBtn = document.getElementById('tab-products-btn');
+            
             const quotesWrapper = document.getElementById('quotes-panel-wrapper');
+            const customersWrapper = document.getElementById('customers-panel-wrapper');
             const productsWrapper = document.getElementById('products-panel-wrapper');
+
+            // Reset buttons
+            [quotesBtn, customersBtn, productsBtn].forEach(btn => {
+                if (btn) {
+                    btn.classList.add('btn-secondary');
+                    btn.classList.remove('btn-primary');
+                }
+            });
+            // Hide panels
+            [quotesWrapper, customersWrapper, productsWrapper].forEach(p => {
+                if (p) p.style.display = 'none';
+            });
 
             if (tab === 'quotes') {
                 quotesBtn.classList.add('btn-primary');
                 quotesBtn.classList.remove('btn-secondary');
-                productsBtn.classList.add('btn-secondary');
-                productsBtn.classList.remove('btn-primary');
                 quotesWrapper.style.display = 'block';
-                productsWrapper.style.display = 'none';
+            } else if (tab === 'customers') {
+                customersBtn.classList.add('btn-primary');
+                customersBtn.classList.remove('btn-secondary');
+                customersWrapper.style.display = 'block';
+                fetchCustomers();
             } else {
                 productsBtn.classList.add('btn-primary');
                 productsBtn.classList.remove('btn-secondary');
-                quotesBtn.classList.add('btn-secondary');
-                quotesBtn.classList.remove('btn-primary');
-                quotesWrapper.style.display = 'none';
                 productsWrapper.style.display = 'block';
                 renderProductsBackend();
             }
         }
 
+        // Fetch registered customer list from Google Sheets
+        function fetchCustomers() {
+            if (!webhookUrl) return;
+            
+            const spinner = document.getElementById('loader-spinner-cust');
+            const tbody = document.getElementById('customers-table-body');
+            
+            spinner.style.display = 'block';
+            tbody.innerHTML = '';
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({
+                    action: 'getUsers',
+                    username: session.username,
+                    role: session.role
+                })
+            })
+            .then(res => res.json())
+            .then(res => {
+                spinner.style.display = 'none';
+                if (res.status === 'success' && res.data) {
+                    // Filter out admins from customer view, showing only role = 'customer'
+                    customersData = res.data.filter(u => u.role === 'customer');
+                    renderCustomers(customersData);
+                } else {
+                    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: #ef4444;">❌ ไม่สามารถดึงรายชื่อลูกค้าได้: ${res.message}</td></tr>`;
+                }
+            })
+            .catch(err => {
+                spinner.style.display = 'none';
+                console.error(err);
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color: #ef4444;">❌ เกิดข้อผิดพลาดทางเทคนิคในการเชื่อมต่อข้อมูลลูกค้า</td></tr>';
+            });
+        }
+
+        // Render customer list
+        function renderCustomers(data) {
+            const tbody = document.getElementById('customers-table-body');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color: var(--text-muted); padding: 20px;">ไม่พบข้อมูลลูกค้าในระบบ</td></tr>';
+                return;
+            }
+
+            data.forEach(cust => {
+                let dateStr = '-';
+                if (cust.createdAt) {
+                    try {
+                        const dateObj = new Date(cust.createdAt);
+                        dateStr = `${String(dateObj.getDate()).padStart(2, '0')}/${String(dateObj.getMonth() + 1).padStart(2, '0')}/${dateObj.getFullYear()} ${String(dateObj.getHours()).padStart(2, '0')}:${String(dateObj.getMinutes()).padStart(2, '0')}`;
+                    } catch (e) {}
+                }
+                
+                tbody.innerHTML += `
+                    <tr>
+                        <td style="color: var(--text-muted); font-size: 0.8rem;">${dateStr}</td>
+                        <td style="font-weight: 600;">${cust.username}</td>
+                        <td>${cust.name || '-'}</td>
+                        <td style="color: var(--primary); font-weight: 500;">${cust.phone || '-'}</td>
+                        <td>${cust.taxId || '-'}</td>
+                        <td style="font-size: 0.8rem; max-width: 250px; white-space: normal; word-wrap: break-word;">${cust.address || '-'}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Filter customer table search
+        function filterCustomers() {
+            const query = document.getElementById('search-customer').value.toLowerCase().trim();
+            const filtered = customersData.filter(cust => {
+                return (cust.name || '').toLowerCase().includes(query) ||
+                       (cust.username || '').toLowerCase().includes(query) ||
+                       (cust.phone || '').toLowerCase().includes(query);
+            });
+            renderCustomers(filtered);
+        }
+
+        // Product Catalog & Stock Seeds
         const defaultProductsSeed = [
             {
                 id: "prod_1",
@@ -839,7 +991,8 @@
                 title: "โต๊ะกินข้าวไม้เนื้อแข็ง ขาเหล็กกล่อง 3 นิ้ว ทรง X-Shape พ่นสีฝุ่นพาวเดอร์โค้ต",
                 price: "เริ่มต้น ฿8,500",
                 sold: "ผลิต 7-14 วัน (มัดจำ 50%)",
-                category: "furniture"
+                category: "furniture",
+                stock: 0
             },
             {
                 id: "prod_2",
@@ -848,7 +1001,8 @@
                 title: "แผ่นเหล็กฉลุลาย CNC แผงกั้นห้อง/ระเบียง ลายเรขาคณิตโมเดิร์น",
                 price: "เริ่มต้น ฿1,500/ตร.ม.",
                 sold: "ผลิต 10 วัน (มัดจำ 50%)",
-                category: "cnc"
+                category: "cnc",
+                stock: 0
             },
             {
                 id: "prod_3",
@@ -857,7 +1011,8 @@
                 title: "ประตูบานเลื่อนเหล็ก กระจกใส กรอบบางสไตล์โฮมคาเฟ่ ดิบเท่กั้นห้องแสงธรรมชาติ",
                 price: "ประเมินตามขนาด",
                 sold: "รวมบริการติดตั้งหน้างาน",
-                category: "architecture"
+                category: "architecture",
+                stock: 0
             },
             {
                 id: "prod_4",
@@ -866,7 +1021,8 @@
                 title: "ชั้นวางของเหล็กตะแกรงฉีก 5 ชั้น โครงสร้างรับน้ำหนักสูง แข็งแรงพิเศษ",
                 price: "เริ่มต้น ฿4,200",
                 sold: "ผลิต 7 วัน (มัดจำ 50%)",
-                category: "furniture"
+                category: "furniture",
+                stock: 3
             },
             {
                 id: "prod_5",
@@ -875,17 +1031,81 @@
                 title: "โครงเตียงเหล็ก 6 ฟุต สไตล์อินดัสเทรียลลอฟท์ ถอดประกอบได้ ไร้เสียงรบกวน",
                 price: "เริ่มต้น ฿11,000",
                 sold: "ผลิต 14 วัน (มัดจำ 50%)",
-                category: "grille"
+                category: "grille",
+                stock: 2
             }
         ];
 
+        let productsData = [];
+
+        function showToast(msg, isError = false) {
+            // Remove any existing duplicate toasts
+            const activeToasts = document.querySelectorAll('.app-toast');
+            activeToasts.forEach(t => t.remove());
+
+            const toast = document.createElement('div');
+            toast.className = 'app-toast';
+            toast.style.cssText = `position: fixed; bottom: 20px; right: 20px; background: ${isError ? '#ef4444' : '#10b981'}; color: white; padding: 12px 24px; border-radius: 8px; font-size: 0.85rem; font-weight: 500; z-index: 10000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: opacity 0.3s ease-in-out;`;
+            toast.innerText = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+            return toast;
+        }
+
         function renderProductsBackend() {
-            let db = JSON.parse(localStorage.getItem('shop_products_db'));
-            if (!db || db.length === 0) {
-                db = defaultProductsSeed;
-                localStorage.setItem('shop_products_db', JSON.stringify(db));
+            const tbody = document.getElementById('products-table-body');
+            if (!tbody) return;
+
+            // Seed default if local storage is empty
+            let localDb = JSON.parse(localStorage.getItem('shop_products_db'));
+            if (!localDb || localDb.length === 0) {
+                localDb = defaultProductsSeed;
+                localStorage.setItem('shop_products_db', JSON.stringify(localDb));
             }
 
+            if (!webhookUrl) {
+                productsData = localDb;
+                renderProductsList(productsData);
+                return;
+            }
+
+            const spinner = document.getElementById('loader-spinner-prod');
+            if (spinner) spinner.style.display = 'block';
+            tbody.innerHTML = '';
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({
+                    action: 'getProducts',
+                    username: session.username,
+                    role: session.role
+                })
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (spinner) spinner.style.display = 'none';
+                if (res.status === 'success' && res.data && res.data.length > 0) {
+                    productsData = res.data;
+                    localStorage.setItem('shop_products_db', JSON.stringify(productsData));
+                    renderProductsList(productsData);
+                } else {
+                    productsData = localDb;
+                    renderProductsList(productsData);
+                }
+            })
+            .catch(err => {
+                if (spinner) spinner.style.display = 'none';
+                console.error('Error fetching products:', err);
+                productsData = localDb;
+                renderProductsList(productsData);
+            });
+        }
+
+        function renderProductsList(db) {
             const tbody = document.getElementById('products-table-body');
             if (!tbody) return;
 
@@ -898,19 +1118,37 @@
                     grille: 'เตียง/เหล็กดัด'
                 };
                 const categoryName = categoryNames[prod.category] || prod.category;
+                
+                const stockVal = typeof prod.stock !== 'undefined' ? parseInt(prod.stock) : 0;
+                const stockBadge = stockVal > 0 
+                    ? `<span class="badge" style="background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.25); display: inline-block; margin-bottom: 4px;">🟢 พร้อมส่ง ${stockVal} ชิ้น</span>`
+                    : `<span class="badge" style="background: rgba(249, 115, 22, 0.15); color: #fdba74; border: 1px solid rgba(249,115,22,0.25); display: inline-block; margin-bottom: 4px;">🔴 ผลิตตามสั่ง</span>`;
+
+                const barcodeUrl = `https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(prod.id)}&code=Code128&multiplebarcodes=false`;
 
                 tbody.innerHTML += `
                     <tr>
                         <td>
                             <img src="${prod.image}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border);">
                         </td>
+                        <td style="font-family: monospace; font-weight: bold; color: var(--primary);">${prod.id}</td>
                         <td style="font-weight: 500;">${prod.title}</td>
                         <td style="color: var(--primary); font-weight: 600;">${prod.price}</td>
                         <td><span class="badge" style="background: rgba(255,255,255,0.05); color: #fff;">${categoryName}</span></td>
-                        <td><span class="badge" style="background: rgba(202,138,4,0.15); color: var(--primary);">${prod.badge || '-'}</span></td>
-                        <td style="color: var(--text-muted); font-size: 0.8rem;">${prod.sold || '-'}</td>
+                        <td>
+                            <span class="badge" style="background: rgba(202,138,4,0.15); color: var(--primary); margin-bottom: 4px; display: inline-block;">${prod.badge || '-'}</span><br>
+                            <small style="color: var(--text-muted); font-size: 0.72rem;">${prod.sold || '-'}</small>
+                        </td>
+                        <td>${stockBadge}</td>
+                        <td style="text-align: center; vertical-align: middle; background: rgba(255,255,255,0.02);">
+                            <a href="${barcodeUrl}" target="_blank" title="คลิกเพื่อขยายและพิมพ์ภาพบาร์โค้ด">
+                                <img src="${barcodeUrl}" style="max-height: 38px; background: white; padding: 2px; border-radius: 4px; border: 1px solid var(--border);" alt="Barcode">
+                            </a>
+                            <br>
+                            <small style="font-size: 0.65rem; color: var(--text-muted);">คลิกเพื่อพิมพ์</small>
+                        </td>
                         <td style="text-align: center;">
-                            <div style="display: flex; gap: 8px; justify-content: center;">
+                            <div style="display: flex; gap: 8px; justify-content: center; align-items: center; height: 100%;">
                                 <button class="btn btn-secondary" onclick="openEditProductModal('${prod.id}')" style="padding: 4px 10px; font-size: 0.75rem;">✏️ แก้ไข</button>
                                 <button class="btn btn-danger" onclick="deleteProduct('${prod.id}')" style="padding: 4px 10px; font-size: 0.75rem;">🗑️ ลบ</button>
                             </div>
@@ -923,23 +1161,30 @@
         function openAddProductModal() {
             document.getElementById('product-modal-title').innerText = 'เพิ่มสินค้าใหม่';
             document.getElementById('edit-product-id').value = '';
+            document.getElementById('prod-id').value = 'P' + Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('prod-id').removeAttribute('readonly');
+            document.getElementById('prod-id').style.opacity = '1';
             document.getElementById('product-form').reset();
+            document.getElementById('prod-stock').value = '0';
             document.getElementById('product-modal').style.display = 'flex';
         }
 
         function openEditProductModal(id) {
-            const db = JSON.parse(localStorage.getItem('shop_products_db') || '[]');
-            const prod = db.find(p => p.id === id);
+            const prod = productsData.find(p => p.id === id);
             if (!prod) return;
 
             document.getElementById('product-modal-title').innerText = 'แก้ไขสินค้า';
             document.getElementById('edit-product-id').value = prod.id;
+            document.getElementById('prod-id').value = prod.id;
+            document.getElementById('prod-id').setAttribute('readonly', 'true');
+            document.getElementById('prod-id').style.opacity = '0.7';
             document.getElementById('prod-title').value = prod.title;
             document.getElementById('prod-price').value = prod.price;
             document.getElementById('prod-category').value = prod.category;
             document.getElementById('prod-badge').value = prod.badge || '';
             document.getElementById('prod-sold').value = prod.sold || '';
             document.getElementById('prod-image').value = prod.image;
+            document.getElementById('prod-stock').value = typeof prod.stock !== 'undefined' ? prod.stock : 0;
 
             document.getElementById('product-modal').style.display = 'flex';
         }
@@ -954,47 +1199,139 @@
 
         function handleProductSubmit(e) {
             e.preventDefault();
-            const id = document.getElementById('edit-product-id').value;
+            const editId = document.getElementById('edit-product-id').value;
+            const newId = document.getElementById('prod-id').value.trim();
             const title = document.getElementById('prod-title').value.trim();
             const price = document.getElementById('prod-price').value.trim();
             const category = document.getElementById('prod-category').value;
             const badge = document.getElementById('prod-badge').value.trim();
             const sold = document.getElementById('prod-sold').value.trim();
             const image = document.getElementById('prod-image').value.trim();
+            const stock = parseInt(document.getElementById('prod-stock').value) || 0;
 
-            let db = JSON.parse(localStorage.getItem('shop_products_db') || '[]');
+            const id = editId || newId;
 
-            if (id) {
-                db = db.map(p => p.id === id ? { ...p, title, price, category, badge, sold, image } : p);
-            } else {
-                const newId = 'prod_' + Date.now();
-                db.push({ id: newId, title, price, category, badge, sold, image });
+            if (!id) {
+                alert('กรุณาระบุรหัสสินค้า');
+                return;
             }
 
-            localStorage.setItem('shop_products_db', JSON.stringify(db));
-            closeProductModal();
-            renderProductsBackend();
+            const productData = { id, title, price, category, badge, sold, image, stock };
 
-            const toast = document.createElement('div');
-            toast.style.cssText = 'position: fixed; bottom: 20px; right: 20px; background: #10b981; color: white; padding: 12px 24px; border-radius: 8px; font-size: 0.85rem; font-weight: 500; z-index: 10000; box-shadow: 0 4px 12px rgba(0,0,0,0.15);';
-            toast.innerText = '✔️ บันทึกรายการสินค้าสำเร็จ!';
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 2000);
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '⏳ กำลังบันทึก...';
+            submitBtn.disabled = true;
+
+            const saveLocal = () => {
+                let db = JSON.parse(localStorage.getItem('shop_products_db') || '[]');
+                if (editId) {
+                    db = db.map(p => p.id === editId ? productData : p);
+                } else {
+                    if (db.some(p => p.id === newId)) {
+                        alert('รหัสสินค้านี้มีอยู่ในระบบแล้ว กรุณาใช้รหัสอื่น');
+                        submitBtn.innerHTML = originalBtnText;
+                        submitBtn.disabled = false;
+                        return false;
+                    }
+                    db.push(productData);
+                }
+                localStorage.setItem('shop_products_db', JSON.stringify(db));
+                return true;
+            };
+
+            if (webhookUrl) {
+                fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({
+                        action: 'saveProduct',
+                        username: session.username,
+                        role: session.role,
+                        ...productData
+                    })
+                })
+                .then(res => res.json())
+                .then(res => {
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                    if (res.status === 'success') {
+                        saveLocal();
+                        closeProductModal();
+                        renderProductsBackend();
+                        showToast('✔️ บันทึกรายการสินค้าลง Google Sheet สำเร็จ!');
+                    } else {
+                        alert('❌ ไม่สามารถบันทึกข้อมูลสินค้าได้: ' + res.message);
+                    }
+                })
+                .catch(err => {
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                    console.error('Webhook error:', err);
+                    if (confirm('เกิดข้อผิดพลาดในการเชื่อมต่อ Google Sheets ต้องการบันทึกแบบออฟไลน์ชั่วคราว (LocalStorage) หรือไม่?')) {
+                        if (saveLocal() !== false) {
+                            closeProductModal();
+                            renderProductsBackend();
+                            showToast('⚠️ บันทึกแบบออฟไลน์สำเร็จ (ไม่ได้บันทึกใน Google Sheets)');
+                        }
+                    }
+                });
+            } else {
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+                if (saveLocal() !== false) {
+                    closeProductModal();
+                    renderProductsBackend();
+                    showToast('✔️ บันทึกรายการสินค้าสำเร็จ (ใช้งาน Local Storage)');
+                }
+            }
         }
 
         function deleteProduct(id) {
-            if (!confirm('คุณแน่ใจหรือไม่ที่จะลบสินค้าชิ้นนี้ออกจากหน้าแรก?')) return;
+            if (!confirm('คุณแน่ใจหรือไม่ที่จะลบสินค้าชิ้นนี้?')) return;
 
-            let db = JSON.parse(localStorage.getItem('shop_products_db') || '[]');
-            db = db.filter(p => p.id !== id);
-            localStorage.setItem('shop_products_db', JSON.stringify(db));
-            renderProductsBackend();
+            const deleteLocal = () => {
+                let db = JSON.parse(localStorage.getItem('shop_products_db') || '[]');
+                db = db.filter(p => p.id !== id);
+                localStorage.setItem('shop_products_db', JSON.stringify(db));
+                renderProductsBackend();
+            };
 
-            const toast = document.createElement('div');
-            toast.style.cssText = 'position: fixed; bottom: 20px; right: 20px; background: #ef4444; color: white; padding: 12px 24px; border-radius: 8px; font-size: 0.85rem; font-weight: 500; z-index: 10000; box-shadow: 0 4px 12px rgba(0,0,0,0.15);';
-            toast.innerText = '🗑️ ลบสินค้าเรียบร้อยแล้ว';
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 2000);
+            if (webhookUrl) {
+                const toast = showToast('⏳ กำลังลบข้อมูลสินค้าจาก Google Sheets...');
+                
+                fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({
+                        action: 'deleteProduct',
+                        username: session.username,
+                        role: session.role,
+                        id: id
+                    })
+                })
+                .then(res => res.json())
+                .then(res => {
+                    if (toast) toast.remove();
+                    if (res.status === 'success') {
+                        deleteLocal();
+                        showToast('🗑️ ลบสินค้าออกจากระบบสำเร็จ');
+                    } else {
+                        alert('❌ ไม่สามารถลบข้อมูลสินค้าได้: ' + res.message);
+                    }
+                })
+                .catch(err => {
+                    if (toast) toast.remove();
+                    console.error('Delete error:', err);
+                    if (confirm('เกิดข้อผิดพลาดในการลบจาก Google Sheets ต้องการลบแบบออฟไลน์ชั่วคราว (LocalStorage) หรือไม่?')) {
+                        deleteLocal();
+                        showToast('⚠️ ลบข้อมูลสินค้าในหน้าเว็บแล้ว (ไม่ได้ลบใน Google Sheets)');
+                    }
+                });
+            } else {
+                deleteLocal();
+                showToast('🗑️ ลบสินค้าเรียบร้อยแล้ว');
+            }
         }
 
         // Fetch records on load

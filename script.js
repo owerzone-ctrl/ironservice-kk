@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
             title: "โต๊ะกินข้าวไม้เนื้อแข็ง ขาเหล็กกล่อง 3 นิ้ว ทรง X-Shape พ่นสีฝุ่นพาวเดอร์โค้ต",
             price: "เริ่มต้น ฿8,500",
             sold: "ผลิต 7-14 วัน (มัดจำ 50%)",
-            category: "furniture"
+            category: "furniture",
+            stock: 0
         },
         {
             id: "prod_2",
@@ -20,7 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
             title: "แผ่นเหล็กฉลุลาย CNC แผงกั้นห้อง/ระเบียง ลายเรขาคณิตโมเดิร์น",
             price: "เริ่มต้น ฿1,500/ตร.ม.",
             sold: "ผลิต 10 วัน (มัดจำ 50%)",
-            category: "cnc"
+            category: "cnc",
+            stock: 0
         },
         {
             id: "prod_3",
@@ -29,7 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
             title: "ประตูบานเลื่อนเหล็ก กระจกใส กรอบบางสไตล์โฮมคาเฟ่ ดิบเท่กั้นห้องแสงธรรมชาติ",
             price: "ประเมินตามขนาด",
             sold: "รวมบริการติดตั้งหน้างาน",
-            category: "architecture"
+            category: "architecture",
+            stock: 0
         },
         {
             id: "prod_4",
@@ -38,7 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
             title: "ชั้นวางของเหล็กตะแกรงฉีก 5 ชั้น โครงสร้างรับน้ำหนักสูง แข็งแรงพิเศษ",
             price: "เริ่มต้น ฿4,200",
             sold: "ผลิต 7 วัน (มัดจำ 50%)",
-            category: "furniture"
+            category: "furniture",
+            stock: 3
         },
         {
             id: "prod_5",
@@ -47,7 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
             title: "โครงเตียงเหล็ก 6 ฟุต สไตล์อินดัสเทรียลลอฟท์ ถอดประกอบได้ ไร้เสียงรบกวน",
             price: "เริ่มต้น ฿11,000",
             sold: "ผลิต 14 วัน (มัดจำ 50%)",
-            category: "grille"
+            category: "grille",
+            stock: 2
         }
     ];
 
@@ -61,19 +66,50 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('shop_products_db', JSON.stringify(db));
         }
 
-        grid.innerHTML = '';
-        db.forEach(prod => {
-            grid.innerHTML += `
-                <div class="product-card" data-category="${prod.category}">
-                    <div class="p-badge">${prod.badge || 'สั่งตัดตามพื้นที่'}</div>
-                    <img src="${prod.image || 'assets/cat_furniture.png'}" class="p-image" alt="${prod.title}">
-                    <div class="p-title">${prod.title}</div>
-                    <div class="p-price">${prod.price}</div>
-                    <div class="p-sold">${prod.sold || 'ผลิต 7-14 วัน'}</div>
-                    <button class="btn btn-sm btn-outline open-modal-btn card-quote-btn" data-service="${prod.category}" data-title="${prod.title}">ขอใบเสนอราคา</button>
-                </div>
-            `;
-        });
+        const renderList = (products) => {
+            grid.innerHTML = '';
+            products.forEach(prod => {
+                const stockVal = typeof prod.stock !== 'undefined' ? parseInt(prod.stock) : 0;
+                const stockBadge = stockVal > 0
+                    ? `<div class="p-stock" style="font-size: 0.72rem; font-weight: 600; padding: 3px 8px; border-radius: 4px; display: inline-block; margin-top: 4px; margin-bottom: 6px; align-self: flex-start; background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.25);">🟢 พร้อมส่ง ${stockVal} ชิ้น</div>`
+                    : `<div class="p-stock" style="font-size: 0.72rem; font-weight: 600; padding: 3px 8px; border-radius: 4px; display: inline-block; margin-top: 4px; margin-bottom: 6px; align-self: flex-start; background: rgba(249, 115, 22, 0.15); color: #fdba74; border: 1px solid rgba(249, 115, 22, 0.25);">🔴 ผลิตตามสั่ง (Pre-order)</div>`;
+
+                grid.innerHTML += `
+                    <div class="product-card" data-category="${prod.category}">
+                        <div class="p-badge">${prod.badge || 'สั่งตัดตามพื้นที่'}</div>
+                        <img src="${prod.image || 'assets/cat_furniture.png'}" class="p-image" alt="${prod.title}">
+                        <div class="p-title">${prod.title}</div>
+                        <div class="p-price">${prod.price}</div>
+                        ${stockBadge}
+                        <div class="p-sold">${prod.sold || 'ผลิต 7-14 วัน'}</div>
+                        <button class="btn btn-sm btn-outline open-modal-btn card-quote-btn" data-service="${prod.category}" data-title="${prod.title}">ขอใบเสนอราคา</button>
+                    </div>
+                `;
+            });
+        };
+
+        // Render from local cache immediately
+        renderList(db);
+
+        // Fetch from Google Sheet in background if configured
+        const webhookUrl = localStorage.getItem('google_sheet_webhook_url');
+        if (webhookUrl) {
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({
+                    action: 'getProducts'
+                })
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.status === 'success' && res.data && res.data.length > 0) {
+                    localStorage.setItem('shop_products_db', JSON.stringify(res.data));
+                    renderList(res.data);
+                }
+            })
+            .catch(err => console.error('Error syncing products with Google Sheets:', err));
+        }
     };
     renderProductsFrontend();
 
@@ -266,6 +302,30 @@ document.addEventListener('DOMContentLoaded', () => {
     consultationForm.addEventListener('submit', (e) => {
         e.preventDefault();
         
+        const clientName = document.getElementById('client-name').value.trim();
+        const clientPhone = document.getElementById('client-phone').value.trim();
+        const clientLine = document.getElementById('client-line').value.trim();
+        const projectType = document.getElementById('project-type').value;
+        const projectDetail = document.getElementById('project-detail').value.trim();
+
+        let typeLabel = projectType;
+        if (projectType === 'furniture') typeLabel = 'เฟอร์นิเจอร์สไตล์ลอฟท์ (โต๊ะ, เก้าอี้, ชั้นวาง)';
+        else if (projectType === 'cnc') typeLabel = 'งาน CNC โลหะฉลุลายตกแต่ง';
+        else if (projectType === 'architecture') typeLabel = 'งานสถาปัตยกรรม (ประตูเหล็กกระจก, กั้นห้อง)';
+        else if (projectType === 'grille') typeLabel = 'เหล็กดัดพรีเมียม / เหล็กดัดดีไซน์โมเดิร์น';
+        else if (projectType === 'general') typeLabel = 'อื่นๆ / ทั่วไป';
+
+        const msg = encodeURIComponent(
+            `📝 ส่งคำขอประเมินราคา / สอบถามสั่งผลิต\n` +
+            `👤 ลูกค้า: ${clientName}\n` +
+            `📞 เบอร์โทรศัพท์: ${clientPhone}\n` +
+            `💬 Line ID: ${clientLine || '-'}\n` +
+            `🏷️ ประเภทงาน: ${typeLabel}\n` +
+            `✏️ รายละเอียดเพิ่มเติม: ${projectDetail || '-'}`
+        );
+
+        window.open(`https://lin.ee/8w8xm7u?text=${msg}`, '_blank');
+
         // Simulate sending to backend
         const submitBtn = consultationForm.querySelector('button[type="submit"]');
         const originalText = submitBtn.textContent;

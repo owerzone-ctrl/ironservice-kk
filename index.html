@@ -23,6 +23,8 @@
                 <a href="estimate.html" target="_blank" class="estimate-link">📊 ประเมิณราคา-ด้วยตัวเอง</a>
                 <span class="divider">|</span>
                 <a href="https://www.google.com/maps/search/?api=1&query=งานเหล็กงานลอฟท์ขอนแก่น" target="_blank" class="location-link">📍 เส้นทางที่อยู่ร้าน</a>
+                <span class="divider">|</span>
+                <a href="admin.html" target="_blank" class="admin-link" style="color: var(--text-muted); font-size: 0.85rem;">⚙️ Admin</a>
             </div>
             <div class="top-nav-right">
                 <a href="#notifications">🔔 การแจ้งเตือน</a>
@@ -401,10 +403,15 @@
                         <span class="prefix">QU-</span>
                         <input type="text" id="quote-number" placeholder="XXXXXX" required minlength="5" maxlength="10">
                     </div>
-                    <button type="submit" class="btn btn-primary btn-track">
-                        <span class="spinner hide"></span>
-                        <span class="btn-text">ตรวจสอบสถานะ</span>
-                    </button>
+                    <div style="display: flex; gap: 10px; width: 100%;">
+                        <button type="submit" class="btn btn-primary btn-track" style="flex: 1;">
+                            <span class="spinner hide"></span>
+                            <span class="btn-text">ตรวจสอบสถานะ</span>
+                        </button>
+                        <a href="payment.html" class="btn-pay btn btn-primary" style="flex: 1; background: var(--accent); color: white; border: 1px solid var(--accent); text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
+                            💳 ชำระเงิน / แจ้งโอน
+                        </a>
+                    </div>
                 </form>
 
                 <div class="tracking-tip">

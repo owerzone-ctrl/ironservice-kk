@@ -509,13 +509,13 @@
                 <tr>
                     <td style="text-align: center;">1</td>
                     <td>
-                        <strong id="item-name" style="color: #0f172a; font-size: 0.9rem;">ตู้เหล็กและไม้สไตล์ลอฟท์สั่งทำพิเศษ (Custom Loft Cabinet)</strong>
+                        <strong id="item-name" contenteditable="true" class="editable-field" style="color: #0f172a; font-size: 0.9rem; display: block;">ตู้เหล็กและไม้สไตล์ลอฟท์สั่งทำพิเศษ (Custom Loft Cabinet)</strong>
                         <ul class="spec-list" id="spec-details">
                             <!-- JS will inject specs here -->
                         </ul>
                     </td>
-                    <td style="text-align: center; font-weight: 500; color: #0f172a;" id="item-qty">1</td>
-                    <td style="text-align: center; color: var(--text-muted);" id="item-unit">ตัว</td>
+                    <td style="text-align: center; font-weight: 500; color: #0f172a;" id="item-qty" contenteditable="true" class="editable-field">1</td>
+                    <td style="text-align: center; color: var(--text-muted);" id="item-unit" contenteditable="true" class="editable-field">ตัว</td>
                     <td style="text-align: right; font-weight: 600; color: #0f172a;" id="unit-price">฿0</td>
                 </tr>
             </tbody>
@@ -681,6 +681,9 @@
                 Address: params.get('address'),
                 TaxId: params.get('taxId'),
                 Contact: params.get('contact'),
+                ItemName: params.get('itemName') || 'ตู้เหล็กและไม้สไตล์ลอฟท์สั่งทำพิเศษ (Custom Loft Cabinet)',
+                ItemQty: params.get('itemQty') || '1',
+                ItemUnit: params.get('itemUnit') || 'ตัว',
                 Dimensions: params.get('dimensions'),
                 Steel: params.get('steel'),
                 Tiers: params.get('tiers'),
@@ -742,6 +745,9 @@
                     Address: quote.address,
                     TaxId: quote.taxId,
                     Contact: quote.contact,
+                    ItemName: quote.itemName || 'ตู้เหล็กและไม้สไตล์ลอฟท์สั่งทำพิเศษ (Custom Loft Cabinet)',
+                    ItemQty: quote.itemQty || '1',
+                    ItemUnit: quote.itemUnit || 'ตัว',
                     Dimensions: quote.dimensions,
                     Steel: quote.steel,
                     Tiers: quote.tiers,
@@ -795,6 +801,15 @@
             contactEl.innerText = quote.Contact || '';
             checkPlaceholder(contactEl);
             
+            const itemNameEl = document.getElementById('item-name');
+            if (itemNameEl) itemNameEl.innerText = quote.ItemName || 'ตู้เหล็กและไม้สไตล์ลอฟท์สั่งทำพิเศษ (Custom Loft Cabinet)';
+
+            const itemQtyEl = document.getElementById('item-qty');
+            if (itemQtyEl) itemQtyEl.innerText = quote.ItemQty || '1';
+
+            const itemUnitEl = document.getElementById('item-unit');
+            if (itemUnitEl) itemUnitEl.innerText = quote.ItemUnit || 'ตัว';
+
             // Reconstruct spec list
             const specListEl = document.getElementById('spec-details');
             specListEl.innerHTML = `
@@ -1105,9 +1120,9 @@
                 // Disable editing and remove helper styles class
                 editableElements.forEach(el => {
                     if (el) {
-                        // Customer fields remain editable by default
-                        const isCustField = el.id === 'cust-name' || el.id === 'cust-address' || el.id === 'cust-tax-id' || el.id === 'cust-contact';
-                        if (!isCustField) {
+                        // Customer fields and main item details (name, qty, unit) remain editable by default
+                        const shouldRemainEditable = el.id === 'cust-name' || el.id === 'cust-address' || el.id === 'cust-tax-id' || el.id === 'cust-contact' || el.id === 'item-name' || el.id === 'item-qty' || el.id === 'item-unit';
+                        if (!shouldRemainEditable) {
                             el.removeAttribute('contenteditable');
                         }
                         el.classList.remove('editable-active-field');
@@ -1213,12 +1228,16 @@
             const editedTotal = parseFloat(document.getElementById('combined-val').innerText.replace(/[^0-9.]/g, '')) || 0;
             const editedShipping = document.getElementById('shipping-val').innerText.trim();
             
-            const editedSize = document.getElementById('spec-size') ? document.getElementById('spec-size').innerText.trim() : `ขนาดชิ้นงาน: กว้าง ${w} × ลึก ${l} × สูง ${h} ซม.`;
-            const editedSteel = document.getElementById('spec-steel') ? document.getElementById('spec-steel').innerText.trim() : `โครงสร้างเหล็กหลัก: ${steel}`;
-            const editedTiers = document.getElementById('spec-tiers') ? document.getElementById('spec-tiers').innerText.trim() : `จำนวนชั้นวางของ: ${tiers} ชั้น`;
-            const editedDoor = document.getElementById('spec-door') ? document.getElementById('spec-door').innerText.trim() : `รูปแบบหน้าบาน/ประตู/ฝาครอบ: ${door}`;
-            const editedColor = document.getElementById('spec-color') ? document.getElementById('spec-color').innerText.trim() : `การทำสีโครงเหล็ก: ${color}`;
-            const editedWeight = document.getElementById('spec-weight') ? document.getElementById('spec-weight').innerText.trim() : `น้ำหนักตู้ประมาณการ: ~${weight} กก. (${weightDetail})`;
+            const editedItemName = document.getElementById('item-name') ? document.getElementById('item-name').innerText.trim() : 'ตู้เหล็กและไม้สไตล์ลอฟท์สั่งทำพิเศษ (Custom Loft Cabinet)';
+            const editedItemQty = document.getElementById('item-qty') ? document.getElementById('item-qty').innerText.trim() : '1';
+            const editedItemUnit = document.getElementById('item-unit') ? document.getElementById('item-unit').innerText.trim() : 'ตัว';
+
+            const editedSize = document.getElementById('spec-size') ? document.getElementById('spec-size').innerText.trim() : '-';
+            const editedSteel = document.getElementById('spec-steel') ? document.getElementById('spec-steel').innerText.trim() : '-';
+            const editedTiers = document.getElementById('spec-tiers') ? document.getElementById('spec-tiers').innerText.trim() : '-';
+            const editedDoor = document.getElementById('spec-door') ? document.getElementById('spec-door').innerText.trim() : '-';
+            const editedColor = document.getElementById('spec-color') ? document.getElementById('spec-color').innerText.trim() : '-';
+            const editedWeight = document.getElementById('spec-weight') ? document.getElementById('spec-weight').innerText.trim() : '-';
 
             // Generate print URL link dynamically with all parameters to support direct load
             const urlParams = new URLSearchParams({
@@ -1229,6 +1248,9 @@
                 address: custAddress,
                 taxId: custTaxId,
                 contact: custContact,
+                itemName: editedItemName,
+                itemQty: editedItemQty,
+                itemUnit: editedItemUnit,
                 dimensions: editedSize,
                 steel: editedSteel,
                 tiers: editedTiers,
@@ -1253,6 +1275,9 @@
                 address: custAddress,
                 taxId: custTaxId,
                 contact: custContact,
+                itemName: editedItemName,
+                itemQty: editedItemQty,
+                itemUnit: editedItemUnit,
                 dimensions: editedSize,
                 steel: editedSteel,
                 tiers: editedTiers,

@@ -9,6 +9,7 @@ function doPost(e) {
     // Auto-initialize sheets
     getOrCreateSheet("Users", ["Username", "PasswordHash", "Role", "Name", "Address", "TaxId", "Phone", "CreatedAt"]);
     getOrCreateSheet("Quotations", ["Date", "QuoteNo", "CustomerName", "Address", "TaxId", "Contact", "Dimensions", "Steel", "Tiers", "Door", "Color", "Weight", "Shipping", "Total", "Seller", "Owner", "Status", "UpdatedAt", "PrintUrl"]);
+    getOrCreateSheet("Products", ["ProductId", "Category", "Name", "Price", "Details", "Badge", "Image", "Stock", "Barcode", "CreatedAt", "UpdatedAt"]);
     
     if (action === "register") {
       result = registerUser(requestData);
@@ -18,8 +19,16 @@ function doPost(e) {
       result = saveQuotation(requestData);
     } else if (action === "getQuotations") {
       result = getQuotations(requestData);
+    } else if (action === "getUsers") {
+      result = getUsers(requestData);
     } else if (action === "updateQuotationStatus") {
       result = updateQuotationStatus(requestData);
+    } else if (action === "getProducts") {
+      result = getProducts(requestData);
+    } else if (action === "saveProduct") {
+      result = saveProduct(requestData);
+    } else if (action === "deleteProduct") {
+      result = deleteProduct(requestData);
     } else {
       result = { status: "error", message: "Invalid action" };
     }
@@ -220,3 +229,139 @@ function updateQuotationStatus(data) {
   }
   return { status: "error", message: "ไม่พบข้อมูลใบเสนอราคานี้" };
 }
+
+function getUsers(data) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Users");
+  var rows = sheet.getDataRange().getValues();
+  var headers = rows[0];
+  var list = [];
+  
+  for (var i = 1; i < rows.length; i++) {
+    // Exclude PasswordHash (column index 1)
+    var user = {
+      username: rows[i][0] ? rows[i][0].toString() : "",
+      role: rows[i][2] ? rows[i][2].toString() : "",
+      name: rows[i][3] ? rows[i][3].toString() : "",
+      address: rows[i][4] ? rows[i][4].toString() : "",
+      taxId: rows[i][5] ? rows[i][5].toString() : "",
+      phone: rows[i][6] ? rows[i][6].toString() : "",
+      createdAt: rows[i][7] ? rows[i][7].toString() : ""
+    };
+    list.push(user);
+  }
+  return { status: "success", data: list };
+}
+
+function getProducts(data) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Products");
+  var rows = sheet.getDataRange().getValues();
+  var headers = rows[0];
+  var list = [];
+  
+  var idxId = headers.indexOf("ProductId");
+  var idxCat = headers.indexOf("Category");
+  var idxName = headers.indexOf("Name");
+  var idxPrice = headers.indexOf("Price");
+  var idxDetails = headers.indexOf("Details");
+  var idxBadge = headers.indexOf("Badge");
+  var idxImg = headers.indexOf("Image");
+  var idxStock = headers.indexOf("Stock");
+  var idxBarcode = headers.indexOf("Barcode");
+  var idxCreated = headers.indexOf("CreatedAt");
+  var idxUpdated = headers.indexOf("UpdatedAt");
+  
+  for (var i = 1; i < rows.length; i++) {
+    var row = rows[i];
+    var item = {
+      id: idxId !== -1 ? row[idxId].toString() : "",
+      category: idxCat !== -1 ? row[idxCat].toString() : "",
+      title: idxName !== -1 ? row[idxName].toString() : "",
+      price: idxPrice !== -1 ? row[idxPrice].toString() : "",
+      sold: idxDetails !== -1 ? row[idxDetails].toString() : "",
+      badge: idxBadge !== -1 ? row[idxBadge].toString() : "",
+      image: idxImg !== -1 ? row[idxImg].toString() : "",
+      stock: idxStock !== -1 ? parseInt(row[idxStock]) || 0 : 0,
+      barcode: idxBarcode !== -1 ? row[idxBarcode].toString() : "",
+      createdAt: idxCreated !== -1 ? row[idxCreated].toString() : "",
+      updatedAt: idxUpdated !== -1 ? row[idxUpdated].toString() : ""
+    };
+    list.push(item);
+  }
+  return { status: "success", data: list };
+}
+
+function saveProduct(data) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Products");
+  var range = sheet.getDataRange();
+  var rows = range.getValues();
+  var productId = data.id.trim();
+  
+  var now = new Date().toISOString();
+  
+  var rowIndex = -1;
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][0].toString() === productId) {
+      rowIndex = i + 1;
+      break;
+    }
+  }
+  
+  var targetRow = rowIndex === -1 ? rows.length + 1 : rowIndex;
+  var barcodeFormula = '=IMAGE("https://barcode.tec-it.com/barcode.ashx?data=' + encodeURIComponent(productId) + '&code=Code128&multiplebarcodes=false")';
+  
+  var record = [
+    productId,
+    data.category || "",
+    data.title || "",
+    data.price || "",
+    data.sold || "",
+    data.badge || "",
+    data.image || "",
+    parseInt(data.stock) || 0,
+    barcodeFormula,
+    rowIndex === -1 ? now : rows[rowIndex - 1][9].toString(),
+    now
+  ];
+  
+  if (rowIndex !== -1) {
+    sheet.getRange(rowIndex, 1, 1, record.length).setValues([record]);
+    return { status: "success", message: "อัปเดตข้อมูลสินค้าสำเร็จ" };
+  } else {
+    sheet.appendRow(record);
+    return { status: "success", message: "เพิ่มข้อมูลสินค้าสำเร็จ" };
+  }
+}
+
+function deleteProduct(data) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Products");
+  var rows = sheet.getDataRange().getValues();
+  var productId = data.id.trim();
+  
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][0].toString() === productId) {
+      sheet.deleteRow(i + 1);
+      return { status: "success", message: "ลบข้อมูลสินค้าสำเร็จ" };
+    }
+  }
+  return { status: "error", message: "ไม่พบข้อมูลสินค้านี้" };
+}
+
+// Auto-initialize when opening the sheet or running manual trigger
+function onOpen() {
+  try {
+    var ui = SpreadsheetApp.getUi();
+    ui.createMenu("ระบบหลังร้าน")
+      .addItem("🔄 ซิงค์และสร้างชีทสินค้า", "initDatabaseMenu")
+      .addToUi();
+  } catch(e) {}
+  
+  // Silently run auto-init
+  initDatabaseMenu();
+}
+
+function initDatabaseMenu() {
+  getOrCreateSheet("Users", ["Username", "PasswordHash", "Role", "Name", "Address", "TaxId", "Phone", "CreatedAt"]);
+  getOrCreateSheet("Quotations", ["Date", "QuoteNo", "CustomerName", "Address", "TaxId", "Contact", "Dimensions", "Steel", "Tiers", "Door", "Color", "Weight", "Shipping", "Total", "Seller", "Owner", "Status", "UpdatedAt", "PrintUrl"]);
+  getOrCreateSheet("Products", ["ProductId", "Category", "Name", "Price", "Details", "Badge", "Image", "Stock", "Barcode", "CreatedAt", "UpdatedAt"]);
+}
+

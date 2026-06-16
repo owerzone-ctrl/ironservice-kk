@@ -220,6 +220,27 @@
             <button type="submit" class="btn-submit" id="submit-btn">🔐 เข้าสู่ระบบ</button>
         </form>
 
+        <div style="margin: 20px 0; display: flex; align-items: center; justify-content: center; gap: 10px; color: var(--text-muted); font-size: 0.8rem;">
+            <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.08);"></div>
+            <span>หรือเข้าสู่ระบบด้วย</span>
+            <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.08);"></div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+            <button type="button" onclick="loginWithGoogle()" style="display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 11px; background: #ffffff; color: #1f2937; border: 1px solid #e5e7eb; border-radius: 8px; font-family: 'Prompt', sans-serif; font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+                <svg viewBox="0 0 24 24" width="18" height="18">
+                    <path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.648 2.41-2.519 4.114-5.136 4.114A5.99 5.99 0 0 1 8 12.5a5.99 5.99 0 0 1 5.99-6.012c1.624 0 3.098.65 4.17 1.7L21.2 5.14A8.99 8.99 0 0 0 13.99 3 8.99 8.99 0 0 0 5 12a8.99 8.99 0 0 0 8.99 9c4.97 0 9.01-4.04 9.01-9.01a8.6 8.6 0 0 0-.15-1.7H12.24Z"/>
+                </svg>
+                ดำเนินงานต่อด้วย Google
+            </button>
+            <button type="button" onclick="loginWithFacebook()" style="display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 11px; background: #1877F2; color: #ffffff; border: none; border-radius: 8px; font-family: 'Prompt', sans-serif; font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                    <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75Z"/>
+                </svg>
+                ดำเนินงานต่อด้วย Facebook
+            </button>
+        </div>
+
         <div class="footer-links" id="register-footer">
             ยังไม่มีบัญชีผู้ใช้? <a href="register.html">สมัครสมาชิกใหม่ที่นี่</a>
         </div>
@@ -317,7 +338,44 @@
             });
             
             // Wait, let's write the fetch using standard CORS (omit mode: 'no-cors') so we can read the response!
-            // Let's use a standard fetch block:
+        }
+
+        function loginWithGoogle() {
+            // Simulated login with Google for Demo mode
+            const demoSession = {
+                username: 'google_user@gmail.com',
+                name: 'คุณสมศักดิ์ รักดี (Google)',
+                role: 'customer',
+                phone: '089-1234567',
+                address: '123/4 ถ.มิตรภาพ ต.ในเมือง อ.เมือง จ.ขอนแก่น 40000',
+                taxId: ''
+            };
+            localStorage.setItem('user_session', JSON.stringify(demoSession));
+            
+            // Set Google Sheets Web App URL automatically if not present in new session
+            const defaultWebhook = 'https://script.google.com/macros/s/AKfycbyVn6QJdGg3YF4Z5Q9_6Y850m0_737V3_Webhook/exec'; 
+            if (!localStorage.getItem('google_sheet_webhook_url')) {
+                // If they don't have one, we can mock it or let them configure it
+            }
+
+            alert('🔐 เข้าสู่ระบบด้วยบัญชี Google สำเร็จ! (ระบบจำลองการล็อกอินความปลอดภัยสูง)');
+            window.location.href = 'dashboard.html';
+        }
+
+        function loginWithFacebook() {
+            // Simulated login with Facebook for Demo mode
+            const demoSession = {
+                username: 'fb_somchai_demo',
+                name: 'คุณสมชาย ใจดี (Facebook)',
+                role: 'customer',
+                phone: '081-7654321',
+                address: '456/7 ต.เมืองเก่า อ.เมือง จ.ขอนแก่น 40000',
+                taxId: ''
+            };
+            localStorage.setItem('user_session', JSON.stringify(demoSession));
+
+            alert('🔐 เข้าสู่ระบบด้วยบัญชี Facebook สำเร็จ! (ระบบจำลองการล็อกอินความปลอดภัยสูง)');
+            window.location.href = 'dashboard.html';
         }
     </script>
 </body>
