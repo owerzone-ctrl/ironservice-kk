@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คู่มือการเชื่อมต่อระบบหลังบ้าน Google Sheets | หจก.งานเหล็กงานลอฟท์ขอนแก่น</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ca8a04;
+            --primary-hover: #a16207;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            font-size: 0.95rem;
+        }
+
+        .step-box {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: var(--primary);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 10px rgba(202, 138, 4, 0.3);
+        }
+
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            margin-top: 5px;
+            color: #ffffff;
+        }
+
+        .step-detail {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .ui-simulation {
+            background: #0b0f19;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 16px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            margin-bottom: 16px;
+            color: #cbd5e1;
+        }
+
+        .menu-bar {
+            display: flex;
+            background: #1e293b;
+            padding: 6px 12px;
+            border-radius: 6px;
+            gap: 16px;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            border: 1px solid #475569;
+        }
+
+        .menu-item {
+            color: #94a3b8;
+        }
+        .menu-item.highlight {
+            color: #ffffff;
+            background: var(--primary);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(202, 138, 4, 0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 8px rgba(202, 138, 4, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(202, 138, 4, 0); }
+        }
+
+        .code-container {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .btn-copy {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Prompt', sans-serif;
+            transition: all 0.2s;
+        }
+        .btn-copy:hover {
+            background: var(--primary-hover);
+        }
+
+        pre {
+            background: #090d16;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            max-height: 250px;
+            font-size: 0.8rem;
+            border: 1px solid var(--border);
+        }
+
+        .deploy-btn {
+            background: #2563eb;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: 600;
+            display: inline-block;
+            animation: pulse-blue 2s infinite;
+        }
+
+        @keyframes pulse-blue {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 8px rgba(37, 99, 235, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .back-link:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🛠️ คู่มือการเปิดใช้ระบบหลังบ้าน (Google Sheets)</h1>
+        <p class="subtitle">ทำตามขั้นตอนง่ายๆ 4 ขั้นตอนนี้ เพื่อเริ่มใช้งานระบบล็อกอินและแดชบอร์ดประวัติลูกค้า</p>
+
+        <!-- Step 1 -->
+        <div class="step-box">
+            <div class="step-number">1</div>
+            <div class="step-title">เปิดหน้า Apps Script ใน Google Sheets</div>
+            <div class="step-detail">เปิดหน้าชีทของคุณขึ้นมา จากนั้นมองไปที่แถบเมนูด้านบน แล้วกดคลิกเข้าเมนูตามตัวอย่างปุ่มสีเหลืองด้านล่างนี้</div>
+            
+            <div class="ui-simulation">
+                <div class="menu-bar">
+                    <span class="menu-item">ไฟล์</span>
+                    <span class="menu-item">แก้ไข</span>
+                    <span class="menu-item">ดู</span>
+                    <span class="menu-item">แทรก</span>
+                    <span class="menu-item">รูปแบบ</span>
+                    <span class="menu-item highlight">ส่วนขยาย (Extensions) 👈 คลิกตรงนี้</span>
+                    <span class="menu-item">เครื่องมือ</span>
+                </div>
+                <div style="background: #1e293b; width: 180px; padding: 8px; border-radius: 6px; margin-left: 200px; border: 1px solid #475569;">
+                    <div style="padding: 4px; color: #94a3b8;">Add-ons</div>
+                    <div style="padding: 6px; background: var(--primary); color: white; border-radius: 4px; font-weight: bold; cursor: pointer; text-align: center; animation: pulse 2s infinite;">Apps Script 👈 คลิกตรงนี้</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-box">
+            <div class="step-number">2</div>
+            <div class="step-title">ลบโค้ดเดิม และวางโค้ดสคริปต์ใหม่</div>
+            <div class="step-detail">เมื่อเข้ามาแล้ว ให้ลบตัวหนังสือเก่าออกให้หมด จากนั้นกดปุ่ม "คัดลอกโค้ดสคริปต์" ด้านล่างนี้ แล้วนำมาวาง (Paste) ลงไปแทนที่ จากนั้นกดปุ่มรูป 💾 บันทึกด้านบน</div>
+            
+            <div class="code-container">
+                <button class="btn-copy" onclick="copyCode(this)">📋 คัดลอกโค้ดสคริปต์</button>
+                <pre id="code-block"><code>function doPost(e) {
+  var output = "";
+  try {
+    var requestData = JSON.parse(e.postData.contents);
+    var action = requestData.action;
+    var result = {};
+    
+    getOrCreateSheet("Users", ["Username", "PasswordHash", "Role", "Name", "Address", "TaxId", "Phone", "CreatedAt"]);
+    getOrCreateSheet("Quotations", ["Date", "QuoteNo", "CustomerName", "Address", "TaxId", "Contact", "Dimensions", "Steel", "Tiers", "Door", "Color", "Weight", "Shipping", "Total", "Seller", "Owner", "Status", "UpdatedAt"]);
+    
+    if (action === "register") {
+      result = registerUser(requestData);
+    } else if (action === "login") {
+      result = loginUser(requestData);
+    } else if (action === "saveQuotation") {
+      result = saveQuotation(requestData);
+    } else if (action === "getQuotations") {
+      result = getQuotations(requestData);
+    } else if (action === "updateQuotationStatus") {
+      result = updateQuotationStatus(requestData);
+    } else {
+      result = { status: "error", message: "Invalid action" };
+    }
+    output = JSON.stringify(result);
+  } catch (err) {
+    output = JSON.stringify({ status: "error", message: err.toString() });
+  }
+  return ContentService.createTextOutput(output).setMimeType(ContentService.MimeType.JSON);
+}
+
+function doGet(e) {
+  return ContentService.createTextOutput(JSON.stringify({ status: "success", message: "Apps Script API is running" })).setMimeType(ContentService.MimeType.JSON);
+}
+
+function getOrCreateSheet(name, headers) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName(name);
+  if (!sheet) {
+    sheet = ss.insertSheet(name);
+    sheet.appendRow(headers);
+    sheet.getRange(1, 1, 1, headers.length).setFontWeight("bold").setBackground("#ca8a04").setFontColor("#ffffff");
+  }
+  return sheet;
+}
+
+function hashPassword(password) {
+  var digest = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, password, Utilities.Charset.UTF_8);
+  var signature = "";
+  for (var i = 0; i < digest.length; i++) {
+    var byteVal = digest[i];
+    if (byteVal < 0) byteVal += 256;
+    var byteString = byteVal.toString(16);
+    if (byteString.length == 1) byteString = "0" + byteString;
+    signature += byteString;
+  }
+  return signature;
+}
+
+function registerUser(data) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Users");
+  var rows = sheet.getDataRange().getValues();
+  var username = data.username.trim().toLowerCase();
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][0].toString().toLowerCase() === username) {
+      return { status: "error", message: "ชื่อผู้ใช้นี้มีอยู่ในระบบแล้ว" };
+    }
+  }
+  var hash = hashPassword(data.password);
+  var role = rows.length === 1 ? "admin" : "customer";
+  sheet.appendRow([username, hash, role, data.name || "", data.address || "", data.taxId || "", data.phone || "", new Date().toISOString()]);
+  return { status: "success", message: "สมัครสมาชิกสำเร็จ", role: role };
+}
+
+function loginUser(data) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Users");
+  var rows = sheet.getDataRange().getValues();
+  var username = data.username.trim().toLowerCase();
+  var hash = hashPassword(data.password);
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][0].toString().toLowerCase() === username && rows[i][1] === hash) {
+      return {
+        status: "success",
+        message: "เข้าสู่ระบบสำเร็จ",
+        user: { username: rows[i][0], role: rows[i][2], name: rows[i][3], address: rows[i][4], taxId: rows[i][5], phone: rows[i][6] }
+      };
+    }
+  }
+  return { status: "error", message: "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง" };
+}
+
+function saveQuotation(data) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Quotations");
+  var range = sheet.getDataRange();
+  var rows = range.getValues();
+  var quoteNo = data.quoteNo.trim();
+  var record = [data.date, quoteNo, data.name, data.address, data.taxId, data.contact, data.dimensions, data.steel, data.tiers, data.door, data.color, data.weight, data.shipping, data.total, data.seller, data.owner || "guest", data.status || "รอชำระมัดจำ", new Date().toISOString()];
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][1].toString() === quoteNo) {
+      sheet.getRange(i + 1, 1, 1, record.length).setValues([record]);
+      return { status: "success", message: "อัปเดตข้อมูลสำเร็จ" };
+    }
+  }
+  sheet.appendRow(record);
+  return { status: "success", message: "บันทึกข้อมูลใบเสนอราคาสำเร็จ" };
+}
+
+function getQuotations(data) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Quotations");
+  var rows = sheet.getDataRange().getValues();
+  var username = data.username.trim().toLowerCase();
+  var role = data.role;
+  var list = [];
+  var headers = rows[0];
+  for (var i = 1; i < rows.length; i++) {
+    var owner = rows[i][15].toString().toLowerCase();
+    if (role === "admin" || owner === username) {
+      var item = {};
+      for (var j = 0; j < headers.length; j++) {
+        item[headers[j]] = rows[i][j];
+      }
+      list.push(item);
+    }
+  }
+  list.reverse();
+  return { status: "success", data: list };
+}
+
+function updateQuotationStatus(data) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Quotations");
+  var range = sheet.getDataRange();
+  var rows = range.getValues();
+  var quoteNo = data.quoteNo.trim();
+  var newStatus = data.status;
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][1].toString() === quoteNo) {
+      sheet.getRange(i + 1, 17).setValue(newStatus);
+      sheet.getRange(i + 1, 18).setValue(new Date().toISOString());
+      return { status: "success", message: "อัปเดตสถานะสำเร็จ" };
+    }
+  }
+  return { status: "error", message: "ไม่พบข้อมูลใบเสนอราคานี้" };
+}</code></pre>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-box">
+            <div class="step-number">3</div>
+            <div class="step-title">ทำการ Deploy เพื่อรับลิงก์ URL</div>
+            <div class="step-detail">ให้กดปุ่ม Deploy เพื่อเปิดใช้งานระบบเว็บแอปภายนอก โดยตั้งค่าสิทธิ์ให้เข้าถึงได้ทุกคนตามวิธีนี้</div>
+            
+            <div style="font-size: 0.85rem; color: #cbd5e1; background: #0f172a; padding: 16px; border-radius: 8px; border: 1px solid var(--border);">
+                1. มองหาปุ่มคำว่า <span class="deploy-btn">การทำให้ใช้งานได้ (Deploy) 👈 คลิกตรงนี้</span> ด้านบนขวา<br>
+                2. เลือกเมนู **"การทำให้ใช้งานได้ใหม่ (New deployment)"**<br>
+                3. ในช่องป๊อปอัปให้เลือกประเภทเป็น **"เว็บแอป (Web app)"**<br>
+                4. ปรับช่อง **"ผู้มีสิทธิ์เข้าถึง (Who has access)"** จาก *เฉพาะฉัน* แก้ไขเป็น **"ทุกคน (Anyone)"** *(ตรงนี้สำคัญที่สุด)*<br>
+                5. กดปุ่ม Deploy และล็อกอินยินยอมสิทธิ์บัญชี Gmail ของคุณ<br>
+                6. คัดลอก (Copy) ลิงก์ที่เรียกว่า **URL ของเว็บแอป (Web app URL)**
+            </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step-box">
+            <div class="step-number">4</div>
+            <div class="step-title">นำลิงก์มาวางในระบบหลังร้าน</div>
+            <div class="step-detail">นำลิงก์ URL ยาวๆ ที่ก๊อปปี้มาจาก Google Sheets มากรอกใส่ในหน้าใบเสนอราคาของคุณเพื่อเชื่อมระบบฐานข้อมูลเข้าหากัน</div>
+            
+            <div style="text-align: center; background: #0f172a; padding: 20px; border-radius: 8px; border: 1px solid var(--border);">
+                <button class="btn btn-primary" style="padding: 10px 20px; animation: pulse 2s infinite;">⚙️ ตั้งค่าชีท</button>
+                <div style="margin-top: 12px; font-size: 0.8rem; color: var(--text-muted);">
+                    คลิกปุ่ม "ตั้งค่าชีท" ที่แถบด้านล่างสุดของใบเสนอราคา แล้ววาง URL ลงไป กดตกลงเป็นอันเสร็จสิ้น!
+                </div>
+            </div>
+        </div>
+
+        <a href="estimate.html" class="back-link">🔙 กลับสู่หน้าประเมินราคาชิ้นงาน</a>
+    </div>
+
+    <script>
+        function copyCode(btn) {
+            const code = document.getElementById('code-block').innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                btn.innerText = '✔️ คัดลอกสำเร็จ!';
+                btn.style.background = '#10b981';
+                setTimeout(() => {
+                    btn.innerText = '📋 คัดลอกโค้ดสคริปต์';
+                    btn.style.background = '';
+                }, 2000);
+            }).catch(err => {
+                alert('ไม่สามารถคัดลอกอัตโนมัติได้ กรุณากดคลุมดำโค้ดทั้งหมดแล้วคัดลอกด้วยตนเอง');
+            });
+        }
+    </script>
+</body>
+</html>

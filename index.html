@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRONSERVICE KK | แพลตฟอร์มรับสั่งทำสไตล์ลอฟท์เกรดพรีเมียม</title>
+    <meta name="description" content="IRONSERVICE KK แพลตฟอร์มรับสั่งทำเฟอร์นิเจอร์สไตล์ลอฟท์ งานเหล็กฉลุ CNC ประตูเหล็กกระจก และเหล็กดัดดีไซน์พรีเมียม ออกแบบใหม่เพื่อความพอดีกับบ้านคุณ">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Top Navbar -->
+    <div class="top-navbar">
+        <div class="container top-nav-container">
+            <div class="top-nav-left">
+                <a href="estimate.html" target="_blank" class="estimate-link">📊 ประเมิณราคา-ด้วยตัวเอง</a>
+                <span class="divider">|</span>
+                <a href="https://www.google.com/maps/search/?api=1&query=งานเหล็กงานลอฟท์ขอนแก่น" target="_blank" class="location-link">📍 เส้นทางที่อยู่ร้าน</a>
+            </div>
+            <div class="top-nav-right">
+                <a href="#notifications">🔔 การแจ้งเตือน</a>
+                <a href="#help">❔ ช่วยเหลือ</a>
+                
+                <!-- Guest State -->
+                <button class="btn btn-sm btn-primary member-btn-header" id="header-login-btn" style="background: transparent; border: none; padding: 0; box-shadow: none; color: var(--text-muted); cursor: pointer;">
+                    <span>เข้าสู่ระบบลูกค้า</span>
+                </button>
+                
+                <!-- Logged in state dropdown (hidden by default) -->
+                <div class="user-dropdown-container hide" id="header-user-menu">
+                    <button class="user-dropdown-btn">
+                        <span class="user-avatar" id="header-user-avatar">U</span>
+                        <span class="user-name" id="header-user-name">คุณสมศักดิ์</span>
+                        <svg viewBox="0 0 24 24" width="16" height="16" style="margin-left: 4px;"><path fill="currentColor" d="M7,10L12,15L17,10H7Z"/></svg>
+                    </button>
+                    <ul class="user-dropdown-list">
+                        <li><a href="#profile" id="btn-view-profile">👤 ข้อมูลส่วนตัว</a></li>
+                        <li><a href="#tracking" id="btn-my-orders">📦 ออเดอร์ของฉัน</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a href="#" id="btn-logout">🚪 ออกจากระบบ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header / Search System -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <img src="assets/logo.png" alt="IRONSERVICE KK Logo" class="logo-img">
+                <span class="logo-text">IRONSERVICE <span class="accent">KK</span></span>
+            </a>
+            
+            <div class="search-wrapper">
+                <div class="search-box" id="search-box-container">
+                    <!-- Image Search Input (hidden) -->
+                    <input type="file" id="image-search-input" accept="image/*" style="display:none;">
+                    
+                    <!-- Camera Icon Button -->
+                    <button id="image-search-btn" title="ค้นหาด้วยรูปภาพ" aria-label="ค้นหาด้วยรูปภาพ">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                            <path d="M12 15.2A3.2 3.2 0 0 1 8.8 12 3.2 3.2 0 0 1 12 8.8 3.2 3.2 0 0 1 15.2 12 3.2 3.2 0 0 1 12 15.2M9 2L7.17 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4H16.83L15 2H9Z"/>
+                        </svg>
+                        ค้นด้วยรูป
+                    </button>
+                    
+                    <div class="search-divider"></div>
+                    
+                    <input type="text" id="global-search-input" 
+                           placeholder="ค้นหา เช่น โต๊ะลอฟท์, CNC, ประตูเหล็กกระจก..."
+                           autocomplete="off">
+                    <button id="global-search-btn">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="margin-right:5px;">
+                            <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/>
+                        </svg>
+                        ค้นหา
+                    </button>
+                    
+                    <!-- Live Suggestions Dropdown -->
+                    <div class="search-suggestions" id="search-suggestions"></div>
+                </div>
+                <div class="search-tags">
+                    <span class="search-tag-label">ค้นหายอดนิยม:</span>
+                    <a href="#catalog" class="search-tag-link">🪑 โต๊ะ</a>
+                    <a href="#catalog" class="search-tag-link">🔩 เก้าอี้</a>
+                    <a href="#catalog" class="search-tag-link">🛎️ เคาน์เตอร์</a>
+                    <a href="#catalog" class="search-tag-link">⚙️ CNC</a>
+                    <a href="#catalog" class="search-tag-link">🚪 ประตูเหล็ก</a>
+                </div>
+            </div>
+
+            <div class="header-actions-wrapper">
+                <!-- ติดต่อแอดมิน -->
+                <a href="https://line.me" target="_blank" class="cart-container" id="contact-admin-btn">
+                    <span class="cart-icon">💬</span>
+                    <div class="cart-label">ติดต่อแอดมิน</div>
+                </a>
+
+                <!-- ขอใบเสนอราคา -->
+                <div class="cart-container open-modal-btn" data-service="general" id="quote-cart-btn">
+                    <span class="cart-icon">📋</span>
+                    <span class="cart-badge" id="quote-cart-badge">2</span>
+                    <div class="cart-label">ขอใบเสนอราคา</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==========================================
+         IMAGE SEARCH MODAL
+    =========================================== -->
+    <div id="image-search-modal" class="img-search-overlay" aria-hidden="true">
+        <div class="img-search-modal-box">
+            <button class="img-search-close" id="img-search-close" aria-label="ปิด">&times;</button>
+            
+            <div class="img-search-header">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="var(--accent-orange)">
+                    <path d="M12 15.2A3.2 3.2 0 0 1 8.8 12 3.2 3.2 0 0 1 12 8.8 3.2 3.2 0 0 1 15.2 12 3.2 3.2 0 0 1 12 15.2M9 2L7.17 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4H16.83L15 2H9Z"/>
+                </svg>
+                <h3>ค้นหาด้วยรูปภาพ</h3>
+                <p>อัปโหลดรูปสินค้าหรือแบบที่ชอบ เราจะค้นหาสิ่งที่ใกล้เคียงให้</p>
+            </div>
+
+            <!-- Drop Zone -->
+            <div class="img-drop-zone" id="img-drop-zone">
+                <div class="img-drop-icon">
+                    <svg viewBox="0 0 24 24" width="48" height="48" fill="var(--text-muted)">
+                        <path d="M14,13V17H10V13H7L12,8L17,13M19.35,10.03C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.03C2.34,8.36 0,10.9 0,14A6,6 0 0,0 6,20H19A5,5 0 0,0 24,15C24,12.36 21.95,10.22 19.35,10.03Z"/>
+                    </svg>
+                </div>
+                <p class="drop-main-text">ลากและวางรูปที่นี่</p>
+                <p class="drop-sub-text">หรือ</p>
+                <label for="image-search-input" class="btn btn-sm btn-primary img-upload-label">
+                    เลือกรูปจากเครื่อง
+                </label>
+                <p class="drop-hint">รองรับ JPG, PNG, WEBP (สูงสุด 10MB)</p>
+            </div>
+
+            <!-- Preview & Analysis State (hidden by default) -->
+            <div class="img-analysis-state hide" id="img-analysis-state">
+                <div class="img-preview-wrap">
+                    <img id="img-preview" src="" alt="preview">
+                    <div class="img-scan-line" id="img-scan-line"></div>
+                </div>
+                <div class="img-analysis-info">
+                    <div class="img-analysis-status" id="img-analysis-status">
+                        <div class="analysis-spinner"></div>
+                        <span id="analysis-text">กำลังวิเคราะห์รูปภาพ...</span>
+                    </div>
+                    <div class="img-analysis-tags" id="img-analysis-tags"></div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="img-search-results hide" id="img-search-results">
+                <div class="img-results-header">
+                    <span id="img-results-title">พบสินค้าที่ตรงกัน</span>
+                    <button class="img-search-again" id="img-search-again">🔄 ค้นหาใหม่</button>
+                </div>
+                <div class="img-results-grid" id="img-results-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="main-container">
+        <!-- Banner Grid (66% / 33% Layout) -->
+        <div class="banner-grid">
+            <div class="banner-main" style="background-image: linear-gradient(rgba(9, 9, 11, 0.45), rgba(9, 9, 11, 0.9)), url('assets/hero_background.png');">
+                <div class="banner-content">
+                    <div class="banner-badge">MADE-TO-ORDER PREMIUM</div>
+                    <h2>โต๊ะทำงาน เก้าอี้ ม้านั่ง</h2>
+                    <p>สามารถสั่งผลิตตามแบบและสไตล์ที่ชอบได้ง่ายๆ ทักหาแอดมินได้เลยค่ะ</p>
+                    <button class="btn btn-md btn-primary open-modal-btn" data-service="general" style="margin-top: 15px;">ส่งแบบประเมินราคาฟรี</button>
+                </div>
+            </div>
+            <div class="banner-side-wrapper">
+                <div class="banner-side side-1" style="background-image: linear-gradient(rgba(9, 9, 11, 0.4), rgba(9, 9, 11, 0.75)), url('assets/cat_cnc.png');">
+                    <div class="side-banner-content">
+                        <h3>รวมผลงาน CNC ฉลุลาย</h3>
+                        <a href="#catalog" class="banner-link">ดูผลงานสั่งตัด ></a>
+                    </div>
+                </div>
+                <div class="banner-side side-2" style="background-image: linear-gradient(rgba(9, 9, 11, 0.4), rgba(9, 9, 11, 0.75)), url('assets/cat_furniture.png');">
+                    <div class="side-banner-content">
+                        <h3>ระบบมัดจำ 50% ปลอดภัย</h3>
+                        <span class="banner-desc">ผลิตเร็ว ได้งานตรงสเปก 100%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Icons Menu -->
+        <div class="quick-icons">
+            <a href="table-sets.html" class="icon-item" style="text-decoration: none; color: inherit;">
+                <div class="icon-circle">🪑</div>
+                <div class="icon-text">ชุดโต๊ะ</div>
+            </a>
+            <div class="icon-item" data-service="ชั้นวาง">
+                <div class="icon-circle">🪜</div>
+                <div class="icon-text">ชั้นวางของ</div>
+            </div>
+            <div class="icon-item" data-service="เคาน์เตอร์">
+                <div class="icon-circle">🛎️</div>
+                <div class="icon-text">เคาน์เตอร์</div>
+            </div>
+            <div class="icon-item" data-service="ตู้">
+                <div class="icon-circle">🗄️</div>
+                <div class="icon-text">ตู้เก็บของ</div>
+            </div>
+            <div class="icon-item" data-service="cnc">
+                <div class="icon-circle">⚙️</div>
+                <div class="icon-text">cnc</div>
+            </div>
+            <div class="icon-item open-modal-btn" data-service="general">
+                <div class="icon-circle">📐</div>
+                <div class="icon-text">สั่งผลิตตาม<br>แบบและขนาด</div>
+            </div>
+            <div class="icon-item scroll-to-btn" data-target="#reviews">
+                <div class="icon-circle">⭐</div>
+                <div class="icon-text">รีวิว/ตัวอย่างงาน</div>
+            </div>
+            <div class="icon-item scroll-to-btn" data-target="#tracking" id="btn-quick-track">
+                <div class="icon-circle">🚚</div>
+                <div class="icon-text">เช็คสถานะพัสดุ</div>
+            </div>
+        </div>
+
+        <!-- Trust Features Banner Section -->
+        <section class="trust-features-section">
+            <div class="container trust-features-grid">
+                <!-- Card 1: Free Shipping -->
+                <div class="trust-card glassmorphism">
+                    <div class="trust-icon-box">
+                        <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                            <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm12 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm3.5-7.5l2.25 3H17V11h4.5z"/>
+                        </svg>
+                    </div>
+                    <div class="trust-info">
+                        <h4>ส่งฟรีทั่วไทย</h4>
+                        <p>เมื่อช้อปครบ 5,000 ขึ้นไป</p>
+                    </div>
+                </div>
+
+                <!-- Card 2: Easy Returns -->
+                <div class="trust-card glassmorphism">
+                    <div class="trust-icon-box">
+                        <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                            <path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/>
+                        </svg>
+                    </div>
+                    <div class="trust-info">
+                        <h4>เปลี่ยนคืนสินค้าง่าย</h4>
+                        <p>เปลี่ยนใหม่ภายใน 7 วัน</p>
+                    </div>
+                </div>
+
+                <!-- Card 3: Fast Response -->
+                <div class="trust-card glassmorphism">
+                    <div class="trust-icon-box">
+                        <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                            <path d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42C16.07 4.74 14.12 4 12 4c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/>
+                        </svg>
+                    </div>
+                    <div class="trust-info">
+                        <h4>รวดเร็วในการให้บริการ</h4>
+                        <p>ตอบด่วน ตอบไว</p>
+                    </div>
+                </div>
+
+                <!-- Card 4: Secure Payment -->
+                <div class="trust-card glassmorphism">
+                    <div class="trust-icon-box">
+                        <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                            <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm6 9.09c0 3.96-2.58 7.64-6 8.78-3.42-1.14-6-4.82-6-8.78V6.82l6-2.25 6 2.25v4.27z M12 8.5c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5z"/>
+                        </svg>
+                    </div>
+                    <div class="trust-info">
+                        <h4>ชำระเงินปลอดภัย</h4>
+                        <p>ด้วยระบบออนไลน์</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Catalog Section -->
+        <div class="section-header" id="catalog">
+            สินค้าขายดี
+        </div>
+        <div class="product-grid" id="product-grid-list">
+            
+            <div class="product-card" data-category="furniture">
+                <div class="p-badge">สั่งตัดตามพื้นที่</div>
+                <img src="assets/cat_furniture.png" class="p-image" alt="โต๊ะกินข้าวไม้เนื้อแข็ง">
+                <div class="p-title">โต๊ะกินข้าวไม้เนื้อแข็ง ขาเหล็กกล่อง 3 นิ้ว ทรง X-Shape พ่นสีฝุ่นพาวเดอร์โค้ต</div>
+                <div class="p-price">เริ่มต้น ฿8,500</div>
+                <div class="p-sold">ผลิต 7-14 วัน (มัดจำ 50%)</div>
+                <button class="btn btn-sm btn-outline open-modal-btn card-quote-btn" data-service="furniture" data-title="โต๊ะกินข้าวไม้เนื้อแข็ง ขาเหล็กกล่อง ทรง X-Shape">ขอใบเสนอราคา</button>
+            </div>
+
+            <div class="product-card" data-category="cnc">
+                <div class="p-badge">ออกแบบลายฟรี</div>
+                <img src="assets/cat_cnc.png" class="p-image" alt="แผ่นเหล็กฉลุลาย CNC">
+                <div class="p-title">แผ่นเหล็กฉลุลาย CNC แผงกั้นห้อง/ระเบียง ลายเรขาคณิตโมเดิร์น</div>
+                <div class="p-price">เริ่มต้น ฿1,500/ตร.ม.</div>
+                <div class="p-sold">ผลิต 10 วัน (มัดจำ 50%)</div>
+                <button class="btn btn-sm btn-outline open-modal-btn card-quote-btn" data-service="cnc" data-title="แผ่นเหล็กฉลุลาย CNC แผงกั้นห้อง/ระเบียง">ขอใบเสนอราคา</button>
+            </div>
+
+            <div class="product-card" data-category="architecture">
+                <div class="p-badge">ประเมินหน้างาน</div>
+                <img src="assets/cat_glass_door.png" class="p-image" alt="ประตูบานเลื่อนเหล็ก กระจกใส">
+                <div class="p-title">ประตูบานเลื่อนเหล็ก กระจกใส กรอบบางสไตล์โฮมคาเฟ่ ดิบเท่กั้นห้องแสงธรรมชาติ</div>
+                <div class="p-price">ประเมินตามขนาด</div>
+                <div class="p-sold">รวมบริการติดตั้งหน้างาน</div>
+                <button class="btn btn-sm btn-outline open-modal-btn card-quote-btn" data-service="architecture" data-title="ประตูบานเลื่อนเหล็ก กระจกใส กรอบบางสไตล์โฮมคาเฟ่">ขอใบเสนอราคา</button>
+            </div>
+
+            <div class="product-card" data-category="furniture">
+                <div class="p-badge">สั่งตัดตามพื้นที่</div>
+                <img src="assets/hero_background.png" class="p-image" alt="ชั้นวางของเหล็กตะแกรงฉีก">
+                <div class="p-title">ชั้นวางของเหล็กตะแกรงฉีก 5 ชั้น โครงสร้างรับน้ำหนักสูง แข็งแรงพิเศษ</div>
+                <div class="p-price">เริ่มต้น ฿4,200</div>
+                <div class="p-sold">ผลิต 7 วัน (มัดจำ 50%)</div>
+                <button class="btn btn-sm btn-outline open-modal-btn card-quote-btn" data-service="furniture" data-title="ชั้นวางของเหล็กตะแกรงฉีก 5 ชั้น">ขอใบเสนอราคา</button>
+            </div>
+
+            <div class="product-card" data-category="grille">
+                <div class="p-badge">สั่งตัดตามพื้นที่</div>
+                <img src="assets/cat_grille.png" class="p-image" alt="โครงเตียงเหล็ก 6 ฟุต">
+                <div class="p-title">โครงเตียงเหล็ก 6 ฟุต สไตล์อินดัสเทรียลลอฟท์ ถอดประกอบได้ ไร้เสียงรบกวน</div>
+                <div class="p-price">เริ่มต้น ฿11,000</div>
+                <div class="p-sold">ผลิต 14 วัน (มัดจำ 50%)</div>
+                <button class="btn btn-sm btn-outline open-modal-btn card-quote-btn" data-service="grille" data-title="โครงเตียงเหล็ก 6 ฟุต สไตล์อินดัสเทรียลลอฟท์">ขอใบเสนอราคา</button>
+            </div>
+
+        </div>
+
+        <!-- Reviews Section -->
+        <section id="reviews" class="reviews-section">
+            <div class="section-header-wrap">
+                <div class="section-header-title">รีวิวจากลูกค้า (CUSTOMER REVIEWS)</div>
+                <div class="section-header-desc">ลูกค้าที่ไว้วางใจให้เราสั่งผลิตเฟอร์นิเจอร์และงานโครงสร้างเหล็กสไตล์ลอฟท์</div>
+            </div>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-rating">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">"สั่งทำชุดโต๊ะกินข้าวลอฟท์มาใช้ที่ร้านอาหาร สเปกเหล็กหนาดีมาก ท็อปไม้แท้ลงน้ำยาเคลือบเงาสวยงาม กันน้ำได้จริง ลูกค้าที่ร้านชมทุกคนเลยครับ"</p>
+                    <div class="review-user">
+                        <div class="review-avatar">น</div>
+                        <div class="review-info">
+                            <span class="user-name">คุณนรินทร์ชัย</span>
+                            <span class="user-location">จ.ขอนแก่น</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-rating">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">"ให้ช่างเข้ามาวัดพื้นที่ทำประตูกระจกบานเลื่อนเหล็กและตู้เก็บของติดผนัง งานเสร็จไว ตรงเวลา งานติดตั้งเรียบร้อย ไร้รอยตำหนิ แนะนำร้านนี้เลยค่ะ"</p>
+                    <div class="review-user">
+                        <div class="review-avatar">พ</div>
+                        <div class="review-info">
+                            <span class="user-name">คุณพัชราภา</span>
+                            <span class="user-location">จ.อุดรธานี</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-rating">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">"สั่งทำแผ่นเหล็กฉลุลาย CNC ไปตกแต่งพาร์ทิชันกั้นห้องพักที่โครงการ คุยแบบผ่าน 3D สะดวกมาก งานฉลุออกมาเนียนสวย แข็งแรงมากครับ"</p>
+                    <div class="review-user">
+                        <div class="review-avatar">อ</div>
+                        <div class="review-info">
+                            <span class="user-name">คุณอนิรุทธ์</span>
+                            <span class="user-location">จ.มหาสารคาม</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tracking Section -->
+        <section id="tracking" class="tracking-section">
+            <div class="tracking-card-container">
+                <div class="tracking-header">
+                    <div class="icon-truck">🚚</div>
+                    <h2>ติดตามสถานะออเดอร์ (Order Tracking)</h2>
+                    <p>กรอกเลขใบเสนอราคาของคุณเพื่อดูความคืบหน้าของกระบวนการผลิตและจัดส่ง</p>
+                </div>
+                
+                <form id="tracking-form" class="tracking-form">
+                    <div class="input-group">
+                        <span class="prefix">QU-</span>
+                        <input type="text" id="quote-number" placeholder="XXXXXX" required minlength="5" maxlength="10">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-track">
+                        <span class="spinner hide"></span>
+                        <span class="btn-text">ตรวจสอบสถานะ</span>
+                    </button>
+                </form>
+
+                <div class="tracking-tip">
+                    <p>💡 ทดลองกรอกรหัสตัวอย่างเหล่านี้เพื่อทดสอบระบบ: <strong>QU-10245</strong>, <strong>QU-88901</strong>, หรือ <strong>QU-55201</strong></p>
+                </div>
+
+                <!-- Status Results (Hidden by default, shown by JS) -->
+                <div id="tracking-result" class="tracking-result hide">
+                    <hr class="divider">
+                    <div class="order-info">
+                        <div><strong>ใบเสนอราคาเลขที่:</strong> <span id="res-quote-id">QU-XXXXX</span></div>
+                        <div><strong>ลูกค้า:</strong> <span id="res-customer-name">คุณนรินทร์ชัย</span></div>
+                        <div><strong>ประเภทงาน:</strong> <span id="res-order-type">เฟอร์นิเจอร์โต๊ะไม้ขาเหล็ก</span></div>
+                    </div>
+
+                    <!-- Steps Timeline -->
+                    <div class="timeline">
+                        <div class="timeline-step" id="step-1">
+                            <div class="bullet"></div>
+                            <div class="step-detail">
+                                <div class="step-title">1. วัดพื้นที่หน้างาน</div>
+                                <div class="step-date" id="date-1">12 พ.ค. 2569</div>
+                                <p class="step-desc">วัดขนาดหน้างานเสร็จสิ้นและยืนยันระยะวัดจริง</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step" id="step-2">
+                            <div class="bullet"></div>
+                            <div class="step-detail">
+                                <div class="step-title">2. ออกแบบ 3D & เสนอราคา</div>
+                                <div class="step-date" id="date-2">15 พ.ค. 2569</div>
+                                <p class="step-desc">ส่งมอบและอนุมัติแบบร่างโมเดล 3D</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step" id="step-3">
+                            <div class="bullet"></div>
+                            <div class="step-detail">
+                                <div class="step-title">3. รับมัดจำ 50%</div>
+                                <div class="step-date" id="date-3">18 พ.ค. 2569</div>
+                                <p class="step-desc">ชำระมัดจำงวดแรก เข้าสู่ระบบวางแผนการผลิต</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step" id="step-4">
+                            <div class="bullet"></div>
+                            <div class="step-detail">
+                                <div class="step-title">4. กระบวนการผลิตในโรงงาน</div>
+                                <div class="step-date" id="date-4">22 พ.ค. 2569</div>
+                                <p class="step-desc">เริ่มจัดเตรียมวัสดุและเดินเครื่องผลิตโครงสร้างเหล็ก/ไม้</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step" id="step-5">
+                            <div class="bullet"></div>
+                            <div class="step-detail">
+                                <div class="step-title">5. จัดส่ง & ติดตั้ง</div>
+                                <div class="step-date" id="date-5">รอดำเนินการ</div>
+                                <p class="step-desc">ขนย้ายงานเข้าติดตั้งและประกอบหน้างานจริง</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="progress-bar-wrapper">
+                        <div class="progress-label">ความคืบหน้าภาพรวม (<span id="progress-percent">0%</span>)</div>
+                        <div class="progress-track">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error Results (Hidden by default) -->
+                <div id="tracking-error" class="tracking-error alert-error hide">
+                    ไม่พบข้อมูลเลขที่ใบเสนอราคาที่กรอก กรุณาตรวจสอบและลองอีกครั้ง หรือติดต่อฝ่ายบริการลูกค้า
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Member Login/Register Modal Overlay -->
+    <div id="login-modal-overlay" class="modal-overlay">
+        <div class="modal-container login-modal-container" style="max-width: 450px; padding: 2.5rem;">
+            <button class="modal-close" id="login-modal-close" aria-label="ปิด">&times;</button>
+            
+            <!-- Modal Tabs -->
+            <div class="login-tabs" style="display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 2rem;">
+                <button class="login-tab-btn active" data-tab="login-tab" style="flex: 1; padding: 0.75rem; background: transparent; border: none; border-bottom: 2px solid var(--accent-orange); color: var(--text-light); font-family: var(--font-heading); font-weight: 700; cursor: pointer; font-size: 1.1rem;">เข้าสู่ระบบ</button>
+                <button class="login-tab-btn" data-tab="register-tab" style="flex: 1; padding: 0.75rem; background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--text-muted); font-family: var(--font-heading); font-weight: 700; cursor: pointer; font-size: 1.1rem;">สมัครสมาชิก</button>
+            </div>
+
+            <!-- Tab 1: Login Form -->
+            <form id="login-form" class="login-tab-content">
+                <div class="modal-header" style="margin-bottom: 1.5rem;">
+                    <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">🔑 ยินดีต้อนรับกลับมา</h2>
+                    <p style="font-size: 0.85rem;">เข้าสู่ระบบเพื่อติดตามออเดอร์และสิทธิพิเศษของคุณ</p>
+                </div>
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label for="login-email" style="font-size: 0.85rem; margin-bottom: 0.4rem; display: block;">อีเมล / เบอร์โทรศัพท์ <span class="required">*</span></label>
+                    <input type="text" id="login-email" placeholder="example@email.com หรือ 063xxxxxxx" required style="width: 100%;">
+                </div>
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label for="login-password" style="font-size: 0.85rem; margin-bottom: 0.4rem; display: block;">รหัสผ่าน <span class="required">*</span></label>
+                    <input type="password" id="login-password" placeholder="••••••••" required style="width: 100%;">
+                </div>
+                <div class="login-options" style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; margin-bottom: 1.5rem; color: var(--text-muted);">
+                    <label class="remember-me" style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer;">
+                        <input type="checkbox" checked style="accent-color: var(--accent-orange);"> จดจำฉันในระบบ
+                    </label>
+                    <a href="#" class="forgot-password" style="color: var(--accent-gold); text-decoration: none;">ลืมรหัสผ่าน?</a>
+                </div>
+                <button type="submit" class="btn btn-md btn-block btn-primary">เข้าสู่ระบบ</button>
+                
+                <div class="social-login-divider" style="text-align: center; margin: 1.5rem 0; position: relative;">
+                    <span style="background-color: var(--bg-secondary); padding: 0 0.75rem; font-size: 0.8rem; color: var(--text-muted); position: relative; z-index: 2;">หรือเข้าสู่ระบบด้วย</span>
+                    <div style="position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background-color: var(--border-color); z-index: 1;"></div>
+                </div>
+                <div class="social-login-buttons" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem;">
+                    <button type="button" class="btn btn-sm btn-secondary social-btn line-login" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.5rem 0.25rem;">
+                        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#06C755" d="M12,2C6.5,2 2,5.6 2,10.1C2,12.7 3.9,15 7,16.4C6.7,17.4 6.2,19.2 6.1,19.5C6,20 6.3,19.9 6.5,19.8C6.6,19.7 9,18.1 10,17.3C10.7,17.5 11.3,17.6 12,17.6C17.5,17.6 22,14 22,9.6C22,5.1 17.5,2 12,2Z"/></svg>
+                        LINE
+                    </button>
+                    <button type="button" class="btn btn-sm btn-secondary social-btn google-login" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.5rem 0.25rem;">
+                        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.648 2.41-2.519 4.114-5.136 4.114A5.99 5.99 0 0 1 8 12.5a5.99 5.99 0 0 1 5.99-6.002c1.478 0 2.82.54 3.865 1.424l3.22-3.22A10.16 10.16 0 0 0 13.99 2 10.25 10.25 0 0 0 3.75 12.25a10.25 10.25 0 0 0 10.24 10.25c5.68 0 10.21-4.114 10.21-10.25 0-.693-.06-1.352-.173-1.965H12.24z"/></svg>
+                        Google
+                    </button>
+                    <button type="button" class="btn btn-sm btn-secondary social-btn facebook-login" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.5rem 0.25rem;">
+                        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#1877F2" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        Facebook
+                    </button>
+                </div>
+            </form>
+
+            <!-- Tab 2: Register Form -->
+            <form id="register-form" class="login-tab-content hide">
+                <div class="modal-header" style="margin-bottom: 1.5rem;">
+                    <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">📝 สมัครสมาชิกใหม่</h2>
+                    <p style="font-size: 0.85rem;">สมัครฟรีเพื่อผูกประวัติออเดอร์และขอรับคำปรึกษา</p>
+                </div>
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label for="reg-name" style="font-size: 0.85rem; margin-bottom: 0.4rem; display: block;">ชื่อ-นามสกุล <span class="required">*</span></label>
+                    <input type="text" id="reg-name" placeholder="คุณสมศักดิ์ รักดี" required style="width: 100%;">
+                </div>
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label for="reg-phone" style="font-size: 0.85rem; margin-bottom: 0.4rem; display: block;">เบอร์โทรศัพท์ <span class="required">*</span></label>
+                    <input type="tel" id="reg-phone" placeholder="063XXXXXXX" required pattern="[0-9]{9,10}" style="width: 100%;">
+                </div>
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label for="reg-email" style="font-size: 0.85rem; margin-bottom: 0.4rem; display: block;">อีเมล <span class="required">*</span></label>
+                    <input type="email" id="reg-email" placeholder="example@email.com" required style="width: 100%;">
+                </div>
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label for="reg-pass" style="font-size: 0.85rem; margin-bottom: 0.4rem; display: block;">รหัสผ่าน <span class="required">*</span></label>
+                    <input type="password" id="reg-pass" placeholder="อย่างน้อย 6 ตัวอักษร" required minlength="6" style="width: 100%;">
+                </div>
+                <label class="terms-accept" style="display: flex; gap: 0.5rem; align-items: flex-start; font-size: 0.75rem; color: var(--text-muted); cursor: pointer; margin-bottom: 1.5rem;">
+                    <input type="checkbox" required style="accent-color: var(--accent-orange); margin-top: 0.15rem;"> ฉันยอมรับเงื่อนไขบริการและนโยบายความเป็นส่วนตัว
+                </label>
+                <button type="submit" class="btn btn-md btn-block btn-primary">ยืนยันสมัครสมาชิก</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Member Profile Modal Overlay -->
+    <div id="profile-modal-overlay" class="modal-overlay">
+        <div class="modal-container profile-modal-container" style="max-width: 550px;">
+            <button class="modal-close" id="profile-modal-close" aria-label="ปิด">&times;</button>
+            <div class="modal-header">
+                <h2>👤 ข้อมูลส่วนตัวสมาชิก</h2>
+                <p>รายละเอียดสมาชิกเกรดพรีเมียมและประวัติออเดอร์ของคุณ</p>
+            </div>
+            
+            <div class="profile-card" style="display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem; background-color: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--border-radius-md); margin-bottom: 2rem;">
+                <div class="profile-avatar-big" id="prof-avatar-placeholder" style="width: 70px; height: 70px; border-radius: 50%; background-color: var(--accent-orange); color: var(--text-light); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-family: var(--font-heading); font-weight: 700; box-shadow: 0 0 15px rgba(241, 169, 10, 0.4);">S</div>
+                <div class="profile-details-main">
+                    <h3 id="prof-name" style="font-size: 1.35rem; color: var(--text-light); margin-bottom: 0.25rem;">คุณสมศักดิ์ รักดี</h3>
+                    <p id="prof-email" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">somsak@email.com</p>
+                    <span class="user-tier-badge" style="display: inline-block; font-size: 0.75rem; padding: 0.2rem 0.6rem; background-color: rgba(241, 169, 10, 0.15); border: 1px solid rgba(241, 169, 10, 0.3); color: var(--accent-orange); border-radius: 10px; font-weight: 600;">Premium Member</span>
+                </div>
+            </div>
+
+            <div class="profile-info-grid" style="display: grid; grid-template-columns: 1fr; gap: 1rem; padding: 1.25rem; background-color: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--border-radius-md); margin-bottom: 2rem; font-size: 0.9rem;">
+                <div class="info-item" style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 0.5rem;">
+                    <span class="label" style="color: var(--text-muted);">เบอร์โทรศัพท์:</span>
+                    <span class="value" id="prof-phone" style="font-weight: 600;">063-7409696</span>
+                </div>
+                <div class="info-item" style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 0.5rem; flex-direction: column; gap: 0.25rem;">
+                    <span class="label" style="color: var(--text-muted);">ที่อยู่จัดส่ง & ติดตั้ง:</span>
+                    <span class="value" style="font-weight: 400; color: var(--text-light); line-height: 1.4;">123/45 อำเภอเมือง จังหวัดขอนแก่น 40000</span>
+                </div>
+                <div class="info-item" style="display: flex; justify-content: space-between; padding-bottom: 0.25rem;">
+                    <span class="label" style="color: var(--text-muted);">คะแนนสะสมพิเศษ:</span>
+                    <span class="value" style="color: var(--accent-orange); font-weight: 700;">1,250 คะแนน</span>
+                </div>
+            </div>
+
+            <div class="profile-orders-section" style="margin-bottom: 2rem;">
+                <h4 style="font-size: 1.1rem; color: var(--text-light); margin-bottom: 1rem;">📦 ออเดอร์สั่งทำที่ผูกกับบัญชีของคุณ</h4>
+                <div class="profile-orders-list" style="display: grid; gap: 0.75rem;">
+                    <div class="profile-order-card" data-quote="10245" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background-color: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--border-radius-md); cursor: pointer; transition: all var(--transition-fast);">
+                        <div class="order-card-meta" style="display: flex; flex-direction: column; gap: 0.15rem;">
+                            <strong style="color: var(--accent-orange); font-family: var(--font-heading);">QU-10245</strong>
+                            <span style="font-size: 0.8rem; color: var(--text-light);">โต๊ะทำงาน Loft Wood + ชั้นวางเหล็ก</span>
+                        </div>
+                        <div class="order-card-status status-completed" style="font-size: 0.8rem; font-weight: 600; color: #10b981; padding: 0.25rem 0.5rem; background-color: rgba(16, 185, 129, 0.1); border-radius: 4px;">กำลังติดตั้ง (95%)</div>
+                    </div>
+                    <div class="profile-order-card" data-quote="55201" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background-color: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--border-radius-md); cursor: pointer; transition: all var(--transition-fast);">
+                        <div class="order-card-meta" style="display: flex; flex-direction: column; gap: 0.15rem;">
+                            <strong style="color: var(--accent-orange); font-family: var(--font-heading);">QU-55201</strong>
+                            <span style="font-size: 0.8rem; color: var(--text-light);">ประตูบานเลื่อนเหล็กดำกระจกใส</span>
+                        </div>
+                        <div class="order-card-status status-production" style="font-size: 0.8rem; font-weight: 600; color: var(--accent-orange); padding: 0.25rem 0.5rem; background-color: rgba(241, 169, 10, 0.1); border-radius: 4px;">กำลังผลิต (75%)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-actions" style="margin-top: 1.5rem;">
+                <button class="btn btn-secondary btn-block" id="btn-close-profile">ปิดหน้าต่าง</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Consultation Modal Overlay -->
+    <div id="modal-overlay" class="modal-overlay">
+        <div class="modal-container">
+            <button class="modal-close" aria-label="ปิด">&times;</button>
+            <div class="modal-header">
+                <h2>📝 รับคำปรึกษาและประเมินราคาฟรี</h2>
+                <p>กรอกข้อมูลรายละเอียดเบื้องต้นเพื่อให้ทีมสถาปนิกของเราติดต่อกลับภายใน 24 ชม.</p>
+            </div>
+            
+            <form id="consultation-form" class="consultation-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="client-name">ชื่อ-นามสกุล <span class="required">*</span></label>
+                        <input type="text" id="client-name" name="name" placeholder="คุณสมชาย ใจดี" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="client-phone">เบอร์โทรศัพท์ <span class="required">*</span></label>
+                        <input type="tel" id="client-phone" name="phone" placeholder="063-XXXXXXX" required pattern="[0-9]{9,10}">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="client-line">Line ID</label>
+                        <input type="text" id="client-line" name="line_id" placeholder="line_username">
+                    </div>
+                    <div class="form-group">
+                        <label for="project-type">ประเภทงานที่สนใจสั่งทำ <span class="required">*</span></label>
+                        <select id="project-type" name="project_type" required>
+                            <option value="">-- เลือกประเภทงาน --</option>
+                            <option value="furniture">เฟอร์นิเจอร์สไตล์ลอฟท์ (โต๊ะ, เก้าอี้, ชั้นวาง)</option>
+                            <option value="cnc">งาน CNC โลหะฉลุลายตกแต่ง</option>
+                            <option value="architecture">งานสถาปัตยกรรม (ประตูเหล็กกระจก, กั้นห้อง)</option>
+                            <option value="grille">เหล็กดัดพรีเมียม / เหล็กดัดดีไซน์โมเดิร์น</option>
+                            <option value="general">อื่นๆ / ต้องการให้สถาปนิกติดต่อแนะนำโดยตรง</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="project-detail">รายละเอียดความต้องการ หรือขนาดพื้นที่โดยประมาณ</label>
+                    <textarea id="project-detail" name="detail" rows="4" placeholder="ระบุขนาดของเฟอร์นิเจอร์ที่ต้องการ ลายฉลุ หรือรายละเอียดอื่นๆ เพื่อช่วยให้เราประเมินราคาเบื้องต้นได้แม่นยำยิ่งขึ้น..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>อัปโหลดแบบสเก็ตช์หรือรูปหน้างานจริง (ถ้ามี)</label>
+                    <div class="file-upload-box">
+                        <input type="file" id="client-file" class="file-input" accept="image/*,application/pdf">
+                        <div class="file-upload-placeholder">
+                            <span class="upload-icon">📁</span>
+                            <span class="upload-text">คลิกเพื่ออัปโหลด หรือลากไฟล์มาวางตรงนี้ (JPG, PNG, PDF ขนาดไม่เกิน 5MB)</span>
+                        </div>
+                        <div class="file-name-preview hide"></div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary close-modal-action">ยกเลิก</button>
+                    <button type="submit" class="btn btn-primary">ส่งแบบประเมินราคา</button>
+                </div>
+            </form>
+
+            <!-- Success State inside Modal (Hidden by default) -->
+            <div id="modal-success-state" class="modal-success-state hide">
+                <div class="success-icon-wrapper">
+                    <svg viewBox="0 0 24 24" width="64" height="64" class="success-icon">
+                        <path fill="currentColor" d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" />
+                    </svg>
+                </div>
+                <h3>ส่งคำขอประเมินราคาสำเร็จ!</h3>
+                <p>ระบบได้รับข้อมูลของท่านเรียบร้อยแล้ว สถาปนิกโครงการจะวิเคราะห์แบบและรายละเอียด แล้วติดต่อกลับทางเบอร์โทรศัพท์หรือไลน์ไอดีของท่านโดยเร็วที่สุด</p>
+                <div class="generated-quote-box">
+                    <span>รหัสคำขอรับบริการชั่วคราวของคุณคือ:</span>
+                    <strong id="created-quote-id">QU-202611</strong>
+                    <p class="quote-note">*คุณสามารถนำรหัสนี้ไปค้นหาเพื่อติดตามความคืบหน้าได้ที่หน้า "เช็คสถานะงาน"</p>
+                </div>
+                <button class="btn btn-primary close-modal-success-btn">ตกลง</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand-info">
+                <div class="footer-logo">
+                    <img src="assets/logo.png" alt="IRONSERVICE KK Logo" class="footer-logo-img">
+                    IRONSERVICE <span>KK</span>
+                </div>
+                <p>ผู้ผลิตและออกแบบเฟอร์นิเจอร์สไตล์อุตสาหกรรมลอฟท์ งานโครงสร้างโลหะ CNC และประตูหน้าต่างเหล็กเกรดสถาปัตยกรรมระดับพรีเมียม ตอบโจทย์ไลฟ์สไตล์โมเดิร์นร่วมสมัย</p>
+                <div class="social-icons">
+                    <!-- FB Icon Mock -->
+                    <a href="https://facebook.com" target="_blank" aria-label="Facebook Page" class="social-link">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="currentColor" d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A9.999 9.999 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z" />
+                        </svg>
+                    </a>
+                    <!-- LINE Icon Mock -->
+                    <a href="https://line.me" target="_blank" aria-label="Line Account" class="social-link">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="currentColor" d="M12,2C6.5,2 2,5.6 2,10.1C2,12.7 3.9,15 7,16.4C6.7,17.4 6.2,19.2 6.1,19.5C6,20 6.3,19.9 6.5,19.8C6.6,19.7 9,18.1 10,17.3C10.7,17.5 11.3,17.6 12,17.6C17.5,17.6 22,14 22,9.6C22,5.1 17.5,2 12,2M8.9,12.7H7.7V8.5H8.9V12.7M11.6,12.7H10.4V8.5H11.6V12.7M14.6,12.7L13.2,10.6V12.7H12V8.5H13.2L14.6,10.6V8.5H15.8V12.7H14.6M18.8,9.7H17.3V10.2H18.8V11.2H17.3V11.7H18.8V12.7H16.1V8.5H18.8V9.7Z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <h4>เมนู</h4>
+                <ul>
+                    <li><a href="#hero">หน้าแรก</a></li>
+                    <li><a href="#catalog">แคตตาล็อกสินค้า</a></li>
+                    <li><a href="#tracking">เช็คสถานะออเดอร์</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>บริการรับสั่งทำ</h4>
+                <ul>
+                    <li><a href="#catalog" class="open-modal-btn" data-service="furniture">เฟอร์นิเจอร์ลอฟท์สั่งทำ</a></li>
+                    <li><a href="#catalog" class="open-modal-btn" data-service="cnc">งานตัดพลาสม่า/เลเซอร์ CNC</a></li>
+                    <li><a href="#catalog" class="open-modal-btn" data-service="architecture">ประตูบานสไลด์สไตล์เหล็กกระจก</a></li>
+                    <li><a href="#catalog" class="open-modal-btn" data-service="grille">เหล็กดัดประดับอาคารพรีเมียม</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-contact">
+                <h4>ติดต่อสอบถาม</h4>
+                <p>📍 โชว์รูม IRONSERVICE KK อำเภอเมือง จังหวัดขอนแก่น</p>
+                <p>📞 <strong>เบอร์โทรศัพท์:</strong> 063-7409696</p>
+                <p>💬 <strong>Line ID:</strong> @ironservicekk</p>
+                <p>📧 <strong>อีเมล:</strong> contact@ironservicekk.com</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="container bottom-container">
+                <p>&copy; 2026 IRONSERVICE KK. All Rights Reserved. ออกแบบสไตล์อินดัสเทรียลลอฟท์เพื่อคุณ</p>
+                <p>สร้างหน้าเว็บด้วยดีไซน์พรีเมียมแบบสมบูรณ์</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Multi-Channel Contact Widget -->
+    <div class="contact-widget-container" id="contactWidgetContainer">
+        <!-- Contact Panel / Menu Card -->
+        <div class="contact-widget-card" id="contactWidgetCard">
+            <!-- Header -->
+            <div class="contact-card-header">
+                <div class="contact-header-title">
+                    <span class="online-indicator"></span>
+                    <h4>ติดต่อ IRONSERVICE KK</h4>
+                </div>
+                <button class="contact-close-btn" id="contactCloseBtn" aria-label="ปิดเมนู">&times;</button>
+            </div>
+            
+            <!-- Channels Grid -->
+            <div class="contact-channels-section">
+                <p class="section-label">เลือกช่องทางติดต่อ:</p>
+                <div class="contact-channels-grid">
+                    <!-- LINE -->
+                    <a href="https://line.me/ti/p/@ironservicekk" target="_blank" class="channel-item line-item" title="LINE ID: @ironservicekk">
+                        <div class="channel-icon">
+                            <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12,2C6.5,2 2,5.6 2,10.1C2,12.7 3.9,15 7,16.4C6.7,17.4 6.2,19.2 6.1,19.5C6,20 6.3,19.9 6.5,19.8C6.6,19.7 9,18.1 10,17.3C10.7,17.5 11.3,17.6 12,17.6C17.5,17.6 22,14 22,9.6C22,5.1 17.5,2 12,2Z" /></svg>
+                        </div>
+                        <span class="channel-name">LINE</span>
+                    </a>
+                    
+                    <!-- FB MESSENGER -->
+                    <a href="https://m.me/ironservicekk" target="_blank" class="channel-item messenger-item" title="Facebook Messenger">
+                        <div class="channel-icon">
+                            <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 2C6.48 2 2 6.14 2 11.25C2 14.18 3.44 16.78 5.7 18.52V22L9.02 20.18C9.97 20.44 10.97 20.59 12 20.59C17.52 20.59 22 16.45 22 11.25C22 6.14 17.52 2 12 2ZM13.06 14.63L10.53 11.93L5.61 14.63L10.94 9.02L13.47 11.72L18.39 9.02L13.06 14.63Z" /></svg>
+                        </div>
+                        <span class="channel-name">Messenger</span>
+                    </a>
+                    
+                    <!-- INSTAGRAM -->
+                    <a href="https://instagram.com/ironservicekk" target="_blank" class="channel-item instagram-item" title="Instagram">
+                        <div class="channel-icon">
+                            <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8c0 2 1.6 3.6 3.6 3.6h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6c0-2-1.6-3.6-3.6-3.6H7.6m8.9 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3" /></svg>
+                        </div>
+                        <span class="channel-name">Instagram</span>
+                    </a>
+                    
+                    <!-- SHOPEE -->
+                    <a href="https://shopee.co.th/ironservicekk" target="_blank" class="channel-item shopee-item" title="Shopee Shop">
+                        <div class="channel-icon">
+                            <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M19.5 7.5h-2.585c-.595-2.56-2.53-4.5-4.915-4.5s-4.32 1.94-4.915 4.5h-2.585c-.825 0-1.5.675-1.5 1.5v10.5c0 .825.675 1.5 1.5 1.5h15c.825 0 1.5-.675 1.5-1.5v-10.5c0-.825-.675-1.5-1.5-1.5zm-7.5-3c1.655 0 3.015 1.345 3.415 3h-6.83c.4-1.655 1.76-3 3.415-3zm7.5 15h-15v-10.5h15v10.5z M10.5 10.5h3v1.5h-3zm0 3h3v1.5h-3z" /></svg>
+                        </div>
+                        <span class="channel-name">Shopee</span>
+                    </a>
+                    
+                    <!-- LAZADA -->
+                    <a href="https://lazada.co.th/" target="_blank" class="channel-item lazada-item" title="Lazada Shop">
+                        <div class="channel-icon">
+                            <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 2.69l-9.35 9.35a1 1 0 0 0 0 1.41l9.35 9.35a1 1 0 0 0 1.41 0l9.35-9.35a1 1 0 0 0 0-1.41l-9.35-9.35a1 1 0 0 0-1.41 0zm.7 17.51l-8-8 8-8 8 8-8 8z M12.7 6.69l4.35 4.35H8.35l4.35-4.35z" /></svg>
+                        </div>
+                        <span class="channel-name">Lazada</span>
+                    </a>
+                    
+                    <!-- TIKTOK -->
+                    <a href="https://tiktok.com/@ironservicekk" target="_blank" class="channel-item tiktok-item" title="TikTok Profile">
+                        <div class="channel-icon">
+                            <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12.99 2.61 1.52 4.1 1.52v3.77c-1.87-.04-3.7-.68-5.18-1.84-.04 2.85-.02 5.7-.03 8.55-.09 1.95-.88 3.89-2.38 5.17-1.87 1.54-4.52 2.05-6.88 1.34-2.22-.65-4.14-2.42-4.9-4.63-.92-2.78-.17-6.07 1.92-8.08 1.83-1.74 4.54-2.29 6.88-1.42v3.83c-1.39-.51-3 .01-3.83 1.2-.87 1.25-.7 3.06.43 4.1 1.08.97 2.83.99 3.91.03.74-.71.99-1.79.97-2.79V0h-.02z" /></svg>
+                        </div>
+                        <span class="channel-name">TikTok</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Direct Message Form -->
+            <div class="contact-form-section">
+                <p class="section-label">หรือฝากข้อความติดต่อตรงที่นี่:</p>
+                <form id="contactDirectForm" class="contact-direct-form">
+                    <div class="form-row">
+                        <input type="text" id="directName" placeholder="ชื่อของคุณ" required class="contact-input">
+                    </div>
+                    <div class="form-row">
+                        <input type="text" id="directContact" placeholder="เบอร์โทร หรือ Line ID" required class="contact-input">
+                    </div>
+                    <div class="form-row">
+                        <textarea id="directMessage" placeholder="พิมพ์ข้อความที่ต้องการสอบถาม..." required class="contact-textarea" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="contact-submit-btn" id="directSubmitBtn">
+                        <span class="btn-text">ส่งข้อความด่วน</span>
+                        <span class="btn-spinner hide"><i class="fas fa-spinner fa-spin"></i> กำลังส่ง...</span>
+                    </button>
+                </form>
+                <div class="contact-form-success hide" id="contactSuccessMsg">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="color: #10b981; margin-right: 6px;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    <span>ส่งข้อความสำเร็จ! เจ้าหน้าที่จะติดต่อกลับโดยเร็วที่สุด</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Toggle & Call Floating Buttons Row -->
+        <div class="floating-buttons-row">
+            <!-- Call Button -->
+            <a href="tel:0637409696" class="contact-call-btn" aria-label="โทรติดต่อ: 063-7409696">
+                <span class="tooltip-text">โทร: 063-7409696</span>
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
+                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.01-.24 1.12.37 2.33.57 3.58.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.46.57 3.58.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                </svg>
+            </a>
+
+            <!-- Toggle Main Button -->
+            <button class="contact-main-toggle" id="contactMainToggle" aria-label="เปิดเมนูติดต่อสอบถาม">
+                <span class="tooltip-text">ติดต่อสอบถาม</span>
+                <!-- Chat Icon SVG -->
+                <svg class="icon-chat" viewBox="0 0 24 24" width="30" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H5.2L4 17.2V4H20V16Z" fill="currentColor"/>
+                    <path d="M6 7H18V9H6V7ZM6 11H14V13H6V11Z" fill="currentColor"/>
+                </svg>
+                <!-- Close Icon SVG (hidden by default) -->
+                <svg class="icon-close hide" viewBox="0 0 24 24" width="30" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z" fill="currentColor"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>

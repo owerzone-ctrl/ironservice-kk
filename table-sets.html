@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>โต๊ะทำงาน เก้าอี้ ม้านั่ง | IRONSERVICE KK</title>
+    <meta name="description" content="IRONSERVICE KK แพลตฟอร์มรับสั่งทำชุดโต๊ะกินข้าวลอฟท์ โต๊ะบาร์สูง โต๊ะทำงานลอฟท์ และโต๊ะประชุมไม้แผ่นเดียวเกรดพรีเมียม ออกแบบฟรีตามขนาดบ้านคุณ">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .category-hero {
+            background-image: linear-gradient(rgba(9, 9, 11, 0.5), rgba(9, 9, 11, 0.9)), url('assets/hero_background.png');
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            padding: 3.5rem 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .category-hero h1 {
+            font-size: 2.5rem;
+            color: #fff;
+            margin: 0 0 12px 0;
+            font-weight: 700;
+        }
+
+        .category-hero p {
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 650px;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .category-hero .accent {
+            color: var(--accent);
+        }
+
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .breadcrumbs a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .breadcrumbs a:hover {
+            color: var(--accent);
+        }
+
+        .catalog-container {
+            margin-bottom: 4rem;
+        }
+
+        /* Shopee Tabs */
+        .shopee-tabs-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        .shopee-tab {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .shopee-tab:hover {
+            border-color: var(--accent-orange);
+            color: var(--accent-orange);
+        }
+        .shopee-tab.active {
+            background: var(--accent-orange);
+            border-color: var(--accent-orange);
+            color: #000;
+            font-weight: 700;
+        }
+        .shopee-view-all-btn {
+            margin-left: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #ee4d2d;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .shopee-view-all-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        .shopee-link-btn {
+            display: block;
+            width: 100%;
+            margin-top: 5px;
+            background: #ee4d2d;
+            color: #fff;
+            border: none;
+            padding: 9px 0;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: opacity 0.2s;
+        }
+        .shopee-link-btn:hover { opacity: 0.85; }
+        .tab-search-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 14px 20px;
+            margin-bottom: 20px;
+            font-size: 13.5px;
+            color: var(--text-muted);
+        }
+        .tab-search-link a {
+            color: var(--accent-orange);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .tab-search-link a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navbar -->
+    <div class="top-navbar">
+        <div class="container top-nav-container">
+            <div class="top-nav-left">
+                <a href="estimate.html" target="_blank" class="estimate-link">📊 ประเมิณราคา-ด้วยตัวเอง</a>
+                <span class="divider">|</span>
+                <a href="https://www.google.com/maps/search/?api=1&query=งานเหล็กงานลอฟท์ขอนแก่น" target="_blank" class="location-link">📍 เส้นทางที่อยู่ร้าน</a>
+            </div>
+            <div class="top-nav-right">
+                <a href="#notifications">🔔 การแจ้งเตือน</a>
+                <a href="#help">❔ ช่วยเหลือ</a>
+                
+                <!-- Guest State -->
+                <button class="btn btn-sm btn-primary member-btn-header" id="header-login-btn" style="background: transparent; border: none; padding: 0; box-shadow: none; color: var(--text-muted); cursor: pointer;">
+                    <span>เข้าสู่ระบบลูกค้า</span>
+                </button>
+                
+                <!-- Logged in state dropdown (hidden by default) -->
+                <div class="user-dropdown-container hide" id="header-user-menu">
+                    <button class="user-dropdown-btn">
+                        <span class="user-avatar" id="header-user-avatar">U</span>
+                        <span class="user-name" id="header-user-name">คุณสมศักดิ์</span>
+                        <svg viewBox="0 0 24 24" width="16" height="16" style="margin-left: 4px;"><path fill="currentColor" d="M7,10L12,15L17,10H7Z"/></svg>
+                    </button>
+                    <ul class="user-dropdown-list">
+                        <li><a href="#profile" id="btn-view-profile">👤 ข้อมูลส่วนตัว</a></li>
+                        <li><a href="#tracking" id="btn-my-orders">📦 ออเดอร์ของฉัน</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a href="#" id="btn-logout">🚪 ออกจากระบบ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header / Search System -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo.png" alt="IRONSERVICE KK Logo" class="logo-img">
+                <span class="logo-text">IRONSERVICE <span class="accent">KK</span></span>
+            </a>
+            
+            <div class="search-wrapper">
+                <div class="search-box" id="search-box-container">
+                    <!-- Image Search Input (hidden) -->
+                    <input type="file" id="image-search-input" accept="image/*" style="display:none;">
+                    
+                    <!-- Camera Icon Button -->
+                    <button id="image-search-btn" title="ค้นหาด้วยรูปภาพ" aria-label="ค้นหาด้วยรูปภาพ">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                            <path d="M12 15.2A3.2 3.2 0 0 1 8.8 12 3.2 3.2 0 0 1 12 8.8 3.2 3.2 0 0 1 15.2 12 3.2 3.2 0 0 1 12 15.2M9 2L7.17 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4H16.83L15 2H9Z"/>
+                        </svg>
+                        ค้นด้วยรูป
+                    </button>
+                    
+                    <div class="search-divider"></div>
+                    
+                    <input type="text" id="global-search-input" 
+                           placeholder="ค้นหา เช่น โต๊ะลอฟท์, เก้าอี้บาร์, ม้านั่ง..."
+                           autocomplete="off">
+                    <button id="global-search-btn">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="margin-right:5px;">
+                            <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/>
+                        </svg>
+                        ค้นหา
+                    </button>
+                    
+                    <!-- Live Suggestions Dropdown -->
+                    <div class="search-suggestions" id="search-suggestions"></div>
+                </div>
+                <div class="search-tags">
+                    <span class="search-tag-label">ค้นหายอดนิยม:</span>
+                    <a href="#" class="search-tag-link">🪑 โต๊ะกินข้าว</a>
+                    <a href="#" class="search-tag-link">🔩 โต๊ะทำงาน</a>
+                    <a href="#" class="search-tag-link">🍺 โต๊ะบาร์</a>
+                    <a href="#" class="search-tag-link">🛋️ ม้านั่ง</a>
+                    <a href="#" class="search-tag-link">📐 สั่งตามแบบ</a>
+                </div>
+            </div>
+
+            <div class="header-actions-wrapper">
+                <a href="https://line.me" target="_blank" class="cart-container" id="contact-admin-btn">
+                    <span class="cart-icon">💬</span>
+                    <div class="cart-label">ติดต่อแอดมิน</div>
+                </a>
+                <div class="cart-container open-modal-btn" data-service="general" id="quote-cart-btn">
+                    <span class="cart-icon">📋</span>
+                    <span class="cart-badge" id="quote-cart-badge">2</span>
+                    <div class="cart-label">ขอใบเสนอราคา</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- IMAGE SEARCH MODAL -->
+    <div id="image-search-modal" class="img-search-overlay" aria-hidden="true">
+        <div class="img-search-modal-box">
+            <button class="img-search-close" id="img-search-close" aria-label="ปิด">&times;</button>
+            
+            <div class="img-search-header">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="var(--accent-orange)">
+                    <path d="M12 15.2A3.2 3.2 0 0 1 8.8 12 3.2 3.2 0 0 1 12 8.8 3.2 3.2 0 0 1 15.2 12 3.2 3.2 0 0 1 12 15.2M9 2L7.17 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4H16.83L15 2H9Z"/>
+                </svg>
+                <h3>ค้นหาด้วยรูปภาพ</h3>
+                <p>อัปโหลดรูปสินค้าหรือแบบที่ชอบ เราจะค้นหาสิ่งที่ใกล้เคียงให้</p>
+            </div>
+
+            <div class="img-drop-zone" id="img-drop-zone">
+                <div class="img-drop-icon">
+                    <svg viewBox="0 0 24 24" width="48" height="48" fill="var(--text-muted)">
+                        <path d="M14,13V17H10V13H7L12,8L17,13M19.35,10.03C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.03C2.34,8.36 0,10.9 0,14A6,6 0 0,0 6,20H19A5,5 0 0,0 24,15C24,12.36 21.95,10.22 19.35,10.03Z"/>
+                    </svg>
+                </div>
+                <p class="drop-main-text">ลากและวางรูปที่นี่</p>
+                <p class="drop-sub-text">หรือ</p>
+                <label for="image-search-input" class="btn btn-sm btn-primary img-upload-label">
+                    เลือกรูปจากเครื่อง
+                </label>
+                <p class="drop-hint">รองรับ JPG, PNG, WEBP (สูงสุด 10MB)</p>
+            </div>
+
+            <div class="img-analysis-state hide" id="img-analysis-state">
+                <div class="img-preview-wrap">
+                    <img id="img-preview" src="" alt="preview">
+                    <div class="img-scan-line" id="img-scan-line"></div>
+                </div>
+                <div class="img-analysis-info">
+                    <div class="img-analysis-status" id="img-analysis-status">
+                        <div class="analysis-spinner"></div>
+                        <span id="analysis-text">กำลังวิเคราะห์รูปภาพ...</span>
+                    </div>
+                    <div class="img-analysis-tags" id="img-analysis-tags"></div>
+                </div>
+            </div>
+
+            <div class="img-search-results hide" id="img-search-results">
+                <div class="img-results-header">
+                    <span id="img-results-title">พบสินค้าที่ตรงกัน</span>
+                    <button class="img-search-again" id="img-search-again">🔄 ค้นหาใหม่</button>
+                </div>
+                <div class="img-results-grid" id="img-results-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="main-container">
+        
+        <!-- Breadcrumbs -->
+        <div class="breadcrumbs">
+            <a href="index.html">หน้าแรก</a>
+            <span>/</span>
+            <span style="color: var(--accent);">ชุดโต๊ะ</span>
+        </div>
+
+        <!-- Category Hero -->
+        <div class="category-hero">
+            <h1>โต๊ะทำงาน เก้าอี้ ม้านั่ง</h1>
+            <p>สามารถสั่งผลิตตามแบบและสไตล์ที่ชอบได้ง่ายๆ ทักหาแอดมินได้เลยค่ะ</p>
+        </div>
+
+        <!-- Shopee Category Tabs -->
+        <div class="shopee-tabs-bar">
+            <button class="shopee-tab active" data-tab="table-set" onclick="switchTab(this,'table-set')">🪑 ชุดโต๊ะ</button>
+            <button class="shopee-tab" data-tab="table" onclick="switchTab(this,'table')">🗄️ โต๊ะ</button>
+            <button class="shopee-tab" data-tab="chair" onclick="switchTab(this,'chair')">💺 เก้าอี้</button>
+            <button class="shopee-tab" data-tab="bench" onclick="switchTab(this,'bench')">🛋️ ม้านั่ง</button>
+            <a href="https://shopee.co.th/shop/1379593117" target="_blank" class="shopee-view-all-btn">
+                🛒 ดูร้านบน Shopee
+            </a>
+        </div>
+
+        <!-- Product Grid Catalog -->
+        <div class="catalog-container">
+            <div class="product-grid" id="product-grid-main">
+                
+                <!-- Product 1 -->
+                <div class="product-card" data-category="furniture">
+                    <div class="p-badge">สั่งตัดตามพื้นที่</div>
+                    <img src="https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&w=600&q=80" class="p-image" alt="ชุดโต๊ะ Loft Timber">
+                    <div class="p-details" style="padding: 1rem 1.25rem 1.25rem 1.25rem; display: flex; flex-direction: column; gap: 8px;">
+                        <div class="p-title" style="font-weight: 600; color: #fff; line-height: 1.4; font-size: 0.95rem;">ชุดโต๊ะกินข้าว Loft Timber ท็อปไม้แท้หนา ขาเหล็กกล่อง X-Shape พ่นสีฝุ่นกันสนิม</div>
+                        <div class="p-price" style="font-size: 1.25rem; font-weight: 700; color: var(--accent);">เริ่มต้น ฿12,500</div>
+                        <div class="p-sold" style="font-size: 0.8rem; color: var(--text-muted);">ผลิต 7-14 วัน (มัดจำ 50%)</div>
+                        <button class="btn btn-sm btn-outline open-modal-btn card-quote-btn" data-service="furniture" data-title="ชุดโต๊ะกินข้าว Loft Timber" style="width: 100%; margin-top: 5px;">ขอใบเสนอราคา</button>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card" data-category="furniture">
+                    <div class="p-badge">สไตล์คาเฟ่</div>
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80" class="p-image" alt="ชุดโต๊ะบาร์ Café Loft">
+                    <div class="p-details" style="padding: 1rem 1.25rem 1.25rem 1.25rem; display: flex; flex-direction: column; gap: 8px;">
+                        <div class="p-title" style="font-weight: 600; color: #fff; line-height: 1.4; font-size: 0.95rem;">ชุดโต๊ะบาร์สูง Café Loft พร้อมเก้าอี้สตูลบาร์ โครงเหล็กกล่องทำสีดำดิบดุดัน</div>
+                        <div class="p-price" style="font-size: 1.25rem; font-weight: 700; color: var(--accent);">เริ่มต้น ฿7,900</div>
+                        <div class="p-sold" style="font-size: 0.8rem; color: var(--text-muted);">ผลิต 7 วัน (มัดจำ 50%)</div>
+                        <button class="btn btn-sm btn-outline open-modal-btn card-quote-btn" data-service="furniture" data-title="ชุดโต๊ะบาร์สูง Café Loft" style="width: 100%; margin-top: 5px;">ขอใบเสนอราคา</button>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card" data-category="furniture">
+                    <div class="p-badge">ออกแบบตามหลักการศาสตร์</div>
+                    <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=600&q=80" class="p-image" alt="โต๊ะทำงาน Executive Loft">
+                    <div class="p-details" style="padding: 1rem 1.25rem 1.25rem 1.25rem; display: flex; flex-direction: column; gap: 8px;">
+                        <div class="p-title" style="font-weight: 600; color: #fff; line-height: 1.4; font-size: 0.95rem;">โต๊ะทำงาน Executive Loft ท็อปไม้โอ๊คแท้ โครงเหล็กฝังสายไฟระบายอากาศใต้โต๊ะ</div>
+                        <div class="p-price" style="font-size: 1.25rem; font-weight: 700; color: var(--accent);">เริ่มต้น ฿15,900</div>
+                        <div class="p-sold" style="font-size: 0.8rem; color: var(--text-muted);">ผลิต 10 วัน (มัดจำ 50%)</div>
+                        <button class="btn btn-sm btn-outline open-modal-btn card-quote-btn" data-service="furniture" data-title="โต๊ะทำงาน Executive Loft" style="width: 100%; margin-top: 5px;">ขอใบเสนอราคา</button>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card" data-category="furniture">
+                    <div class="p-badge">ทนสภาพอากาศ</div>
+                    <img src="https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&fit=crop&w=600&q=80" class="p-image" alt="ชุดโต๊ะนั่งเล่น Outdoor">
+                    <div class="p-details" style="padding: 1rem 1.25rem 1.25rem 1.25rem; display: flex; flex-direction: column; gap: 8px;">
+                        <div class="p-title" style="font-weight: 600; color: #fff; line-height: 1.4; font-size: 0.95rem;">ชุดโต๊ะนั่งเล่นระเบียง Outdoor Steel กันสนิมพิเศษ ทาสีเคลือบพาวเดอร์โค้ตทนฝนทนน้ำ</div>
+                        <div class="p-price" style="font-size: 1.25rem; font-weight: 700; color: var(--accent);">เริ่มต้น ฿6,500</div>
+                        <div class="p-sold" style="font-size: 0.8rem; color: var(--text-muted);">ผลิต 5 วัน (มัดจำ 50%)</div>
+                        <button class="btn btn-sm btn-outline open-modal-btn card-quote-btn" data-service="furniture" data-title="ชุดโต๊ะนั่งเล่นระเบียง Outdoor Steel" style="width: 100%; margin-top: 5px;">ขอใบเสนอราคา</button>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card" data-category="furniture">
+                    <div class="p-badge">งานหรูชิ้นเดียว</div>
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" class="p-image" alt="โต๊ะประชุมใหญ่ Live Edge">
+                    <div class="p-details" style="padding: 1rem 1.25rem 1.25rem 1.25rem; display: flex; flex-direction: column; gap: 8px;">
+                        <div class="p-title" style="font-weight: 600; color: #fff; line-height: 1.4; font-size: 0.95rem;">โต๊ะประชุมใหญ่ Conference Live-Edge ไม้แผ่นเดียวลายธรรมชาติ ขาเหล็กหนาพิเศษ</div>
+                        <div class="p-price" style="font-size: 1.25rem; font-weight: 700; color: var(--accent);">เริ่มต้น ฿29,000</div>
+                        <div class="p-sold" style="font-size: 0.8rem; color: var(--text-muted);">ผลิต 14 วัน (มัดจำ 50%)</div>
+                        <button class="btn btn-sm btn-outline open-modal-btn card-quote-btn" data-service="furniture" data-title="โต๊ะประชุมใหญ่ Conference Live-Edge" style="width: 100%; margin-top: 5px;">ขอใบเสนอราคา</button>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card" data-category="furniture">
+                    <div class="p-badge">รับประทานคู่กาแฟ</div>
+                    <img src="https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=600&q=80" class="p-image" alt="โต๊ะกลางกาแฟ Loft Coffee">
+                    <div class="p-details" style="padding: 1rem 1.25rem 1.25rem 1.25rem; display: flex; flex-direction: column; gap: 8px;">
+                        <div class="p-title" style="font-weight: 600; color: #fff; line-height: 1.4; font-size: 0.95rem;">โต๊ะกลางกาแฟ Loft Coffee Table โครงเหล็กกล่องคู่ตะแกรงเหล็กฉีกฉลุลอฟท์คู่ชั้นวาง</div>
+                        <div class="p-price" style="font-size: 1.25rem; font-weight: 700; color: var(--accent);">เริ่มต้น ฿3,800</div>
+                        <div class="p-sold" style="font-size: 0.8rem; color: var(--text-muted);">ผลิต 3 วัน (มัดจำ 50%)</div>
+                        <button class="btn btn-sm btn-outline open-modal-btn card-quote-btn" data-service="furniture" data-title="โต๊ะกลางกาแฟ Loft Coffee Table" style="width: 100%; margin-top: 5px;">ขอใบเสนอราคา</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+
+
+    <!-- Member Login/Register Modal Overlay -->
+    <div id="login-modal-overlay" class="modal-overlay">
+        <div class="modal-container login-modal-container" style="max-width: 450px; padding: 2.5rem;">
+            <button class="modal-close" id="login-modal-close" aria-label="ปิด">&times;</button>
+            
+            <!-- Modal Tabs -->
+            <div class="login-tabs" style="display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 2rem;">
+                <button class="login-tab-btn active" data-tab="login-tab" style="flex: 1; padding: 0.75rem; background: transparent; border: none; border-bottom: 2px solid var(--accent-orange); color: var(--text-light); font-family: var(--font-heading); font-weight: 700; cursor: pointer; font-size: 1.1rem;">เข้าสู่ระบบ</button>
+                <button class="login-tab-btn" data-tab="register-tab" style="flex: 1; padding: 0.75rem; background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--text-muted); font-family: var(--font-heading); font-weight: 700; cursor: pointer; font-size: 1.1rem;">สมัครสมาชิก</button>
+            </div>
+
+            <!-- Tab 1: Login Form -->
+            <form id="login-form" class="login-tab-content">
+                <div class="modal-header" style="margin-bottom: 1.5rem;">
+                    <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">🔑 ยินดีต้อนรับกลับมา</h2>
+                    <p style="font-size: 0.85rem;">เข้าสู่ระบบเพื่อติดตามออเดอร์และสิทธิพิเศษของคุณ</p>
+                </div>
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label for="login-email" style="font-size: 0.85rem; margin-bottom: 0.4rem; display: block;">อีเมล / เบอร์โทรศัพท์ <span class="required">*</span></label>
+                    <input type="text" id="login-email" placeholder="example@email.com หรือ 063xxxxxxx" required style="width: 100%;">
+                </div>
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label for="login-password" style="font-size: 0.85rem; margin-bottom: 0.4rem; display: block;">รหัสผ่าน <span class="required">*</span></label>
+                    <input type="password" id="login-password" placeholder="••••••••" required style="width: 100%;">
+                </div>
+                <div class="login-options" style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; margin-bottom: 1.5rem; color: var(--text-muted);">
+                    <label class="remember-me" style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer;">
+                        <input type="checkbox" checked style="accent-color: var(--accent-orange);"> จดจำฉันในระบบ
+                    </label>
+                    <a href="#" class="forgot-password" style="color: var(--accent-gold); text-decoration: none;">ลืมรหัสผ่าน?</a>
+                </div>
+                <button type="submit" class="btn btn-md btn-block btn-primary">เข้าสู่ระบบ</button>
+                
+                <div class="social-login-divider" style="text-align: center; margin: 1.5rem 0; position: relative;">
+                    <span style="background-color: var(--bg-secondary); padding: 0 0.75rem; font-size: 0.8rem; color: var(--text-muted); position: relative; z-index: 2;">หรือเข้าสู่ระบบด้วย</span>
+                    <div style="position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background-color: var(--border-color); z-index: 1;"></div>
+                </div>
+                <div class="social-login-buttons" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem;">
+                    <button type="button" class="btn btn-sm btn-secondary social-btn line-login" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.5rem 0.25rem;">
+                        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#06C755" d="M12,2C6.5,2 2,5.6 2,10.1C2,12.7 3.9,15 7,16.4C6.7,17.4 6.2,19.2 6.1,19.5C6,20 6.3,19.9 6.5,19.8C6.6,19.7 9,18.1 10,17.3C10.7,17.5 11.3,17.6 12,17.6C17.5,17.6 22,14 22,9.6C22,5.1 17.5,2 12,2Z"/></svg>
+                        LINE
+                    </button>
+                    <button type="button" class="btn btn-sm btn-secondary social-btn google-login" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.5rem 0.25rem;">
+                        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.648 2.41-2.519 4.114-5.136 4.114A5.99 5.99 0 0 1 8 12.5a5.99 5.99 0 0 1 5.99-6.002c1.478 0 2.82.54 3.865 1.424l3.22-3.22A10.16 10.16 0 0 0 13.99 2 10.25 10.25 0 0 0 3.75 12.25a10.25 10.25 0 0 0 10.24 10.25c5.68 0 10.21-4.114 10.21-10.25 0-.693-.06-1.352-.173-1.965H12.24z"/></svg>
+                        Google
+                    </button>
+                    <button type="button" class="btn btn-sm btn-secondary social-btn facebook-login" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.5rem 0.25rem;">
+                        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#1877F2" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        Facebook
+                    </button>
+                </div>
+            </form>
+
+            <!-- Tab 2: Register Form -->
+            <form id="register-form" class="login-tab-content hide">
+                <div class="modal-header" style="margin-bottom: 1.5rem;">
+                    <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">📝 สมัครสมาชิกใหม่</h2>
+                    <p style="font-size: 0.85rem;">สมัครฟรีเพื่อผูกประวัติออเดอร์และขอรับคำปรึกษา</p>
+                </div>
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label for="reg-name" style="font-size: 0.85rem; margin-bottom: 0.4rem; display: block;">ชื่อ-นามสกุล <span class="required">*</span></label>
+                    <input type="text" id="reg-name" placeholder="คุณสมศักดิ์ รักดี" required style="width: 100%;">
+                </div>
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label for="reg-phone" style="font-size: 0.85rem; margin-bottom: 0.4rem; display: block;">เบอร์โทรศัพท์ <span class="required">*</span></label>
+                    <input type="tel" id="reg-phone" placeholder="063XXXXXXX" required pattern="[0-9]{9,10}" style="width: 100%;">
+                </div>
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label for="reg-email" style="font-size: 0.85rem; margin-bottom: 0.4rem; display: block;">อีเมล <span class="required">*</span></label>
+                    <input type="email" id="reg-email" placeholder="example@email.com" required style="width: 100%;">
+                </div>
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label for="reg-pass" style="font-size: 0.85rem; margin-bottom: 0.4rem; display: block;">รหัสผ่าน <span class="required">*</span></label>
+                    <input type="password" id="reg-pass" placeholder="อย่างน้อย 6 ตัวอักษร" required minlength="6" style="width: 100%;">
+                </div>
+                <label class="terms-accept" style="display: flex; gap: 0.5rem; align-items: flex-start; font-size: 0.75rem; color: var(--text-muted); cursor: pointer; margin-bottom: 1.5rem;">
+                    <input type="checkbox" required style="accent-color: var(--accent-orange); margin-top: 0.15rem;"> ฉันยอมรับเงื่อนไขบริการและนโยบายความเป็นส่วนตัว
+                </label>
+                <button type="submit" class="btn btn-md btn-block btn-primary">ยืนยันสมัครสมาชิก</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Member Profile Modal Overlay -->
+    <div id="profile-modal-overlay" class="modal-overlay">
+        <div class="modal-container profile-modal-container" style="max-width: 550px;">
+            <button class="modal-close" id="profile-modal-close" aria-label="ปิด">&times;</button>
+            <div class="modal-header">
+                <h2>👤 โปรไฟล์และข้อมูลของฉัน</h2>
+                <p>จัดการข้อมูลส่วนตัวและตรวจสอบประวัติการทำรายการ</p>
+            </div>
+            
+            <div class="profile-modal-body" style="display: flex; flex-direction: column; gap: 20px; margin-top: 1.5rem;">
+                <div class="profile-card" style="display: flex; align-items: center; gap: 15px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);">
+                    <div class="profile-pic" style="width: 60px; height: 60px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold;">U</div>
+                    <div class="profile-meta">
+                        <h3 id="profile-name-val" style="margin: 0 0 4px 0; font-size: 1.1rem; color: white;">คุณสมศักดิ์ รักดี</h3>
+                        <span id="profile-phone-val" style="font-size: 0.85rem; color: var(--text-muted);">📞 081-234-5678</span>
+                    </div>
+                </div>
+                
+                <div class="profile-order-section">
+                    <h4 style="margin: 0 0 10px 0; color: white; font-size: 0.95rem;">📦 ประวัติการขอใบเสนอราคาล่าสุดของคุณ</h4>
+                    <div id="profile-quotes-list" style="display: flex; flex-direction: column; gap: 10px;">
+                        <!-- Quotes injected dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ===== Inline Quote Section (bottom of page) ===== -->
+    <section id="quote-section" style="
+        background: linear-gradient(135deg, #13131a 0%, #0d0d14 100%);
+        border-top: 2px solid var(--accent-orange, #f5a623);
+        padding: 3.5rem 0 4rem;
+        margin-top: 1rem;
+    ">
+        <div class="container" style="max-width:860px;">
+            <!-- Section Header -->
+            <div style="text-align:center; margin-bottom:2.5rem;">
+                <div style="font-size:2.4rem; margin-bottom:10px;">📝</div>
+                <h2 style="font-size:1.8rem; font-weight:700; color:#fff; margin:0 0 8px;">รับคำปรึกษาและประเมินราคาฟรี</h2>
+                <p style="color:var(--text-muted,#888); font-size:0.95rem; margin:0;">กรอกข้อมูลเบื้องต้น ทีมงานจะติดต่อกลับภายใน 24 ชม.</p>
+            </div>
+
+            <!-- Form Box -->
+            <div id="quote-form-wrap" style="
+                background: rgba(255,255,255,0.03);
+                border: 1px solid rgba(255,255,255,0.08);
+                border-radius: 20px;
+                padding: 2.5rem 2.5rem;
+            ">
+                <!-- Selected product name indicator -->
+                <div id="quote-product-tag" style="display:none; margin-bottom:1.5rem; padding:10px 16px; background:rgba(245,166,35,0.1); border:1px solid rgba(245,166,35,0.3); border-radius:10px; font-size:13.5px; color:var(--accent-orange,#f5a623);">
+                    🛒 สินค้าที่เลือก: <strong id="quote-product-name"></strong>
+                </div>
+
+                <form id="consultation-form" class="consultation-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="client-name">ชื่อ-นามสกุล <span class="required" style="color:#ef4444">*</span></label>
+                            <input type="text" id="client-name" name="name" placeholder="คุณสมชาย ใจดี" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="client-phone">เบอร์โทรศัพท์ <span class="required" style="color:#ef4444">*</span></label>
+                            <input type="tel" id="client-phone" name="phone" placeholder="063-XXXXXXX" required pattern="[0-9]{9,10}">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="client-line">Line ID</label>
+                            <input type="text" id="client-line" name="line_id" placeholder="line_username">
+                        </div>
+                        <div class="form-group">
+                            <label for="project-type">ประเภทงานที่สนใจสั่งทำ <span class="required" style="color:#ef4444">*</span></label>
+                            <select id="project-type" name="project_type" required>
+                                <option value="">-- เลือกประเภทงาน --</option>
+                                <option value="furniture">เฟอร์นิเจอร์สไตล์ลอฟท์ (โต๊ะ, เก้าอี้, ชั้นวาง)</option>
+                                <option value="cnc">งาน CNC โลหะฉลุลายตกแต่ง</option>
+                                <option value="architecture">งานสถาปัตยกรรม (ประตูเหล็กกระจก, กั้นห้อง)</option>
+                                <option value="grille">เหล็กดัดพรีเมียม / เหล็กดัดดีไซน์โมเดิร์น</option>
+                                <option value="general">อื่นๆ / ต้องการให้สถาปนิกติดต่อแนะนำโดยตรง</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="project-detail">รายละเอียดความต้องการ หรือขนาดพื้นที่โดยประมาณ</label>
+                        <textarea id="project-detail" name="detail" rows="4" placeholder="ระบุขนาดเฟอร์นิเจอร์ที่ต้องการ สีที่ชอบ หรือรายละเอียดอื่นๆ..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>อัปโหลดแบบสเก็ตช์หรือรูปหน้างาน (ถ้ามี)</label>
+                        <div class="file-upload-box">
+                            <input type="file" id="client-file" class="file-input" accept="image/*,application/pdf">
+                            <div class="file-upload-placeholder">
+                                <span class="upload-icon">📁</span>
+                                <span class="upload-text">คลิกเพื่ออัปโหลด หรือลากไฟล์มาวางตรงนี้ (JPG, PNG, PDF ไม่เกิน 5MB)</span>
+                            </div>
+                            <div class="file-name-preview hide"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions" style="justify-content:flex-end;">
+                        <button type="submit" class="btn btn-primary" style="min-width:200px; font-size:1rem; padding:14px 28px;">📤 ส่งแบบประเมินราคา</button>
+                    </div>
+                </form>
+
+                <!-- Success State -->
+                <div id="modal-success-state" class="modal-success-state hide" style="text-align:center; padding:2rem 0;">
+                    <div class="success-icon-wrapper">
+                        <svg viewBox="0 0 24 24" width="64" height="64" class="success-icon">
+                            <path fill="currentColor" d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" />
+                        </svg>
+                    </div>
+                    <h3>ส่งคำขอประเมินราคาสำเร็จ! 🎉</h3>
+                    <p>ระบบได้รับข้อมูลของท่านแล้ว ทีมงานจะติดต่อกลับโดยเร็วที่สุด</p>
+                    <div class="generated-quote-box">
+                        <span>รหัสคำขอของคุณ:</span>
+                        <strong id="created-quote-id">QU-202611</strong>
+                    </div>
+                    <button class="btn btn-primary close-modal-success-btn" style="margin-top:1rem;">ตกลง</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand-info">
+                <div class="footer-logo">
+                    <img src="assets/logo.png" alt="IRONSERVICE KK Logo" class="footer-logo-img">
+                    IRONSERVICE <span>KK</span>
+                </div>
+                <p>ผู้ผลิตและออกแบบเฟอร์นิเจอร์สไตล์อุตสาหกรรมลอฟท์ งานโครงสร้างโลหะ CNC และประตูหน้าต่างเหล็กเกรดสถาปัตยกรรมระดับพรีเมียม ตอบโจทย์ไลฟ์สไตล์โมเดิร์นร่วมสมัย</p>
+                <div class="social-icons">
+                    <a href="https://facebook.com" target="_blank" aria-label="Facebook Page" class="social-link">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="currentColor" d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A9.999 9.999 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z" />
+                        </svg>
+                    </a>
+                    <a href="https://line.me" target="_blank" aria-label="Line Account" class="social-link">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="currentColor" d="M12,2C6.5,2 2,5.6 2,10.1C2,12.7 3.9,15 7,16.4C6.7,17.4 6.2,19.2 6.1,19.5C6,20 6.3,19.9 6.5,19.8C6.6,19.7 9,18.1 10,17.3C10.7,17.5 11.3,17.6 12,17.6C17.5,17.6 22,14 22,9.6C22,5.1 17.5,2 12,2M8.9,12.7H7.7V8.5H8.9V12.7M11.6,12.7H10.4V8.5H11.6V12.7M14.6,12.7L13.2,10.6V12.7H12V8.5H13.2L14.6,10.6V8.5H15.8V12.7H14.6M18.8,9.7H17.3V10.2H18.8V11.2H17.3V11.7H18.8V12.7H16.1V8.5H18.8V9.7Z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <h4>เมนู</h4>
+                <ul>
+                    <li><a href="index.html">หน้าแรก</a></li>
+                    <li><a href="index.html#catalog">แคตตาล็อกสินค้า</a></li>
+                    <li><a href="index.html#tracking">เช็คสถานะออเดอร์</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>บริการรับสั่งทำ</h4>
+                <ul>
+                    <li><a href="index.html#catalog" class="open-modal-btn" data-service="furniture">เฟอร์นิเจอร์ลอฟท์สั่งทำ</a></li>
+                    <li><a href="index.html#catalog" class="open-modal-btn" data-service="cnc">งานตัดพลาสม่า/เลเซอร์ CNC</a></li>
+                    <li><a href="index.html#catalog" class="open-modal-btn" data-service="architecture">ประตูบานสไลด์สไตล์เหล็กกระจก</a></li>
+                    <li><a href="index.html#catalog" class="open-modal-btn" data-service="grille">เหล็กดัดประดับอาคารพรีเมียม</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-contact">
+                <h4>ติดต่อสอบถาม</h4>
+                <p>📍 โชว์รูม IRONSERVICE KK อำเภอเมือง จังหวัดขอนแก่น</p>
+                <p>📞 <strong>เบอร์โทรศัพท์:</strong> 063-7409696</p>
+                <p>💬 <strong>Line ID:</strong> @ironservicekk</p>
+                <p>📧 <strong>อีเมล:</strong> contact@ironservicekk.com</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="container bottom-container">
+                <p>&copy; 2026 IRONSERVICE KK. All Rights Reserved. ออกแบบสไตล์อินดัสเทรียลลอฟท์เพื่อคุณ</p>
+                <p>สร้างหน้าเว็บด้วยดีไซน์พรีเมียมแบบสมบูรณ์</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+
+    <script>
+    // Helper function to escape HTML safely
+    function escHtml(s) {
+        return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    // Expose selectProductForQuote globally
+    window.selectProductForQuote = (title) => {
+        const tag = document.getElementById('quote-product-tag');
+        const name = document.getElementById('quote-product-name');
+        if (tag && name) {
+            if (title) {
+                name.textContent = title;
+                tag.style.display = 'block';
+            } else {
+                tag.style.display = 'none';
+            }
+        }
+        const section = document.getElementById('quote-section');
+        if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchInput    = document.getElementById('global-search-input');
+        const searchBtn      = document.getElementById('global-search-btn');
+        const searchSugg     = document.getElementById('search-suggestions');
+
+        // Dynamic Product Database & Fallback Defaults
+        const DEFAULT_PRODUCTS = [
+            {
+                name: "ชุดโต๊ะกินข้าว Loft Timber ท็อปไม้แท้หนา ขาเหล็กกล่อง X-Shape พ่นสีฝุ่นกันสนิม",
+                price_str: "เริ่มต้น ฿12,500",
+                image: "https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&w=600&q=80",
+                badge: "สั่งตัดตามพื้นที่",
+                sold_str: "ผลิต 7-14 วัน (มัดจำ 50%)",
+                category: "table-set",
+                shopee_url: ""
+            },
+            {
+                name: "ชุดโต๊ะบาร์สูง Café Loft พร้อมเก้าอี้สตูลบาร์ โครงเหล็กกล่องทำสีดำดิบดุดัน",
+                price_str: "เริ่มต้น ฿7,900",
+                image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80",
+                badge: "สไตล์คาเฟ่",
+                sold_str: "ผลิต 7 วัน (มัดจำ 50%)",
+                category: "table-set",
+                shopee_url: ""
+            },
+            {
+                name: "โต๊ะทำงาน Executive Loft ท็อปไม้โอ๊คแท้ โครงเหล็กฝังสายไฟระบายอากาศใต้โต๊ะ",
+                price_str: "เริ่มต้น ฿15,900",
+                image: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=600&q=80",
+                badge: "ออกแบบตามหลักการศาสตร์",
+                sold_str: "ผลิต 10 วัน (มัดจำ 50%)",
+                category: "table",
+                shopee_url: ""
+            },
+            {
+                name: "ชุดโต๊ะนั่งเล่นระเบียง Outdoor Steel กันสนิมพิเศษ ทาสีเคลือบพาวเดอร์โค้ตทนฝนทนน้ำ",
+                price_str: "เริ่มต้น ฿6,500",
+                image: "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&fit=crop&w=600&q=80",
+                badge: "ทนสภาพอากาศ",
+                sold_str: "ผลิต 5 วัน (มัดจำ 50%)",
+                category: "table-set",
+                shopee_url: ""
+            },
+            {
+                name: "โต๊ะประชุมใหญ่ Conference Live-Edge ไม้แผ่นเดียวลายธรรมชาติ ขาเหล็กหนาพิเศษ",
+                price_str: "เริ่มต้น ฿29,000",
+                image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80",
+                badge: "งานหรูชิ้นเดียว",
+                sold_str: "ผลิต 14 วัน (มัดจำ 50%)",
+                category: "table",
+                shopee_url: ""
+            },
+            {
+                name: "โต๊ะกลางกาแฟ Loft Coffee Table โครงเหล็กกล่องคู่ตะแกรงเหล็กฉีกฉลุลอฟท์คู่ชั้นวาง",
+                price_str: "เริ่มต้น ฿3,800",
+                image: "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=600&q=80",
+                badge: "รับประทานคู่กาแฟ",
+                sold_str: "ผลิต 3 วัน (มัดจำ 50%)",
+                category: "table",
+                shopee_url: ""
+            },
+            {
+                name: "เก้าอี้สตูลลอฟท์ Loft Stool โครงเหล็กกลมทำสีพาวเดอร์โค้ต ท็อปไม้แท้สวยงาม",
+                price_str: "เริ่มต้น ฿1,200",
+                image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=600&q=80",
+                badge: "นั่งสบายสไตล์ลอฟท์",
+                sold_str: "ผลิต 3 วัน (มัดจำ 50%)",
+                category: "chair",
+                shopee_url: ""
+            },
+            {
+                name: "ม้านั่งยาว Bench Loft เหล็กหนาพิเศษ ท็อปไม้สนนอกเคลือบแลคเกอร์ใสโชว์ลายไม้",
+                price_str: "เริ่มต้น ฿3,500",
+                image: "https://images.unsplash.com/photo-1581428982868-e410dd047a90?auto=format&fit=crop&w=600&q=80",
+                badge: "ม้านั่งยาว",
+                sold_str: "ผลิต 5 วัน (มัดจำ 50%)",
+                category: "bench",
+                shopee_url: ""
+            }
+        ];
+
+        // ── Load Real Shopee Data ──────────────────────────────────────
+        let products = [];
+        try {
+            const shopeeCatalog = JSON.parse(localStorage.getItem('shopee_catalog') || '[]');
+            if (shopeeCatalog && shopeeCatalog.length > 0) {
+                products = shopeeCatalog.map(p => {
+                    const n = p.name.toLowerCase();
+                    let cat = 'table-set';
+                    if (n.includes('ชุดโต๊ะ') || n.includes('ชุดบาร์') || n.includes('ชุดเก้าอี้') || (n.includes('ชุด') && n.includes('โต๊ะ'))) {
+                        cat = 'table-set';
+                    } else if (n.includes('เก้าอี้') || n.includes('สตูล') || n.includes('chair') || n.includes('stool')) {
+                        cat = 'chair';
+                    } else if (n.includes('ม้านั่ง') || n.includes('bench')) {
+                        cat = 'bench';
+                    } else if (n.includes('โต๊ะ') || n.includes('table') || n.includes('desk')) {
+                        cat = 'table';
+                    }
+                    return {
+                        name: p.name,
+                        price_str: p.price_str,
+                        image: p.image,
+                        badge: p.sold > 10 ? '🔥 ขายดีบน Shopee' : 'พร้อมส่ง',
+                        sold_str: `ขายแล้ว ${p.sold || 0} ชิ้น`,
+                        category: cat,
+                        shopee_url: p.shopee_url || ''
+                    };
+                });
+            } else {
+                products = DEFAULT_PRODUCTS;
+            }
+        } catch (e) {
+            console.error('Error loading shopee_catalog:', e);
+            products = DEFAULT_PRODUCTS;
+        }
+
+        let currentActiveCategory = 'table-set';
+
+        // Render dynamic catalog
+        const renderGrid = (catFilter = 'table-set') => {
+            currentActiveCategory = catFilter;
+            const grid = document.getElementById('product-grid-main');
+            if (!grid) return;
+
+            const filtered = products.filter(p => p.category === catFilter);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.1); border-radius: 16px;">
+                        <span style="font-size: 2.5rem; display: block; margin-bottom: 1rem;">📭</span>
+                        <h3 style="color: #fff; margin-bottom: 0.5rem; font-size: 1.15rem; font-weight: 600;">ยังไม่มีสินค้าในหมวดหมู่นี้ในร้านค้า Shopee ของเรา</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 500px; margin: 0 auto 1.5rem; line-height: 1.6;">
+                            แต่ลูกค้าสามารถส่งภาพแบบร่าง ขนาด หรือรายละเอียดงานเหล็ก/ไม้ที่ต้องการ เพื่อประเมินราคาและสั่งทำพิเศษ (Made-to-Order) กับเราได้โดยตรงเลยค่ะ
+                        </p>
+                        <button class="btn btn-primary card-quote-btn" data-service="furniture" data-title="สั่งทำพิเศษหมวดหมู่ ${catFilter === 'table-set' ? 'ชุดโต๊ะ' : catFilter === 'table' ? 'โต๊ะ' : catFilter === 'chair' ? 'เก้าอี้' : 'ม้านั่ง'}" style="min-width: 200px; padding: 12px 24px; font-weight: 600;">
+                            💬 ติดต่อสอบถาม / สั่งผลิตตามแบบ
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(p => {
+                let shopeeBtn = '';
+                if (p.shopee_url) {
+                    shopeeBtn = `<a class="shopee-link-btn" href="${p.shopee_url}" target="_blank" onclick="event.stopPropagation()">🛒 ซื้อบน Shopee</a>`;
+                }
+                return `
+                    <div class="product-card" data-category="${p.category}">
+                        <div class="p-badge">${escHtml(p.badge)}</div>
+                        <img src="${escHtml(p.image)}" class="p-image" alt="${escHtml(p.name)}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%231a1a24%22 width=%22100%22 height=%22100%22/><text x=%2250%25%22 y=%2250%25%22 fill=%22%23555%22 font-size=%2230%22 text-anchor=%22middle%22 dy=%220.35em%22>📦</text></svg>'">
+                        <div class="p-details" style="padding: 1.25rem; display: flex; flex-direction: column; gap: 8px;">
+                            <div class="p-title" style="font-weight: 600; color: #fff; line-height: 1.45; font-size: 0.95rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 2.8rem;">${escHtml(p.name)}</div>
+                            <div class="p-price" style="font-size: 1.25rem; font-weight: 700; color: var(--accent); margin: 2px 0;">${escHtml(p.price_str)}</div>
+                            <div class="p-sold" style="font-size: 0.8rem; color: var(--text-muted);">${escHtml(p.sold_str)}</div>
+                            <button class="btn btn-sm btn-outline card-quote-btn" data-service="furniture" data-title="${escHtml(p.name)}" style="width: 100%; margin-top: 5px;">ขอใบเสนอราคา</button>
+                            ${shopeeBtn}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        };
+
+        // Tab Switch logic exposed globally
+        window.switchTab = (btn, category) => {
+            document.querySelectorAll('.shopee-tab').forEach(tab => tab.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            renderGrid(category);
+        };
+
+        // Initial Grid Render
+        renderGrid('table-set');
+
+        // Suggestion data for this page search
+        const PAGE_PRODUCTS = [
+            { icon: '🪑', label: 'ชุดโต๊ะกินข้าว Loft Timber ท็อปไม้แท้',      category: 'ชุดโต๊ะ',   keywords: ['โต๊ะ','กินข้าว','ไม้','loft timber'] },
+            { icon: '🍺', label: 'ชุดโต๊ะบาร์สูง Café Loft เก้าอี้สตูล',       category: 'บาร์/คาเฟ่', keywords: ['บาร์','คาเฟ่','สูง','สตูล'] },
+            { icon: '🖥️', label: 'โต๊ะทำงาน Executive Loft ท็อปไม้โอ๊ค',      category: 'โต๊ะทำงาน', keywords: ['ทำงาน','ออฟฟิศ','executive','โอ๊ค'] },
+            { icon: '🛋️', label: 'ม้านั่งยาว Bench Loft เหล็กไม้',             category: 'ม้านั่ง',   keywords: ['ม้านั่ง','bench','ยาว','เหล็ก'] },
+            { icon: '📐', label: 'สั่งผลิตชุดโต๊ะตามแบบและขนาด',               category: 'สั่งพิเศษ', keywords: ['สั่ง','ผลิต','ตามแบบ','ขนาด'] },
+        ];
+
+        const highlight = (text, q) => {
+            if (!q) return text;
+            return text.replace(new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi'), '<mark>$1</mark>');
+        };
+
+        const showSugg = (query) => {
+            if (!searchSugg) return;
+            const q = query.toLowerCase().trim();
+            if (!q) { searchSugg.classList.remove('active'); return; }
+            const matches = PAGE_PRODUCTS.filter(p =>
+                p.keywords.some(k => k.includes(q)) || p.label.toLowerCase().includes(q)
+            ).slice(0, 5);
+            searchSugg.innerHTML = matches.length
+                ? matches.map(p => `
+                    <div class="suggestion-item" data-kw="${p.keywords[0]}">
+                        <span class="suggest-icon">${p.icon}</span>
+                        <span class="suggest-label">${highlight(p.label, q)}</span>
+                        <span class="suggest-category">${p.category}</span>
+                    </div>`).join('')
+                : `<div class="suggestions-no-result">ไม่พบ "${query}" ลองใช้คำอื่น</div>`;
+            searchSugg.querySelectorAll('.suggestion-item').forEach(el => {
+                el.addEventListener('click', () => {
+                    const kw = el.querySelector('.suggest-label').textContent;
+                    if (searchInput) searchInput.value = kw;
+                    searchSugg.classList.remove('active');
+                    filterCards(kw);
+                });
+            });
+            searchSugg.classList.add('active');
+        };
+
+        const filterCards = (query = '') => {
+            const q = query.toLowerCase().trim();
+            const cards = document.querySelectorAll('#product-grid-main .product-card');
+            cards.forEach(card => {
+                const title = card.querySelector('.p-title') ? card.querySelector('.p-title').textContent.toLowerCase() : '';
+                const cat   = (card.getAttribute('data-category') || '').toLowerCase();
+                const badge = card.querySelector('.p-badge') ? card.querySelector('.p-badge').textContent.toLowerCase() : '';
+                card.style.display = (!q || title.includes(q) || cat.includes(q) || badge.includes(q)) ? '' : 'none';
+            });
+        };
+
+        if (searchInput) {
+            searchInput.addEventListener('input', () => { filterCards(searchInput.value); showSugg(searchInput.value); });
+            searchInput.addEventListener('keydown', e => {
+                if (e.key === 'Enter') { searchSugg && searchSugg.classList.remove('active'); filterCards(searchInput.value); }
+                if (e.key === 'Escape') { searchSugg && searchSugg.classList.remove('active'); }
+            });
+        }
+        if (searchBtn) searchBtn.addEventListener('click', () => { searchSugg && searchSugg.classList.remove('active'); filterCards(searchInput ? searchInput.value : ''); });
+
+        document.addEventListener('click', e => { if (searchSugg && !e.target.closest('#search-box-container')) searchSugg.classList.remove('active'); });
+
+        // Search tags click
+        document.querySelectorAll('.search-tag-link').forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                const t = link.textContent.replace(/^[^\u0E00-\u0E7FA-Za-z]+/, '').trim();
+                if (searchInput) searchInput.value = t;
+                filterCards(t);
+            });
+        });
+
+        // ---- IMAGE SEARCH ----
+        const imgBtn    = document.getElementById('image-search-btn');
+        const imgModal  = document.getElementById('image-search-modal');
+        const imgClose  = document.getElementById('img-search-close');
+        const imgFile   = document.getElementById('image-search-input');
+        const dropZone  = document.getElementById('img-drop-zone');
+        const analysisState = document.getElementById('img-analysis-state');
+        const imgPreview    = document.getElementById('img-preview');
+        const analysisTags  = document.getElementById('img-analysis-tags');
+        const analysisText  = document.getElementById('analysis-text');
+        const resultsBox    = document.getElementById('img-search-results');
+        const resultsGrid   = document.getElementById('img-results-grid');
+        const resultsTitle  = document.getElementById('img-results-title');
+        const searchAgain   = document.getElementById('img-search-again');
+
+        const TABLE_PRODUCTS = [
+            { img: 'https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&w=600&q=80', title: 'ชุดโต๊ะกินข้าว Loft Timber', price: 'เริ่ม ฿12,500', match: 94 },
+            { img: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80', title: 'ชุดโต๊ะบาร์สูง Café Loft',     price: 'เริ่ม ฿7,900',  match: 88 },
+            { img: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=600&q=80', title: 'โต๊ะทำงาน Executive Loft',    price: 'เริ่ม ฿15,900', match: 82 },
+            { img: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=600&q=80', title: 'ชุดโต๊ะประชุม Meeting Loft',    price: 'เริ่ม ฿28,000', match: 76 },
+            { img: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=600&q=80', title: 'ม้านั่ง Bench Loft เหล็กไม้',  price: 'เริ่ม ฿4,900',  match: 70 },
+        ];
+
+        const openImgModal = () => { if (!imgModal) return; imgModal.classList.add('active'); document.body.style.overflow = 'hidden'; resetImgModal(); };
+        const closeImgModal = () => { if (!imgModal) return; imgModal.classList.remove('active'); document.body.style.overflow = ''; };
+        const resetImgModal = () => {
+            dropZone     && dropZone.classList.remove('hide');
+            analysisState && analysisState.classList.add('hide');
+            resultsBox   && resultsBox.classList.add('hide');
+            if (imgFile) imgFile.value = '';
+        };
+
+        if (imgBtn)   imgBtn.addEventListener('click', e => { e.preventDefault(); openImgModal(); });
+        if (imgClose) imgClose.addEventListener('click', closeImgModal);
+        if (imgModal) imgModal.addEventListener('click', e => { if (e.target === imgModal) closeImgModal(); });
+        if (searchAgain) searchAgain.addEventListener('click', resetImgModal);
+
+        if (dropZone) {
+            dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+            dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+            dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('drag-over'); const f = e.dataTransfer.files[0]; if (f && f.type.startsWith('image/')) handleFile(f); });
+        }
+        if (imgFile) imgFile.addEventListener('change', () => { if (imgFile.files[0]) handleFile(imgFile.files[0]); });
+
+        const handleFile = (file) => {
+            const reader = new FileReader();
+            reader.onload = e => {
+                if (imgPreview) imgPreview.src = e.target.result;
+                dropZone     && dropZone.classList.add('hide');
+                analysisState && analysisState.classList.remove('hide');
+                resultsBox   && resultsBox.classList.add('hide');
+                if (analysisText) analysisText.textContent = 'กำลังวิเคราะห์รูปภาพ...';
+                if (analysisTags) analysisTags.innerHTML = '';
+                const steps = [
+                    { label: '🎨 วิเคราะห์สีและโทน',       delay: 400 },
+                    { label: '🔍 จดจำรูปทรงเฟอร์นิเจอร์',   delay: 800 },
+                    { label: '🪵 ตรวจจับประเภทไม้/เหล็ก',   delay: 1100 },
+                    { label: '✅ จับคู่กับชุดโต๊ะในระบบ',    delay: 1500, matched: true },
+                ];
+                steps.forEach(s => setTimeout(() => {
+                    if (!analysisTags) return;
+                    const el = document.createElement('span');
+                    el.className = 'analysis-tag' + (s.matched ? ' matched' : '');
+                    el.textContent = s.label;
+                    analysisTags.appendChild(el);
+                }, s.delay));
+                setTimeout(() => { if (analysisText) analysisText.textContent = 'พบชุดโต๊ะที่ใกล้เคียง'; }, 1600);
+                setTimeout(() => {
+                    analysisState && analysisState.classList.add('hide');
+                    if (resultsTitle) resultsTitle.textContent = `พบ ${TABLE_PRODUCTS.length} รายการที่ตรงกัน`;
+                    if (resultsGrid) resultsGrid.innerHTML = TABLE_PRODUCTS.map((p, i) => `
+                        <div class="img-result-card" style="animation-delay:${i*80}ms" onclick="selectProductForQuote('${escHtml(p.title)}'); document.getElementById('image-search-modal').classList.remove('active'); document.body.style.overflow = '';">
+                            <img src="${p.img}" alt="${p.title}" loading="lazy">
+                            <span class="img-result-match-badge">${p.match}%</span>
+                            <div class="img-result-card-body">
+                                <div class="rc-title">${p.title}</div>
+                                <div class="rc-price">${p.price}</div>
+                            </div>
+                        </div>`).join('');
+                    resultsBox && resultsBox.classList.remove('hide');
+                }, 2200);
+            };
+            reader.readAsDataURL(file);
+        };
+
+        // ---- EVENT DELEGATION FOR CARD QUOTE BUTTONS ----
+        // Clicking quote buttons should scroll to the quote form and NOT trigger popup modal
+        document.addEventListener('click', e => {
+            const btn = e.target.closest('.card-quote-btn');
+            if (btn) {
+                e.stopPropagation(); // Prevent opening modal popup via script.js's .open-modal-btn handler
+                e.preventDefault();
+                const title = btn.getAttribute('data-title') || '';
+                window.selectProductForQuote(title);
+            }
+        });
+
+        // For request quote button in navbar cart icon (which has both .open-modal-btn and is in header)
+        const quoteCartBtn = document.getElementById('quote-cart-btn');
+        if (quoteCartBtn) {
+            quoteCartBtn.addEventListener('click', e => {
+                e.stopPropagation();
+                e.preventDefault();
+                window.selectProductForQuote('');
+            });
+        }
+
+        // ---- QUOTE FORM SUBMIT ----
+        const qForm = document.getElementById('consultation-form');
+        const qSuccess = document.getElementById('modal-success-state');
+        if (qForm) {
+            qForm.addEventListener('submit', e => {
+                e.preventDefault();
+                const qId = 'QU-' + Date.now().toString().slice(-6);
+                const el = document.getElementById('created-quote-id');
+                if (el) el.textContent = qId;
+                qForm.style.display = 'none';
+                if (qSuccess) qSuccess.classList.remove('hide');
+            });
+        }
+        const successCloseBtn = document.querySelector('.close-modal-success-btn');
+        if (successCloseBtn) {
+            successCloseBtn.addEventListener('click', () => {
+                if (qSuccess) qSuccess.classList.add('hide');
+                if (qForm) { qForm.reset(); qForm.style.display = ''; }
+                const tag = document.getElementById('quote-product-tag');
+                if (tag) tag.style.display = 'none';
+            });
+        }
+    });
+    </script>
+</body>
+</html>

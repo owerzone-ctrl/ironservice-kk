@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สมัครสมาชิกใหม่ | หจก.งานเหล็กงานลอฟท์ขอนแก่น</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ca8a04;
+            --primary-hover: #a16207;
+            --text-dark: #0f172a;
+            --text-light: #f8fafc;
+            --bg-dark: #0b0f19;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Prompt', sans-serif;
+            background: radial-gradient(circle at top left, #1e293b 0%, var(--bg-dark) 80%);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .register-container {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(30, 41, 59, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        p.subtitle {
+            font-size: 0.88rem;
+            color: #94a3b8;
+            margin-bottom: 28px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: #cbd5e1;
+            margin-bottom: 6px;
+        }
+
+        input, textarea {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-family: 'Prompt', sans-serif;
+            color: #ffffff;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--primary);
+            background: rgba(15, 23, 42, 0.7);
+            box-shadow: 0 0 0 3px rgba(202, 138, 4, 0.15);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            font-family: 'Prompt', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #ffffff;
+            background: linear-gradient(135deg, #ca8a04 0%, #a16207 100%);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(202, 138, 4, 0.2);
+            transition: all 0.2s;
+            margin-top: 10px;
+            grid-column: span 2;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(202, 138, 4, 0.35);
+        }
+
+        .error-message {
+            grid-column: span 2;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #f87171;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            margin-bottom: 20px;
+            display: none;
+            text-align: left;
+        }
+
+        .footer-links {
+            margin-top: 24px;
+            font-size: 0.82rem;
+            color: #94a3b8;
+        }
+
+        .footer-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="register-container">
+        <h2>สมัครสมาชิกใหม่</h2>
+        <p class="subtitle">กรอกข้อมูลผู้ใช้งานเพื่อบันทึกประวัติการสั่งซื้อและติดตามสถานะชิ้นงาน</p>
+
+        <div class="error-message" id="error-box"></div>
+
+        <form id="register-form" onsubmit="handleRegister(event)" class="form-grid">
+            <div class="form-group">
+                <label for="username">ชื่อผู้ใช้งาน (Username / Email) *</label>
+                <input type="text" id="username" required placeholder="กรอกชื่อผู้ใช้งาน">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">รหัสผ่าน (Password) *</label>
+                <input type="password" id="password" required placeholder="กรอกรหัสผ่าน">
+            </div>
+
+            <div class="form-group">
+                <label for="fullname">ชื่อ-นามสกุล / ชื่อบริษัท *</label>
+                <input type="text" id="fullname" required placeholder="เช่น นายสมชาย รักดี / บจก.รักดี">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">เบอร์โทรศัพท์ติดต่อ *</label>
+                <input type="text" id="phone" required placeholder="เช่น 089-xxxxxxx">
+            </div>
+
+            <div class="form-group">
+                <label for="taxid">เลขประจำตัวผู้เสียภาษี (ถ้ามี)</label>
+                <input type="text" id="taxid" placeholder="กรอกเลขประจำตัวผู้เสียภาษี">
+            </div>
+
+            <div class="form-group" style="visibility: hidden; height: 0; margin: 0; padding: 0;">
+                <!-- Spacer to align address nicely -->
+            </div>
+
+            <div class="form-group full-width">
+                <label for="address">ที่อยู่สำหรับออกเอกสาร / จัดส่งสินค้า *</label>
+                <textarea id="address" required placeholder="กรอกที่อยู่อย่างละเอียด (บ้านเลขที่, ตำบล, อำเภอ, จังหวัด, รหัสไปรษณีย์)"></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit" id="submit-btn">📝 ลงทะเบียนสมาชิก</button>
+        </form>
+
+        <div class="footer-links">
+            มีบัญชีผู้ใช้อยู่แล้ว? <a href="login.html">เข้าสู่ระบบที่นี่</a>
+        </div>
+    </div>
+
+    <script>
+        function handleRegister(e) {
+            e.preventDefault();
+            const errorBox = document.getElementById('error-box');
+            const submitBtn = document.getElementById('submit-btn');
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const fullname = document.getElementById('fullname').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const taxid = document.getElementById('taxid').value.trim();
+            const address = document.getElementById('address').value.trim();
+            
+            // Get webhook URL
+            const webhookUrl = localStorage.getItem('google_sheet_webhook_url');
+            if (!webhookUrl) {
+                errorBox.innerHTML = '❌ กรุณาตั้งค่า Google Sheets Web App URL ในระบบหน้าใบเสนอราคาก่อนครับ (กดปุ่ม "ตั้งค่าชีท")<br><br><a href="setup_guide.html" target="_blank" style="color: var(--primary); font-weight: bold; text-decoration: underline;">📖 คลิกเพื่อดูวิธีเชื่อมต่อ Google Sheets ทีละขั้นตอน (ทำได้ใน 1 นาที)</a>';
+                errorBox.style.display = 'block';
+                return;
+            }
+
+            errorBox.style.display = 'none';
+            submitBtn.innerText = '⏳ กำลังส่งข้อมูลสมัครสมาชิก...';
+            submitBtn.disabled = true;
+
+            // Send registration payload to Apps Script backend
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8' // Simple Request to prevent CORS Preflight failure
+                },
+                body: JSON.stringify({
+                    action: 'register',
+                    username: username,
+                    password: password,
+                    name: fullname,
+                    phone: phone,
+                    taxId: taxid,
+                    address: address
+                })
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.status === 'success') {
+                    alert('🎉 สมัครสมาชิกสำเร็จ! คุณสามารถเข้าสู่ระบบเพื่อใช้งานระบบแดชบอร์ดได้ทันที');
+                    window.location.href = 'login.html';
+                } else {
+                    errorBox.innerText = '❌ ' + res.message;
+                    errorBox.style.display = 'block';
+                    submitBtn.innerText = '📝 ลงทะเบียนสมาชิก';
+                    submitBtn.disabled = false;
+                }
+            })
+            .catch(err => {
+                errorBox.innerText = '❌ เกิดข้อผิดพลาดในระบบส่งข้อมูล กรุณาลองใหม่อีกครั้ง';
+                errorBox.style.display = 'block';
+                submitBtn.innerText = '📝 ลงทะเบียนสมาชิก';
+                submitBtn.disabled = false;
+                console.error(err);
+            });
+        }
+    </script>
+</body>
+</html>

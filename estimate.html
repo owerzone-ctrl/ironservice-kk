@@ -1,0 +1,1875 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ประเมินราคาสินค้าเบื้องต้น | IRONSERVICE KK</title>
+    <meta name="description" content="ระบบประเมินราคาเบื้องต้นสำหรับเฟอร์นิเจอร์เหล็กและไม้สไตล์ลอฟท์เกรดพรีเมียม IRONSERVICE KK ขอนแก่น">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #f1a90a;
+            --accent-dark: #ca8a04;
+            --accent-hover: #d99200;
+            --bg: #09090b;
+            --card: #18181b;
+            --card-alt: #1e1e23;
+            --text: #f4f4f5;
+            --text-muted: #a1a1aa;
+            --border: rgba(255,255,255,0.08);
+            --border-accent: rgba(241, 169, 10, 0.35);
+            --glass: rgba(24, 24, 27, 0.75);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: var(--bg);
+            background-image:
+                radial-gradient(at 10% 10%, rgba(241, 169, 10, 0.07) 0px, transparent 50%),
+                radial-gradient(at 90% 90%, rgba(202, 138, 4, 0.06) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text);
+            padding: 24px 16px 60px;
+            min-height: 100vh;
+        }
+
+        /* Back button */
+        .back-bar {
+            max-width: 820px;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+        }
+        .back-btn:hover { color: var(--accent); }
+        .back-btn svg { width: 16px; height: 16px; }
+
+        /* Main Card */
+        .calc-container {
+            max-width: 820px;
+            width: 100%;
+            margin: 0 auto;
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 36px 32px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 36px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+        .header-badge {
+            display: inline-block;
+            background: rgba(241, 169, 10, 0.12);
+            border: 1px solid var(--border-accent);
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 4px 14px;
+            border-radius: 999px;
+            margin-bottom: 12px;
+        }
+        .header h2 {
+            color: var(--text);
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin: 0 0 8px;
+        }
+        .header h2 span { color: var(--accent); }
+        .header p { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* Form Group */
+        .form-group {
+            margin-bottom: 22px;
+            background: rgba(0,0,0,0.25);
+            padding: 22px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-group:hover {
+            border-color: var(--border-accent);
+            box-shadow: 0 4px 20px rgba(241, 169, 10, 0.06);
+        }
+        .form-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+        .step-badge {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #000;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* Dimension Inputs */
+        .dim-inputs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+        .input-box label { font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 6px; }
+        .input-box input,
+        .input-box select {
+            width: 100%;
+            background: rgba(9, 9, 11, 0.8);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 11px 14px;
+            border-radius: 8px;
+            font-family: 'Prompt', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .input-box input:focus,
+        .input-box select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(241, 169, 10, 0.15);
+        }
+        .input-box select option { background: #18181b; }
+
+        /* Radio Buttons */
+        .check-group { display: flex; flex-wrap: wrap; gap: 8px; }
+        .check-item { position: relative; display: flex; flex-grow: 1; min-width: 110px; }
+        .check-item input[type="radio"] { display: none; }
+        .check-item label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            background: rgba(9, 9, 11, 0.6);
+            border: 1px solid var(--border);
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            user-select: none;
+            text-align: center;
+            line-height: 1.3;
+        }
+        .check-item label:hover { border-color: rgba(241,169,10,0.4); color: var(--text); }
+        .check-item input[type="radio"]:checked + label {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(241, 169, 10, 0.1);
+            font-weight: 500;
+        }
+        .check-item input[type="radio"]:checked + label::before {
+            content: '✔';
+            margin-right: 6px;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        /* Shelf rows */
+        #shelves-container { margin-top: 14px; display: none; flex-direction: column; gap: 8px; }
+        .shelf-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(9,9,11,0.5);
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: 1px dashed rgba(255,255,255,0.1);
+        }
+        .shelf-row span { font-size: 0.85rem; color: var(--text-muted); min-width: 70px; }
+        .shelf-options { display: flex; gap: 8px; flex-grow: 1; justify-content: flex-end; }
+
+        /* Sub options */
+        .sub-options {
+            margin-top: 14px;
+            padding: 16px;
+            background: rgba(9,9,11,0.5);
+            border-radius: 8px;
+            display: none;
+            border-left: 2px dashed var(--border-accent);
+        }
+        .sub-label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px; display: block; }
+
+        /* Powder Coat Color Swatches */
+        .powder-options { margin-top: 14px; display: none; }
+        .powder-options .sub-label { margin-bottom: 12px; }
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+        .color-swatch input[type="radio"] { display: none; }
+        .color-swatch label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            padding: 8px 4px;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            background: rgba(9,9,11,0.4);
+            text-align: center;
+            line-height: 1.2;
+        }
+        .color-swatch label:hover { border-color: rgba(241,169,10,0.5); color: var(--text); }
+        .color-swatch input[type="radio"]:checked + label {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(241,169,10,0.08);
+        }
+        .swatch-dot {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.12);
+            flex-shrink: 0;
+        }
+        @media (max-width: 500px) {
+            .color-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        /* Price Range */
+        .price-range {
+            font-size: 1rem;
+            color: var(--text-muted);
+            letter-spacing: 0.02em;
+            margin-bottom: 4px;
+        }
+        .price-range span { color: var(--accent); font-weight: 600; }
+
+        /* Result Area */
+        .result-area {
+            margin-top: 28px;
+            text-align: center;
+            background: linear-gradient(145deg, rgba(24,24,27,0.9), rgba(9,9,11,0.95));
+            padding: 28px;
+            border-radius: 16px;
+            border: 1px solid var(--border-accent);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.8), 0 0 0 1px rgba(241,169,10,0.1);
+        }
+        .price-label { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 6px; }
+        .price-value {
+            font-size: 2.6rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin: 4px 0 2px;
+            line-height: 1.15;
+        }
+        .price-unit { font-size: 1.1rem; color: var(--text-muted); font-weight: 400; }
+        .note { font-size: 0.78rem; color: rgba(161,161,170,0.7); margin: 12px 0 20px; line-height: 1.6; }
+        .btn-submit {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            color: #09090b;
+            border: none;
+            padding: 14px 24px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Prompt', sans-serif;
+            transition: all 0.25s;
+            width: 100%;
+            letter-spacing: 0.03em;
+            box-shadow: 0 4px 15px rgba(241, 169, 10, 0.3);
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(241, 169, 10, 0.4);
+        }
+        .btn-submit:active { transform: translateY(0); }
+        .btn-line {
+            background: linear-gradient(135deg, #06C755 0%, #05B34C 100%) !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 15px rgba(6, 199, 85, 0.3) !important;
+        }
+        .btn-line:hover {
+            box-shadow: 0 8px 25px rgba(6, 199, 85, 0.45) !important;
+        }
+
+        /* Cost Breakdown */
+        .breakdown {
+            margin: 14px 0 18px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 12px 16px;
+            border: 1px solid rgba(255,255,255,0.06);
+            text-align: left;
+        }
+        .breakdown-title {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .bd-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            padding: 3px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .bd-row:last-child { border-bottom: none; }
+        .bd-sub {
+            color: rgba(241,169,10,0.75);
+            font-weight: 500;
+            font-size: 0.78rem;
+            margin-top: 2px;
+        }
+
+        /* Footer note */
+        .brand-footer {
+            text-align: center;
+            margin-top: 28px;
+            font-size: 0.8rem;
+            color: rgba(161,161,170,0.5);
+        }
+        .brand-footer a { color: var(--accent); text-decoration: none; }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .calc-container { padding: 22px 16px; }
+            .dim-inputs { grid-template-columns: 1fr 1fr; }
+            .dim-inputs .input-box:last-child { grid-column: span 2; }
+            .price-value { font-size: 2.2rem; }
+            .check-item { min-width: 90px; }
+        }
+
+        /* Spinner Loader */
+        .spinner {
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top: 3px solid var(--accent);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(9, 9, 11, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: flex-start; /* Fix vertical overflow cutting off buttons on mobile */
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            overflow-y: auto;
+            padding: 40px 16px;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-overlay .result-area {
+            position: relative;
+            margin: 40px auto; /* Ensure spacing on top and bottom so it is scrollable and centered */
+            max-width: 580px;
+            width: 100%;
+            transform: scale(0.9) translateY(30px);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 0 1px var(--border-accent);
+        }
+        
+        .modal-overlay.active .result-area {
+            transform: scale(1) translateY(0);
+        }
+
+        /* Modal Close Button */
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+            z-index: 100;
+        }
+        
+        .modal-close:hover {
+            background: rgba(241, 169, 10, 0.15);
+            border-color: var(--border-accent);
+            color: var(--accent);
+            transform: rotate(90deg);
+        }
+        
+        .modal-close svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Scrollbar customization for the result modal overlay */
+        .modal-overlay::-webkit-scrollbar {
+            width: 8px;
+        }
+        .modal-overlay::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        .modal-overlay::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        .modal-overlay::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        /* Secondary Button (Recalculate) */
+        .btn-secondary {
+            margin-bottom: 12px;
+            width: 100%;
+            padding: 13px;
+            background: rgba(255, 255, 255, 0.08); /* Brighter background */
+            border: 1px solid rgba(255, 255, 255, 0.25); /* Brighter border */
+            color: var(--text); /* Higher contrast text color */
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-family: 'Prompt', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--border-accent);
+            color: var(--accent);
+            background: rgba(241, 169, 10, 0.1);
+            box-shadow: 0 4px 15px rgba(241, 169, 10, 0.05);
+        }
+
+        /* Modal Summary Grid */
+        .modal-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 16px 0 20px;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .summary-item, .summary-itemHighlight {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            border-radius: 8px;
+        }
+        
+        .summary-itemHighlight {
+            background: rgba(241, 169, 10, 0.08);
+            border: 1px solid rgba(241, 169, 10, 0.2);
+        }
+        
+        .summary-label {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+        
+        .summary-labelHighlight {
+            font-size: 0.72rem;
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .summary-val {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+        
+        .summary-valHighlight {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        
+        @media (max-width: 500px) {
+            .modal-summary-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .summary-item, .summary-itemHighlight {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 10px 14px;
+                width: 100%;
+            }
+            .summary-label, .summary-labelHighlight {
+                margin-bottom: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="back-bar">
+    <a href="index.html" class="back-btn">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12l7 7M5 12l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        กลับหน้าหลัก
+    </a>
+    <div id="user-header-status" style="font-size: 0.85rem; display: flex; align-items: center; gap: 12px;">
+        <!-- Injected dynamically -->
+    </div>
+</div>
+
+<div class="calc-container">
+    <div class="header">
+        <div class="header-badge">IRONSERVICE KK · ขอนแก่น</div>
+        <h2>ระบบประเมินราคา<span>เบื้องต้น</span></h2>
+        <p>เหล็กและไม้สไตล์ลอฟท์เกรดพรีเมียม — ประเมินงบประมาณก่อนสั่งทำจริง</p>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">
+            <span class="step-badge">1</span>
+            กำหนดขนาดพื้นที่ตู้/ชั้นวาง (เซนติเมตร)
+        </label>
+        <div class="dim-inputs">
+            <div class="input-box">
+                <label>กว้าง (W)</label>
+                <input type="number" id="dim_w" placeholder="เช่น 120" value="0" oninput="calculate()">
+            </div>
+            <div class="input-box">
+                <label>ยาว/ลึก (L)</label>
+                <input type="number" id="dim_l" placeholder="เช่น 40" value="0" oninput="calculate()">
+            </div>
+            <div class="input-box">
+                <label>สูง (H)</label>
+                <input type="number" id="dim_h" placeholder="เช่น 200" value="0" oninput="calculate()">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">
+            <span class="step-badge">2</span>
+            เลือกขนาดเหล็กโครงสร้าง
+        </label>
+        <div class="check-group">
+            <div class="check-item"><input type="radio" name="steel" id="s1" value="0.8" onchange="calculate()"><label for="s1">3/4 นิ้ว</label></div>
+            <div class="check-item"><input type="radio" name="steel" id="s2" value="1.0" checked onchange="calculate()"><label for="s2">1 × 1 นิ้ว</label></div>
+            <div class="check-item"><input type="radio" name="steel" id="s3" value="1.2" onchange="calculate()"><label for="s3">2 × 1 นิ้ว</label></div>
+            <div class="check-item"><input type="radio" name="steel" id="s4" value="1.4" onchange="calculate()"><label for="s4">1½ × 1½</label></div>
+            <div class="check-item"><input type="radio" name="steel" id="s5" value="1.6" onchange="calculate()"><label for="s5">3 × 1½ นิ้ว</label></div>
+            <div class="check-item"><input type="radio" name="steel" id="s6" value="1.8" onchange="calculate()"><label for="s6">4 × 2 นิ้ว</label></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">
+            <span class="step-badge">3</span>
+            จำนวนชั้นวางของ (1–7 ชั้น)
+        </label>
+        <div class="input-box" style="max-width: 260px;">
+            <select id="layer_count" onchange="generateShelves(); calculate()">
+                <option value="0">-- ระบุจำนวนชั้น --</option>
+                <option value="1">1 ชั้น</option>
+                <option value="2">2 ชั้น</option>
+                <option value="3" selected>3 ชั้น</option>
+                <option value="4">4 ชั้น</option>
+                <option value="5">5 ชั้น</option>
+                <option value="6">6 ชั้น</option>
+                <option value="7">7 ชั้น</option>
+            </select>
+        </div>
+        <div id="shelves-container"></div>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">
+            <span class="step-badge">4</span>
+            รูปแบบหน้าบาน / ประตู
+        </label>
+        <div class="check-group">
+            <div class="check-item"><input type="radio" name="door" id="d_none" value="none" checked onchange="toggleDoorOptions(); calculate()"><label for="d_none">ไม่มี (เปิดโล่ง)</label></div>
+            <div class="check-item"><input type="radio" name="door" id="d_slide" value="slide" onchange="toggleDoorOptions(); calculate()"><label for="d_slide">บานสไลด์</label></div>
+            <div class="check-item"><input type="radio" name="door" id="d_hinge" value="hinge" onchange="toggleDoorOptions(); calculate()"><label for="d_hinge">บานพับ</label></div>
+        </div>
+        <div class="sub-options" id="door-count-options">
+            <span class="sub-label">ระบุจำนวนบาน:</span>
+            <div class="check-group">
+                <div class="check-item"><input type="radio" name="doorCount" id="h1" value="1" checked onchange="calculate()"><label for="h1">บานเดียว</label></div>
+                <div class="check-item"><input type="radio" name="doorCount" id="h2" value="2" onchange="calculate()"><label for="h2">บานคู่</label></div>
+                <div class="check-item"><input type="radio" name="doorCount" id="h3" value="3" onchange="calculate()"><label for="h3">3 บาน</label></div>
+            </div>
+        </div>
+        <div class="sub-options" id="cover-options" style="display: none; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.05);">
+            <!-- ปิดข้าง ซ้าย-ขวา -->
+            <span class="sub-label">ปิดข้าง ซ้าย-ขวา:</span>
+            <div class="check-group" style="margin-bottom: 12px;">
+                <div class="check-item"><input type="radio" name="coverSide" id="cvs_none" value="none" checked onchange="calculate()"><label for="cvs_none">ไม่ปิด (โล่ง)</label></div>
+                <div class="check-item"><input type="radio" name="coverSide" id="cvs_wood" value="wood" onchange="calculate()"><label for="cvs_wood">🪵 ไม้</label></div>
+                <div class="check-item"><input type="radio" name="coverSide" id="cvs_steel" value="steel" onchange="calculate()"><label for="cvs_steel">⬛ แผ่นเรียบเหล็ก</label></div>
+                <div class="check-item"><input type="radio" name="coverSide" id="cvs_mesh" value="mesh" onchange="calculate()"><label for="cvs_mesh">🔩 ตะแกรงเหล็ก</label></div>
+                <div class="check-item"><input type="radio" name="coverSide" id="cvs_metal" value="metal" onchange="calculate()"><label for="cvs_metal">🏠 เมทัลชีท</label></div>
+            </div>
+
+            <!-- ปิดหลัง -->
+            <span class="sub-label">ปิดหลัง:</span>
+            <div class="check-group" style="margin-bottom: 12px;">
+                <div class="check-item"><input type="radio" name="coverBack" id="cvb_none" value="none" checked onchange="calculate()"><label for="cvb_none">ไม่ปิด (โล่ง)</label></div>
+                <div class="check-item"><input type="radio" name="coverBack" id="cvb_wood" value="wood" onchange="calculate()"><label for="cvb_wood">🪵 ไม้</label></div>
+                <div class="check-item"><input type="radio" name="coverBack" id="cvb_steel" value="steel" onchange="calculate()"><label for="cvb_steel">⬛ แผ่นเรียบเหล็ก</label></div>
+                <div class="check-item"><input type="radio" name="coverBack" id="cvb_mesh" value="mesh" onchange="calculate()"><label for="cvb_mesh">🔩 ตะแกรงเหล็ก</label></div>
+                <div class="check-item"><input type="radio" name="coverBack" id="cvb_metal" value="metal" onchange="calculate()"><label for="cvb_metal">🏠 เมทัลชีท</label></div>
+            </div>
+
+            <!-- ปิดบาน -->
+            <span class="sub-label">ปิดบาน (วัสดุหน้าบาน):</span>
+            <div class="check-group">
+                <div class="check-item"><input type="radio" name="coverDoor" id="cvd_none" value="none" checked onchange="calculate()"><label for="cvd_none">ไม่ปิด (โล่ง)</label></div>
+                <div class="check-item"><input type="radio" name="coverDoor" id="cvd_wood" value="wood" onchange="calculate()"><label for="cvd_wood">🪵 ไม้</label></div>
+                <div class="check-item"><input type="radio" name="coverDoor" id="cvd_steel" value="steel" onchange="calculate()"><label for="cvd_steel">⬛ แผ่นเรียบเหล็ก</label></div>
+                <div class="check-item"><input type="radio" name="coverDoor" id="cvd_mesh" value="mesh" onchange="calculate()"><label for="cvd_mesh">🔩 ตะแกรงเหล็ก</label></div>
+                <div class="check-item"><input type="radio" name="coverDoor" id="cvd_metal" value="metal" onchange="calculate()"><label for="cvd_metal">🏠 เมทัลชีท</label></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">
+            <span class="step-badge">5</span>
+            สีและพื้นผิว (Finishing)
+        </label>
+        <div class="check-group">
+            <div class="check-item"><input type="radio" name="color" id="c_black" value="0" onchange="togglePowderOptions(); calculate()"><label for="c_black">⬛ สีดำด้าน</label></div>
+            <div class="check-item"><input type="radio" name="color" id="c_white" value="0" checked onchange="togglePowderOptions(); calculate()"><label for="c_white">⬜ สีขาว</label></div>
+            <div class="check-item"><input type="radio" name="color" id="c_powder" value="1500" onchange="togglePowderOptions(); calculate()"><label for="c_powder">🎨 Powder Coat</label></div>
+        </div>
+        <!-- Powder Coat Color Picker -->
+        <div class="powder-options" id="powder-options">
+            <span class="sub-label">เลือกสี Powder Coat:</span>
+            <div class="color-grid">
+                <div class="color-swatch"><input type="radio" name="powderColor" id="pc_sw" value="Smooth White" checked onchange="calculate()"><label for="pc_sw"><span class="swatch-dot" style="background:#f0f0f0;"></span>Smooth White</label></div>
+                <div class="color-swatch"><input type="radio" name="powderColor" id="pc_sdw" value="Sand White" onchange="calculate()"><label for="pc_sdw"><span class="swatch-dot" style="background:#e8e0d0;"></span>Sand White</label></div>
+                <div class="color-swatch"><input type="radio" name="powderColor" id="pc_ch" value="Champagne" onchange="calculate()"><label for="pc_ch"><span class="swatch-dot" style="background:#c8b89a;"></span>Champagne</label></div>
+                <div class="color-swatch"><input type="radio" name="powderColor" id="pc_rn" value="Rainy" onchange="calculate()"><label for="pc_rn"><span class="swatch-dot" style="background:#b0bec5;"></span>Rainy</label></div>
+                <div class="color-swatch"><input type="radio" name="powderColor" id="pc_sg" value="Sand Gray" onchange="calculate()"><label for="pc_sg"><span class="swatch-dot" style="background:#6b6b6b;"></span>Sand Gray</label></div>
+                <div class="color-swatch"><input type="radio" name="powderColor" id="pc_sb" value="Sand Black" onchange="calculate()"><label for="pc_sb"><span class="swatch-dot" style="background:#2c2c2c;"></span>Sand Black</label></div>
+                <div class="color-swatch"><input type="radio" name="powderColor" id="pc_br" value="Brown" onchange="calculate()"><label for="pc_br"><span class="swatch-dot" style="background:#7b4f2e;"></span>Brown</label></div>
+                <div class="color-swatch"><input type="radio" name="powderColor" id="pc_yl" value="Yellow" onchange="calculate()"><label for="pc_yl"><span class="swatch-dot" style="background:#f5c300;"></span>Yellow</label></div>
+                <div class="color-swatch"><input type="radio" name="powderColor" id="pc_rd" value="Red" onchange="calculate()"><label for="pc_rd"><span class="swatch-dot" style="background:#b83232;"></span>Red</label></div>
+                <div class="color-swatch"><input type="radio" name="powderColor" id="pc_db" value="Deep Blue" onchange="calculate()"><label for="pc_db"><span class="swatch-dot" style="background:#1a3a6b;"></span>Deep Blue</label></div>
+                <div class="color-swatch"><input type="radio" name="powderColor" id="pc_gr" value="Green" onchange="calculate()"><label for="pc_gr"><span class="swatch-dot" style="background:#2d7a3a;"></span>Green</label></div>
+                <div class="color-swatch"><input type="radio" name="powderColor" id="pc_bk" value="Black" onchange="calculate()"><label for="pc_bk"><span class="swatch-dot" style="background:#111111;"></span>Black</label></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">
+            <span class="step-badge">6</span>
+            เลือกจังหวัดจัดส่ง (ปลายทาง)
+        </label>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px;">
+            <div class="input-box">
+                <label>ต้นทางจัดส่ง (คงที่)</label>
+                <input type="text" value="ขอนแก่น" readonly style="background: rgba(255, 255, 255, 0.05); color: var(--text-muted); cursor: not-allowed; border-color: rgba(255, 255, 255, 0.05);">
+            </div>
+            <div class="input-box">
+                <label>จังหวัดปลายทาง</label>
+                <select id="dest_province" onchange="calculate()">
+                    <option value="" selected disabled>-- เลือกจังหวัด --</option>
+                    <option value="กระบี่">กระบี่</option>
+                    <option value="กรุงเทพมหานคร">กรุงเทพมหานคร</option>
+                    <option value="กาญจนบุรี">กาญจนบุรี</option>
+                    <option value="กาฬสินธุ์">กาฬสินธุ์</option>
+                    <option value="กำแพงเพชร">กำแพงเพชร</option>
+                    <option value="ขอนแก่น">ขอนแก่น</option>
+                    <option value="จันทบุรี">จันทบุรี</option>
+                    <option value="ฉะเชิงเทรา">ฉะเชิงเทรา</option>
+                    <option value="ชลบุรี">ชลบุรี</option>
+                    <option value="ชัยนาท">ชัยนาท</option>
+                    <option value="ชัยภูมิ">ชัยภูมิ</option>
+                    <option value="ชุมพร">ชุมพร</option>
+                    <option value="เชียงราย">เชียงราย</option>
+                    <option value="เชียงใหม่">เชียงใหม่</option>
+                    <option value="ตรัง">ตรัง</option>
+                    <option value="ตราด">ตราด</option>
+                    <option value="ตาก">ตาก</option>
+                    <option value="นครนายก">นครนายก</option>
+                    <option value="นครปฐม">นครปฐม</option>
+                    <option value="นครพนม">นครพนม</option>
+                    <option value="นครราชสีมา">นครราชสีมา</option>
+                    <option value="นครศรีธรรมราช">นครศรีธรรมราช</option>
+                    <option value="นครสวรรค์">นครสวรรค์</option>
+                    <option value="นนทบุรี">นนทบุรี</option>
+                    <option value="นราธิวาส">นราธิวาส</option>
+                    <option value="น่าน">น่าน</option>
+                    <option value="บึงกาฬ">บึงกาฬ</option>
+                    <option value="บุรีรัมย์">บุรีรัมย์</option>
+                    <option value="ปทุมธานี">ปทุมธานี</option>
+                    <option value="ประจวบคีรีขันธ์">ประจวบคีรีขันธ์</option>
+                    <option value="ปราจีนบุรี">ปราจีนบุรี</option>
+                    <option value="ปัตตานี">ปัตตานี</option>
+                    <option value="พระนครศรีอยุธยา">พระนครศรีอยุธยา</option>
+                    <option value="พะเยา">พะเยา</option>
+                    <option value="พังงา">พังงา</option>
+                    <option value="พัทลุง">พัทลุง</option>
+                    <option value="พิจิตร">พิจิตร</option>
+                    <option value="พิษณุโลก">พิษณุโลก</option>
+                    <option value="เพชรบุรี">เพชรบุรี</option>
+                    <option value="เพชรบูรณ์">เพชรบูรณ์</option>
+                    <option value="แพร่">แพร่</option>
+                    <option value="ภูเก็ต">ภูเก็ต</option>
+                    <option value="มหาสารคาม">มหาสารคาม</option>
+                    <option value="มุกดาหาร">มุกดาหาร</option>
+                    <option value="แม่ฮ่องสอน">แม่ฮ่องสอน</option>
+                    <option value="ยโสธร">ยโสธร</option>
+                    <option value="ยะลา">ยะลา</option>
+                    <option value="ร้อยเอ็ด">ร้อยเอ็ด</option>
+                    <option value="ระนอง">ระนอง</option>
+                    <option value="ระยอง">ระยอง</option>
+                    <option value="ราชบุรี">ราชบุรี</option>
+                    <option value="ลพบุรี">ลพบุรี</option>
+                    <option value="ลำปาง">ลำปาง</option>
+                    <option value="ลำพูน">ลำพูน</option>
+                    <option value="เลย">เลย</option>
+                    <option value="ศรีสะเกษ">ศรีสะเกษ</option>
+                    <option value="สกลนคร">สกลนคร</option>
+                    <option value="สงขลา">สงขลา</option>
+                    <option value="สตูล">สตูล</option>
+                    <option value="สมุทรปราการ">สมุทรปราการ</option>
+                    <option value="สมุทรสงคราม">สมุทรสงคราม</option>
+                    <option value="สมุทรสาคร">สมุทรสาคร</option>
+                    <option value="สระแก้ว">สระแก้ว</option>
+                    <option value="สระบุรี">สระบุรี</option>
+                    <option value="สิงห์บุรี">สิงห์บุรี</option>
+                    <option value="สุโขทัย">สุโขทัย</option>
+                    <option value="สุพรรณบุรี">สุพรรณบุรี</option>
+                    <option value="สุราษฎร์ธานี">สุราษฎร์ธานี</option>
+                    <option value="สุรินทร์">สุรินทร์</option>
+                    <option value="หนองคาย">หนองคาย</option>
+                    <option value="หนองบัวลำภู">หนองบัวลำภู</option>
+                    <option value="อ่างทอง">อ่างทอง</option>
+                    <option value="อุดรธานี">อุดรธานี</option>
+                    <option value="อุตรดิตถ์">อุตรดิตถ์</option>
+                    <option value="อุทัยธานี">อุทัยธานี</option>
+                    <option value="อุบลราชธานี">อุบลราชธานี</option>
+                    <option value="อำนาจเจริญ">อำนาจเจริญ</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Button to Reset / Estimate Again -->
+    <div style="margin: 24px 0 0;">
+        <button type="button" class="btn-secondary" onclick="resetForm()" style="margin-bottom: 0;">
+            🔄 ประเมินราคาอีกครั้ง
+        </button>
+    </div>
+
+    <!-- Real-time weight preview -->
+    <div id="realtime-weight-preview" style="text-align: center; margin: 16px 0 8px; font-size: 0.9rem; color: var(--text-muted); display: none; background: rgba(255, 255, 255, 0.02); padding: 10px; border-radius: 10px; border: 1px solid var(--border); transition: all 0.3s ease;">
+        ⚖️ น้ำหนักตู้ประมาณการ: <span id="rt-weight" style="color: var(--accent); font-weight: 600;">0.0</span> กก.
+        <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: 2px;">(คำนวณจากสเปกเหล็กและแผ่นวัสดุประกอบ)</span>
+    </div>
+
+    <!-- Button to Calculate Price -->
+    <div style="margin: 12px 0 16px;">
+        <button type="button" class="btn-submit" id="btn-calculate" onclick="calculateAndShow()" style="background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%); color: #09090b; font-size: 1.05rem; font-weight: 700; padding: 15px 30px; border-radius: 12px; box-shadow: 0 6px 20px rgba(241, 169, 10, 0.35); border: none; cursor: pointer; width: 100%; letter-spacing: 0.03em; transition: all 0.25s;">
+            📊 กดคำนวณประเมินราคาชิ้นงาน
+        </button>
+    </div>
+
+    <div class="brand-footer">
+        <a href="index.html">IRONSERVICE KK</a> · อำเภอเมือง ขอนแก่น · 063-7409696
+    </div>
+</div>
+
+<!-- Result Modal Overlay -->
+<div id="result-modal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+    <div class="result-area">
+        <button type="button" class="modal-close" onclick="closeModal()" aria-label="Close modal">
+            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        <div class="price-label" style="margin-bottom: 16px;">สรุปรายละเอียดราคาทั้งหมด</div>
+        
+        <div style="display: flex; flex-direction: column; gap: 8px; margin: 0 auto 24px; max-width: 480px; text-align: left;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 8px;">
+                <span style="font-size: 0.9rem; color: var(--text-muted);">💵 ราคาสินค้า (รวม VAT)</span>
+                <span style="font-size: 1.3rem; color: var(--text); font-weight: 600;">฿ <span id="totalPrice">0</span></span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 8px;">
+                <div style="display: flex; flex-direction: column;">
+                    <span style="font-size: 0.9rem; color: var(--text-muted);">⚖️ น้ำหนักตู้รวม (ประมาณการ)</span>
+                    <span style="font-size: 0.72rem; color: var(--text-muted);" id="modal-weight-detail">โครงเหล็ก 0.0 กก. + แผ่น/แผง 0.0 กก.</span>
+                </div>
+                <span style="font-size: 1.3rem; color: var(--text); font-weight: 600;"><span id="modal-total-weight">0.0</span> กก.</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 8px;">
+                <div style="display: flex; flex-direction: column;">
+                    <span style="font-size: 0.9rem; color: var(--text-muted);">🚚 ค่าจัดส่ง + แพ็คเกจ (Nim Express)</span>
+                    <span style="font-size: 0.72rem; color: var(--text-muted); margin-top: 2px;">(ราคาประเมินเบื้องต้นอาจถูกกว่าหรือแพงกว่า ต้องให้แอดมินประเมินให้อีกครั้ง)</span>
+                </div>
+                <span style="font-size: 1.3rem; color: var(--text); font-weight: 600;" id="modal-shipping-container">฿ <span id="modal-shipping-price">0</span></span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(241, 169, 10, 0.08); border: 1px solid rgba(241, 169, 10, 0.25); padding: 12px 16px; border-radius: 10px; margin-top: 4px;">
+                <span style="font-size: 0.95rem; color: var(--accent); font-weight: 600;">💰 ยอดรวมทั้งสิ้น</span>
+                <span style="font-size: 2rem; color: var(--accent); font-weight: 700;">฿ <span id="combinedPrice">0</span></span>
+            </div>
+        </div>
+
+        <!-- Spec & Price Summary Grid -->
+        <div class="modal-summary-grid">
+            <div class="summary-item">
+                <span class="summary-label">ขนาดชิ้นงาน</span>
+                <span class="summary-val" id="summary-dimensions">120 × 40 × 180 cm</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">น้ำหนักสินค้า</span>
+                <span class="summary-val" id="summary-weight">0.0 กก.</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">ค่าส่ง + แพ็คเกจ</span>
+                <span class="summary-val" id="summary-shipping">฿ 0</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">ราคาสินค้า (รวม VAT)</span>
+                <span class="summary-val" id="summary-total">฿ 0</span>
+            </div>
+            <div class="summary-itemHighlight">
+                <span class="summary-labelHighlight">ยอดรวมทั้งสิ้น</span>
+                <span class="summary-valHighlight" id="summary-combined">฿ 0</span>
+            </div>
+        </div>
+
+        <!-- Shipping Warning Banner -->
+        <div id="shipping-warning" style="display: none; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.25); color: #f87171; padding: 10px 14px; border-radius: 10px; font-size: 0.8rem; margin: 0 0 16px; text-align: center; font-weight: 500; line-height: 1.4; border-left: 4px solid #ef4444;">
+            ⚠️ ทางร้านใช้ขนส่ง Nim Express (หากสินค้าเกินขนาดขนส่ง ต้องรับเองที่ DC คลังสินค้าปลายทาง)
+        </div>
+
+        <!-- Hidden Breakdown (safely matches JS code references) -->
+        <div id="breakdown" style="display: none;"></div>
+        <div class="note">
+            * ราคานี้เป็นการประเมินโครงสร้างเบื้องต้นเพื่อประกอบการตัดสินใจ<br>
+            เมื่อยืนยันออเดอร์ ทีมงานจะทำแบบ 3D และเสนอราคาสุทธิให้อีกครั้ง (มัดจำ 50%)
+        </div>
+        <button type="button" class="btn-secondary" onclick="closeModal()" style="margin-bottom: 8px;">
+            แก้ไขสเปกชิ้นงาน
+        </button>
+        <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+            <button class="btn-submit btn-line" id="submitBtn" onclick="handleSubmit('spec')" style="margin-bottom: 0;">
+                💬 ส่งข้อมูลสอบถามแอดมิน/สั่งซื้อ
+            </button>
+            <button class="btn-submit" id="quoteBtn" onclick="handleSubmit('quote')">
+                📋 ขอใบเสนอราคาเบื้องต้น
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function generateShelves() {
+        const num = parseInt(document.getElementById('layer_count').value);
+        const container = document.getElementById('shelves-container');
+        if (!num) {
+            container.style.display = 'none';
+            container.innerHTML = '';
+            return;
+        }
+        container.style.display = 'flex';
+        container.innerHTML = '';
+        for (let j = 1; j <= num; j++) {
+            const physicalIndex = num - j + 1;
+            const isTop = (physicalIndex === num);
+            const label = isTop ? '🔝 ชั้นที่ 1 TOP บน' : `ชั้นที่ ${j}`;
+            const rowStyle = isTop ? 'border-color: rgba(241,169,10,0.35); background: rgba(241,169,10,0.04);' : '';
+            const labelStyle = isTop ? 'color: var(--accent); font-weight:600;' : '';
+            container.innerHTML += `
+                <div class="shelf-row" style="${rowStyle}">
+                    <span style="${labelStyle}">${label}</span>
+                    <div class="shelf-options check-group" style="gap:6px;">
+                        <div class="check-item" style="min-width:80px;">
+                            <input type="radio" name="tier${physicalIndex}" id="t${physicalIndex}_wood" value="wood" ${isTop ? 'checked' : ''} onchange="calculate()">
+                            <label for="t${physicalIndex}_wood" style="padding:7px 10px;font-size:0.8rem;">🪵 ไม้</label>
+                        </div>
+                        <div class="check-item" style="min-width:110px;">
+                            <input type="radio" name="tier${physicalIndex}" id="t${physicalIndex}_mesh" value="mesh" ${!isTop ? 'checked' : ''} onchange="calculate()">
+                            <label for="t${physicalIndex}_mesh" style="padding:7px 10px;font-size:0.8rem;">🔩 ตะแกรงเหล็ก</label>
+                        </div>
+                    </div>
+                </div>`;
+        }
+    }
+
+    function toggleDoorOptions() {
+        const doorType = document.querySelector('input[name="door"]:checked').value;
+        document.getElementById('door-count-options').style.display = doorType !== 'none' ? 'block' : 'none';
+        document.getElementById('cover-options').style.display = doorType !== 'none' ? 'block' : 'none';
+    }
+
+    function togglePowderOptions() {
+        const colorType = document.querySelector('input[name="color"]:checked').id;
+        document.getElementById('powder-options').style.display = (colorType === 'c_powder') ? 'block' : 'none';
+    }
+
+
+
+    function drawCabinet() {
+        const canvas = document.getElementById('sketch-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const cx = canvas.width / 2;
+        
+        // Fill canvas with SketchUp-style Sage Green background
+        ctx.fillStyle = '#9cbd97';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Get user specs
+        const w = parseFloat(document.getElementById('dim_w').value) || 120;
+        const l = parseFloat(document.getElementById('dim_l').value) || 40;
+        const h = parseFloat(document.getElementById('dim_h').value) || 100;
+        const tiers = parseInt(document.getElementById('layer_count').value) || 3;
+        
+        // Calculate scaling factor to fit the viewport nicely
+        const maxDim = Math.max(w, l, h);
+        let scale = 1.3;
+        if (maxDim > 0) {
+            scale = Math.min(180 / w, 180 / l, 260 / h);
+        }
+        
+        const adjustedCy = (canvas.height / 2) + (h * scale / 2) - 30;
+
+        function project3D(x3d, y3d, z3d) {
+            // Isometric math
+            const x2d = cx + (x3d * 0.866 - y3d * 0.866) * scale;
+            const y2d = adjustedCy - (z3d - (x3d * 0.5 + y3d * 0.5)) * scale;
+            return { x: x2d, y: y2d };
+        }
+
+        // Draw standard SketchUp grid lines on floor (z=0)
+        ctx.strokeStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.lineWidth = 1;
+        for (let i = -6; i <= 8; i++) {
+            ctx.beginPath();
+            let p1 = project3D(-150, i * 40, 0);
+            let p2 = project3D(w + 150, i * 40, 0);
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.stroke();
+
+            ctx.beginPath();
+            p1 = project3D(i * 40, -150, 0);
+            p2 = project3D(i * 40, l + 150, 0);
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.stroke();
+        }
+
+        // Draw SketchUp Red Axis line (X-axis)
+        ctx.strokeStyle = '#d32f2f';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        let r1 = project3D(-150, 0, 0);
+        let r2 = project3D(w + 150, 0, 0);
+        ctx.moveTo(r1.x, r1.y);
+        ctx.lineTo(r2.x, r2.y);
+        ctx.stroke();
+
+        // Draw SketchUp Green Axis line (Y-axis)
+        ctx.strokeStyle = '#388e3c';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        let g1 = project3D(0, -150, 0);
+        let g2 = project3D(0, l + 150, 0);
+        ctx.moveTo(g1.x, g1.y);
+        ctx.lineTo(g2.x, g2.y);
+        ctx.stroke();
+
+        // Get steel color
+        const colorRadio = document.querySelector('input[name="color"]:checked');
+        let steelColor = '#27272a'; // Default black
+        if (colorRadio) {
+            if (colorRadio.id === 'c_white') steelColor = '#f4f4f5';
+            else if (colorRadio.id === 'c_powder') {
+                const pcColorRadio = document.querySelector('input[name="powderColor"]:checked');
+                const pcColors = {
+                    'Smooth White': '#f0f0f0', 'Sand White': '#e8e0d0', 'Champagne': '#c8b89a',
+                    'Rainy': '#b0bec5', 'Sand Gray': '#6b6b6b', 'Sand Black': '#2c2c2c',
+                    'Brown': '#7b4f2e', 'Yellow': '#f5c300', 'Red': '#b83232',
+                    'Deep Blue': '#1a3a6b', 'Green': '#2d7a3a', 'Black': '#111111'
+                };
+                steelColor = pcColors[pcColorRadio ? pcColorRadio.value : ''] || '#c8b89a';
+            }
+        }
+
+        // Cuboid drawing helper
+        function drawCuboid(xStart, yStart, zStart, xSize, ySize, zSize, fillColor, strokeColor, wireframeOnly, isMesh) {
+            const p1 = project3D(xStart, yStart, zStart);
+            const p2 = project3D(xStart + xSize, yStart, zStart);
+            const p3 = project3D(xStart + xSize, yStart + ySize, zStart);
+            const p4 = project3D(xStart, yStart + ySize, zStart);
+            
+            const p5 = project3D(xStart, yStart, zStart + zSize);
+            const p6 = project3D(xStart + xSize, yStart, zStart + zSize);
+            const p7 = project3D(xStart + xSize, yStart + ySize, zStart + zSize);
+            const p8 = project3D(xStart, yStart + ySize, zStart + zSize);
+
+            ctx.lineWidth = 1;
+
+            if (!wireframeOnly) {
+                // Bottom
+                ctx.fillStyle = fillColor;
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.lineTo(p3.x, p3.y); ctx.lineTo(p4.x, p4.y);
+                ctx.closePath(); ctx.fill();
+                
+                // Left
+                ctx.fillStyle = darkenColor(fillColor, -0.15);
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y); ctx.lineTo(p4.x, p4.y); ctx.lineTo(p8.x, p8.y); ctx.lineTo(p5.x, p5.y);
+                ctx.closePath(); ctx.fill();
+                
+                // Back
+                ctx.fillStyle = darkenColor(fillColor, -0.1);
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.lineTo(p6.x, p6.y); ctx.lineTo(p5.x, p5.y);
+                ctx.closePath(); ctx.fill();
+                
+                // Right
+                ctx.fillStyle = darkenColor(fillColor, -0.05);
+                ctx.beginPath();
+                ctx.moveTo(p2.x, p2.y); ctx.lineTo(p3.x, p3.y); ctx.lineTo(p7.x, p7.y); ctx.lineTo(p6.x, p6.y);
+                ctx.closePath(); ctx.fill();
+                
+                // Front
+                ctx.fillStyle = darkenColor(fillColor, -0.2);
+                ctx.beginPath();
+                ctx.moveTo(p4.x, p4.y); ctx.lineTo(p3.x, p3.y); ctx.lineTo(p7.x, p7.y); ctx.lineTo(p8.x, p8.y);
+                ctx.closePath(); ctx.fill();
+                
+                // Top
+                ctx.fillStyle = darkenColor(fillColor, 0.08);
+                ctx.beginPath();
+                ctx.moveTo(p5.x, p5.y); ctx.lineTo(p6.x, p6.y); ctx.lineTo(p7.x, p7.y); ctx.lineTo(p8.x, p8.y);
+                ctx.closePath(); ctx.fill();
+            }
+
+            // Draw expanded metal mesh pattern (ตาข่ายเหล็กฉีก)
+            if (isMesh && !wireframeOnly) {
+                ctx.strokeStyle = 'rgba(0, 0, 0, 0.35)';
+                ctx.lineWidth = 0.6;
+                // Draw crosshatch pattern for realistic expanded metal mesh
+                for (let k = 0.05; k <= 0.95; k += 0.08) {
+                    const m1 = lerpPoint(p5, p6, k);
+                    const m2 = lerpPoint(p8, p7, k);
+                    ctx.beginPath(); ctx.moveTo(m1.x, m1.y); ctx.lineTo(m2.x, m2.y); ctx.stroke();
+
+                    const n1 = lerpPoint(p5, p8, k);
+                    const n2 = lerpPoint(p6, p7, k);
+                    ctx.beginPath(); ctx.moveTo(n1.x, n1.y); ctx.lineTo(n2.x, n2.y); ctx.stroke();
+                }
+            }
+
+            // Outlines (SketchUp style)
+            if (strokeColor) {
+                ctx.strokeStyle = strokeColor;
+                ctx.beginPath();
+                ctx.moveTo(p5.x, p5.y); ctx.lineTo(p6.x, p6.y); ctx.lineTo(p7.x, p7.y); ctx.lineTo(p8.x, p8.y); ctx.closePath();
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.lineTo(p3.x, p3.y); ctx.lineTo(p4.x, p4.y); ctx.closePath();
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y); ctx.lineTo(p5.x, p5.y);
+                ctx.moveTo(p2.x, p2.y); ctx.lineTo(p6.x, p6.y);
+                ctx.moveTo(p3.x, p3.y); ctx.lineTo(p7.x, p7.y);
+                ctx.moveTo(p4.x, p4.y); ctx.lineTo(p8.x, p8.y);
+                ctx.stroke();
+            }
+        }
+
+        function lerpPoint(pt1, pt2, t) { return { x: pt1.x + (pt2.x - pt1.x) * t, y: pt1.y + (pt2.y - pt1.y) * t }; }
+        function darkenColor(hex, percent) {
+            let num = parseInt(hex.replace("#",""), 16), amt = Math.round(2.55 * percent * 100), R = (num >> 16) + amt, G = (num >> 8 & 0x00FF) + amt, B = (num & 0x0000FF) + amt;
+            return "#" + (0x1000000 + (R<255?R<0?0:R:255)*0x10000 + (G<255?G<0?0:G:255)*0x100 + (B<255?B<0?0:B:255)).toString(16).slice(1);
+        }
+
+        const legThickness = 3, hasMiddleSupport = (w >= 120), legHeight = h - 3;
+        const sx = 0.28, sy = 0.48, shadowColor = 'rgba(0, 0, 0, 0.04)';
+
+        // Function to draw leg shadow on ground
+        function drawLegShadow(lx, ly, ldx, ldy, lh) {
+            for (let sz = 0; sz <= lh; sz += 4) {
+                drawCuboid(lx - sz * sx, ly + sz * sy, 0, ldx, ldy, 0.1, shadowColor, null, false);
+            }
+        }
+
+        // ── 0. DRAW GROUND SHADOWS (Drawn first) ──
+        drawLegShadow(0, 0, legThickness, legThickness, legHeight); // Back-left leg
+        drawLegShadow(w - legThickness, 0, legThickness, legThickness, legHeight); // Back-right leg
+        drawLegShadow(0, l - legThickness, legThickness, legThickness, legHeight); // Front-left leg
+        drawLegShadow(w - legThickness, l - legThickness, legThickness, legThickness, legHeight); // Front-right leg
+
+        const startZ = 10, endZ = h - 3, totalHeight = endZ - startZ;
+        for (let i = 1; i <= tiers; i++) {
+            const z = startZ + (totalHeight * (i - 1) / Math.max(1, tiers - 1));
+            const shCol = `rgba(0, 0, 0, ${Math.max(0.02, 0.14 - (z / h) * 0.08)})`;
+            if (i < tiers) {
+                drawCuboid(legThickness - z * sx, legThickness + z * sy, 0, w - legThickness * 2, l - legThickness * 2, 0.1, shCol, null, false);
+            } else {
+                drawCuboid(-1 - z * sx, -1 + z * sy, 0, w + 2, l + 2, 0.1, `rgba(0, 0, 0, 0.15)`, null, false);
+            }
+        }
+
+        const outlineColor = 'rgba(0, 0, 0, 0.35)';
+        const doorType = document.querySelector('input[name="door"]:checked').value;
+
+        // ── 1. DRAW BACK COVER (at y = 0, furthest back) ──
+        if (doorType !== 'none') {
+            const backType = document.querySelector('input[name="coverBack"]:checked').value;
+            if (backType !== 'none') {
+                let fColor = (backType === 'wood') ? '#e2b784' : (backType === 'mesh') ? '#18181b' : (backType === 'metal') ? '#4b5563' : '#1e1e24';
+                drawCuboid(0, 0, 10, w, 1.5, legHeight - 10, fColor, outlineColor, false, backType === 'mesh');
+            }
+        }
+
+        // ── 2. DRAW BACK LEGS (at y = 0) ──
+        drawCuboid(0, 0, 0, legThickness, legThickness, legHeight, steelColor, outlineColor, false);
+        drawCuboid(w - legThickness, 0, 0, legThickness, legThickness, legHeight, steelColor, outlineColor, false);
+
+        // ── 3. DRAW BACK & SIDE HORIZONTAL FRAMES AND SHELVES (Back to Front) ──
+        for (let i = 1; i <= tiers; i++) {
+            const z = startZ + (totalHeight * (i - 1) / Math.max(1, tiers - 1));
+            
+            // Back horizontal tube (y = 0)
+            drawCuboid(0, 0, z, w, legThickness, legThickness, steelColor, outlineColor, false);
+            // Side horizontal tubes (from y = 0 to l)
+            drawCuboid(0, 0, z, legThickness, l, legThickness, steelColor, outlineColor, false);
+            drawCuboid(w - legThickness, 0, z, legThickness, l, legThickness, steelColor, outlineColor, false);
+            
+            // Middle horizontal crossbar (W >= 120 cm)
+            if (hasMiddleSupport && i < tiers) {
+                drawCuboid(w / 2 - legThickness / 2, 0, z, legThickness, l, legThickness, steelColor, outlineColor, false);
+            }
+            
+            // Draw shelf board
+            if (i < tiers) {
+                const mat = document.querySelector(`input[name="tier${i}"]:checked`).value;
+                const isMesh = (mat === 'mesh');
+                const shelfColor = isMesh ? '#1e1e24' : '#e2b784';
+                
+                if (hasMiddleSupport) {
+                    drawCuboid(legThickness, legThickness, z + 1, w / 2 - legThickness - (legThickness / 2), l - (legThickness * 2), 1.5, shelfColor, outlineColor, false, isMesh);
+                    drawCuboid(w / 2 + (legThickness / 2), legThickness, z + 1, w / 2 - legThickness - (legThickness / 2), l - (legThickness * 2), 1.5, shelfColor, outlineColor, false, isMesh);
+                } else {
+                    drawCuboid(legThickness, legThickness, z + 1, w - (legThickness * 2), l - (legThickness * 2), 1.5, shelfColor, outlineColor, false, isMesh);
+                }
+            }
+        }
+
+        // ── 4. DRAW SIDE COVERS (if any) ──
+        if (doorType !== 'none') {
+            const sideType = document.querySelector('input[name="coverSide"]:checked').value;
+            if (sideType !== 'none') {
+                let fColor = (sideType === 'wood') ? '#e2b784' : (sideType === 'mesh') ? '#18181b' : (sideType === 'metal') ? '#4b5563' : '#1e1e24';
+                drawCuboid(0, 1.5, 10, 1.5, l - 3, legHeight - 10, fColor, outlineColor, false, sideType === 'mesh');
+                drawCuboid(w - 1.5, 1.5, 10, 1.5, l - 3, fColor, outlineColor, false, sideType === 'mesh');
+            }
+        }
+
+        // ── 5. DRAW FRONT HORIZONTAL FRAMES (at y = l - legThickness) ──
+        for (let i = 1; i <= tiers; i++) {
+            const z = startZ + (totalHeight * (i - 1) / Math.max(1, tiers - 1));
+            drawCuboid(0, l - legThickness, z, w, legThickness, legThickness, steelColor, outlineColor, false);
+        }
+
+        // ── 6. DRAW FRONT LEGS (at y = l - legThickness) ──
+        drawCuboid(0, l - legThickness, 0, legThickness, legThickness, legHeight, steelColor, outlineColor, false);
+        drawCuboid(w - legThickness, l - legThickness, 0, legThickness, legThickness, legHeight, steelColor, outlineColor, false);
+        
+        // ── 7. DRAW TOP WOOD SHELF (with overhang) ──
+        const topMat = document.querySelector(`input[name="tier${tiers}"]:checked`).value;
+        const topColor = (topMat === 'mesh') ? '#1e1e24' : '#e2b784';
+        drawCuboid(-1, -1, legHeight, w + 2, l + 2, 3, topColor, outlineColor, false, (topMat === 'mesh'));
+        
+        // ── 8. DRAW DOORS (at y = l, frontmost) ──
+        if (doorType !== 'none') {
+            const cnt = parseInt(document.querySelector('input[name="doorCount"]:checked').value) || 1;
+            const doorH = totalHeight / Math.max(1, tiers - 1);
+            const doorZ = 10 + legThickness;
+            
+            // Get door material selection
+            const doorCoverType = document.querySelector('input[name="coverDoor"]:checked').value;
+            const doorFillColor = (doorCoverType === 'wood') ? '#e2b784' : (doorCoverType === 'mesh') ? '#18181b' : (doorCoverType === 'metal') ? '#4b5563' : '#1e1e24';
+            const doorIsMesh = (doorCoverType === 'mesh');
+            
+            if (doorType === 'slide') {
+                const halfW = w / 2;
+                // Back sliding door (slightly inset)
+                drawCuboid(legThickness, l - legThickness - 1.8, doorZ, halfW, 0.8, doorH - legThickness, darkenColor(doorFillColor, -0.05), outlineColor, false, doorIsMesh);
+                drawCuboid(halfW - 6, l - legThickness - 2.2, doorZ + (doorH / 2) - 8, 1.8, 0.4, 16, '#f1a90a', '', false);
+                
+                // Front sliding door
+                drawCuboid(halfW - 5, l - legThickness - 0.8, doorZ, halfW - legThickness, 0.8, doorH - legThickness, doorFillColor, outlineColor, false, doorIsMesh);
+                drawCuboid(halfW + 4, l - legThickness - 0.2, doorZ + (doorH / 2) - 8, 1.8, 0.4, 16, '#f1a90a', '', false);
+            } 
+            else if (doorType === 'hinge') {
+                if (cnt === 1) {
+                    drawCuboid(legThickness, l - 1, doorZ, w - (legThickness * 2), 1, doorH - legThickness, doorFillColor, outlineColor, false, doorIsMesh);
+                    drawCuboid(w - 12, l - 0.2, doorZ + (doorH / 2) - 8, 1.8, 0.4, 16, '#f1a90a', '', false);
+                } 
+                else if (cnt === 2) {
+                    const doorW = (w - (legThickness * 2)) / 2;
+                    // Left door
+                    drawCuboid(legThickness, l - 1, doorZ, doorW - 0.5, 1, doorH - legThickness, doorFillColor, outlineColor, false, doorIsMesh);
+                    drawCuboid(doorW - 4, l - 0.2, doorZ + (doorH / 2) - 8, 1.8, 0.4, 16, '#f1a90a', '', false);
+                    
+                    // Right door
+                    drawCuboid(legThickness + doorW + 0.5, l - 1, doorZ, doorW - 0.5, 1, doorH - legThickness, doorFillColor, outlineColor, false, doorIsMesh);
+                    drawCuboid(legThickness + doorW + 4, l - 0.2, doorZ + (doorH / 2) - 8, 1.8, 0.4, 16, '#f1a90a', '', false);
+                }
+                else if (cnt === 3) {
+                    const doorW = (w - (legThickness * 2)) / 3;
+                    for (let d = 0; d < 3; d++) {
+                        const startX = legThickness + d * doorW;
+                        drawCuboid(startX, l - 1, doorZ, doorW - 0.5, 1, doorH - legThickness, doorFillColor, outlineColor, false, doorIsMesh);
+                        drawCuboid(startX + doorW - 4, l - 0.2, doorZ + (doorH / 2) - 8, 1.8, 0.4, 16, '#f1a90a', '', false);
+                    }
+                }
+            }
+        }
+    }
+
+    // ================================================================
+    // ราคาเหล็กต่อ "เส้น" (600 ซม.) — จากชีทประเมินราคาจริง
+    // ================================================================
+    const STEEL_PRICE_PER_BAR = {
+        '0.8': 160,  // 3/4 นิ้ว
+        '1.0': 200,  // 1×1 นิ้ว
+        '1.2': 300,  // 2×1 นิ้ว
+        '1.4': 280,  // 1½×1½ นิ้ว
+        '1.6': 420,  // 3×1½ นิ้ว
+        '1.8': 600   // 4×2 นิ้ว
+    };
+    const BAR_LEN_CM     = 550;   // ความยาวใช้งานต่อเส้น (ซม.) — จริง 600 หักเสียเหล็ก
+    const HEIGHT_STEEL   = 300;   // ขาตั้ง (2×1 เสมอ) — 300 บาท/เส้น
+    const BOARD_AREA_M2  = 3;     // พื้นที่ต่อแผ่น (ตรม.) — มาตรฐานไม้/ตะแกรง
+    const WOOD_PER_BOARD = 1150;  // ไม้พาราประสาน บาท/แผ่น
+    const MESH_PER_BOARD = 600;   // ตะแกรงเหล็ก บาท/แผ่น
+    const METAL_PER_M2   = 350;   // เมทัลชีท บาท/ตรม.
+    const STEEL_PER_M2   = 200;   // แผ่นเรียบเหล็ก บาท/ตรม. (ประมาณการ)
+    const PROFIT_MULT    = 3.2;   // คูณกำไร ×3.2
+    const VAT_RATE       = 0.07;  // VAT 7%
+
+    // โซนและค่าจัดส่งเพิ่มตามภูมิภาคอ้างอิงจากต้นทาง ขอนแก่น
+    const PROVINCE_ZONES = {
+        // Isan (0)
+        "ขอนแก่น": 0, "กาฬสินธุ์": 0, "ชัยภูมิ": 0, "นครพนม": 0, "นครราชสีมา": 0,
+        "บึงกาฬ": 0, "บุรีรัมย์": 0, "มหาสารคาม": 0, "มุกดาหาร": 0, "ยโสธร": 0,
+        "ร้อยเอ็ด": 0, "เลย": 0, "ศรีสะเกษ": 0, "สกลนคร": 0, "สุรินทร์": 0,
+        "หนองคาย": 0, "หนองบัวลำภู": 0, "อำนาจเจริญ": 0, "อุดรธานี": 0, "อุบลราชธานี": 0,
+
+        // Bangkok & Vicinity (30)
+        "กรุงเทพมหานคร": 30, "นนทบุรี": 30, "ปทุมธานี": 30, "สมุทรปราการ": 30,
+        "สมุทรสาคร": 30, "นครปฐม": 30,
+
+        // Central & East (50)
+        "กาญจนบุรี": 50, "จันทบุรี": 50, "ฉะเชิงเทรา": 50, "ชลบุรี": 50, "ชัยนาท": 50,
+        "ตราด": 50, "นครนายก": 50, "นครสวรรค์": 50, "ประจวบคีรีขันธ์": 50, "ปราจีนบุรี": 50,
+        "พระนครศรีอยุธยา": 50, "เพชรบุรี": 50, "เพชรบูรณ์": 50, "ระยอง": 50, "ราชบุรี": 50,
+        "ลพบุรี": 50, "สมุทรสงคราม": 50, "สระแก้ว": 50, "สระบุรี": 50, "สิงห์บุรี": 50,
+        "สุพรรณบุรี": 50, "อ่างทอง": 50, "อุทัยธานี": 50,
+
+        // North (70)
+        "กำแพงเพชร": 70, "เชียงราย": 70, "เชียงใหม่": 70, "ตาก": 70, "น่าน": 70,
+        "พะเยา": 70, "พิจิตร": 70, "พิษณุโลก": 70, "แพร่": 70, "ลำปาง": 70,
+        "ลำพูน": 70, "สุโขทัย": 70, "อุตรดิตถ์": 70,
+
+        // South (100)
+        "กระบี่": 100, "ชุมพร": 100, "ตรัง": 100, "นครศรีธรรมราช": 100, "พังงา": 100,
+        "พัทลุง": 100, "ภูเก็ต": 100, "ระนอง": 100, "สงขลา": 100, "สตูล": 100,
+        "สุราษฎร์ธานี": 100,
+
+        // Remote/Islands (150)
+        "แม่ฮ่องสอน": 150, "ยะลา": 150, "ปัตตานี": 150, "นราธิวาส": 150
+    };
+
+    function calculate() {
+        const w = parseFloat(document.getElementById('dim_w').value) || 0;
+        const l = parseFloat(document.getElementById('dim_l').value) || 0;
+        const h = parseFloat(document.getElementById('dim_h').value) || 0;
+        const tiers = parseInt(document.getElementById('layer_count').value) || 1;
+
+        if (!w && !l && !h) {
+            document.getElementById('totalPrice').innerText = '0';
+            if (document.getElementById('summary-dimensions')) {
+                document.getElementById('summary-dimensions').innerText = '0 × 0 × 0 cm';
+                document.getElementById('summary-total').innerText = '฿ 0';
+                document.getElementById('summary-shipping').innerText = '฿ 0';
+                document.getElementById('summary-combined').innerText = '฿ 0';
+            }
+            if (document.getElementById('summary-weight')) {
+                document.getElementById('summary-weight').innerText = '0.0 กก.';
+            }
+            if (document.getElementById('modal-shipping-container')) {
+                document.getElementById('modal-shipping-container').innerHTML = `฿ <span id="modal-shipping-price">0</span>`;
+            }
+            if (document.getElementById('modal-total-weight')) {
+                document.getElementById('modal-total-weight').innerText = '0.0';
+            }
+            if (document.getElementById('modal-weight-detail')) {
+                document.getElementById('modal-weight-detail').innerText = 'โครงเหล็ก 0.0 กก. + แผ่น/แผง 0.0 กก.';
+            }
+            if (document.getElementById('combinedPrice')) {
+                document.getElementById('combinedPrice').innerText = '0';
+            }
+            const rtWeightEl = document.getElementById('rt-weight');
+            const rtWeightPreviewEl = document.getElementById('realtime-weight-preview');
+            if (rtWeightEl && rtWeightPreviewEl) {
+                rtWeightPreviewEl.style.display = 'none';
+            }
+            updateBreakdown(0, 0, 0, 0, 0, 0, 0, 0);
+            return;
+        }
+
+        const wm = w / 100, lm = l / 100, hm = h / 100;
+
+        // ── เหล็กโครงสร้าง ────────────────────────────────────────────
+        // แนวกว้าง = 3 ท่อน/ชั้น | แนวยาว = 2 ท่อน/ชั้น | ขาตั้ง = 4 ขา
+        const wPieces = tiers * 3;
+        const lPieces = tiers * 2;
+        const hPieces = 4;
+
+        const steelKey = document.querySelector('input[name="steel"]:checked').value;
+        const priceH = STEEL_PRICE_PER_BAR[steelKey] || 200;  // เหล็กแนวราบ (ผู้ใช้เลือก)
+        const priceV = HEIGHT_STEEL;                            // เหล็กขาตั้ง (2×1 คงที่)
+
+        const wCost = (w * wPieces / BAR_LEN_CM) * priceH;
+        const lCost = (l * lPieces / BAR_LEN_CM) * priceH;
+        const hCost = (h * hPieces / BAR_LEN_CM) * priceV;
+        const steelCost = wCost + lCost + hCost;
+
+        // ── คำนวณน้ำหนักโครงเหล็ก ──────────────────────────────────────
+        const STEEL_WEIGHT_PER_BAR = {
+            '0.8': 3.8,  // 3/4 นิ้ว
+            '1.0': 3.8,  // 1×1 นิ้ว
+            '1.2': 7.6,  // 2×1 นิ้ว
+            '1.4': 7.0,  // 1½×1½ นิ้ว
+            '1.6': 13.0, // 3×1½ นิ้ว
+            '1.8': 15.0  // 4×2 นิ้ว
+        };
+        const weightH = ((w * wPieces + l * lPieces) / 600) * (STEEL_WEIGHT_PER_BAR[steelKey] || 3.8);
+        const weightV = ((h * hPieces) / 600) * 7.6; // ขาตั้ง 2x1 เสมอ (7.6 กก./เส้น)
+        const steelWeight = weightH + weightV;
+
+        // ฟังก์ชันคำนวณน้ำหนักวัสดุแผ่นชั้น/แผงปิดตามตารางความหนาแน่นจริง
+        function getMaterialWeight(type, area) {
+            if (!type || type === 'none') return 0;
+            let density = 0;
+            if (type === 'wood') {
+                density = 38 / 2.88; // ไม้พาราประสาน: 1 แผ่น 120x240 ซม. (2.88 ตรม.) หนัก 38 กก. -> ~13.19 กก./ตรม.
+            } else if (type === 'steel') {
+                density = 24 / 2.88; // แผ่นเหล็กเรียบ: 1 แผ่น 120x240 ซม. (2.88 ตรม.) หนัก 24 กก. -> ~8.33 กก./ตรม.
+            } else if (type === 'mesh') {
+                density = 3.0; // ตะแกรงเหล็ก -> ~3.0 กก./ตรม.
+            } else if (type === 'metal') {
+                density = 3.5; // เมทัลชีท -> ~3.5 กก./ตรม.
+            }
+            return area * density;
+        }
+
+        // ── พื้นชั้นวาง ────────────────────────────────────────────────
+        // จำนวนแผ่น = (กว้าง × ยาว) ÷ 3 (ตรม./แผ่นมาตรฐาน)
+        let shelfCost = 0;
+        let shelfWeight = 0;
+        for (let i = 1; i <= tiers; i++) {
+            const mat = document.querySelector(`input[name="tier${i}"]:checked`);
+            const boards = (wm * lm) / BOARD_AREA_M2;
+            const shelfArea = wm * lm;
+            
+            shelfCost += (mat && mat.value === 'wood')
+                ? boards * WOOD_PER_BOARD
+                : boards * MESH_PER_BOARD;
+                
+            if (mat) {
+                shelfWeight += getMaterialWeight(mat.value, shelfArea);
+            }
+        }
+
+        // ── ประตู/หน้าบาน ──────────────────────────────────────────────
+        let doorCost = 0;
+        const doorType = document.querySelector('input[name="door"]:checked').value;
+        if (doorType !== 'none') {
+            const cnt = parseInt(document.querySelector('input[name="doorCount"]:checked').value) || 1;
+            doorCost = cnt * 250;
+        }
+
+        // ── แผงปิดซ้าย-ขวา / แผงปิดหลัง / แผงปิดบาน ───────────────────
+        let coverCost = 0;
+        let coverWeight = 0;
+        if (doorType !== 'none') {
+            function getMaterialCost(type, area) {
+                if (type === 'none') return 0;
+                const boards = area / BOARD_AREA_M2;
+                if (type === 'wood' || type === 'steel') return boards * WOOD_PER_BOARD;
+                if (type === 'mesh') return boards * MESH_PER_BOARD;
+                if (type === 'metal') return area * METAL_PER_M2;
+                return 0;
+            }
+
+            // 1. ปิดข้าง ซ้าย-ขวา (Side Cover) -> 2 ด้าน
+            const sideType = document.querySelector('input[name="coverSide"]:checked').value;
+            const sideArea = 2 * hm * lm;
+            const sideCost = getMaterialCost(sideType, sideArea);
+            const sideWeight = getMaterialWeight(sideType, sideArea);
+
+            // 2. ปิดหลัง (Back Cover) -> 1 ด้าน
+            const backType = document.querySelector('input[name="coverBack"]:checked').value;
+            const backArea = hm * wm;
+            const backCost = getMaterialCost(backType, backArea);
+            const backWeight = getMaterialWeight(backType, backArea);
+
+            // 3. ปิดบาน (Door Cover) -> 1 ด้านของบานประตู
+            const doorCoverType = document.querySelector('input[name="coverDoor"]:checked').value;
+            const doorArea = wm * (hm / Math.max(1, tiers - 1));
+            const doorCoverCost = getMaterialCost(doorCoverType, doorArea);
+            const doorCoverWeight = getMaterialWeight(doorCoverType, doorArea);
+
+            coverCost = sideCost + backCost + doorCoverCost;
+            coverWeight = sideWeight + backWeight + doorCoverWeight;
+        }
+
+        // ── Powder Coat ────────────────────────────────────────────────
+        let powderCost = 0;
+        if (document.querySelector('input[name="color"]:checked').id === 'c_powder')
+            powderCost = 1500;
+
+        // ── รวม × กำไร × VAT ──────────────────────────────────────────
+        // ประตู/หน้าบาน บวกแยก 300 บาท/บาน ไม่คูณกำไร x3.2
+        const rawCost    = steelCost + shelfCost + coverCost + powderCost;
+        const withProfit = (rawCost * PROFIT_MULT) + doorCost;
+        const total      = withProfit * (1 + VAT_RATE);
+
+        const rounded = Math.round(total);
+
+        document.getElementById('totalPrice').innerText = rounded.toLocaleString('th-TH');
+        if (document.getElementById('summary-total')) {
+            document.getElementById('summary-total').innerText = `฿ ${rounded.toLocaleString('th-TH')}`;
+        }
+
+        const totalSize = w + l + h;
+        const isOverSize = totalSize > 315;
+        const sizeColor = isOverSize ? '#ef4444' : 'var(--text-muted)';
+
+        const totalWeight = steelWeight + shelfWeight + coverWeight;
+
+        document.getElementById('summary-dimensions').innerHTML = `${w} × ${l} × ${h} cm <span style="font-size: 0.75rem; color: ${sizeColor}; display: block; margin-top: 2px;">(รวม ${totalSize} cm)</span>`;
+        if (document.getElementById('summary-weight')) {
+            document.getElementById('summary-weight').innerHTML = `~${totalWeight.toFixed(1)} กก. <span style="font-size: 0.72rem; color: var(--text-muted); display: block; margin-top: 2px;">(เหล็ก+แผ่น)</span>`;
+        }
+        if (document.getElementById('modal-total-weight')) {
+            document.getElementById('modal-total-weight').innerText = totalWeight.toFixed(1);
+        }
+        if (document.getElementById('modal-weight-detail')) {
+            document.getElementById('modal-weight-detail').innerText = `โครงเหล็ก ${steelWeight.toFixed(1)} กก. + แผ่น/แผง ${(shelfWeight + coverWeight).toFixed(1)} กก.`;
+        }
+        
+        // Update real-time preview on the main page
+        const rtWeightEl = document.getElementById('rt-weight');
+        const rtWeightPreviewEl = document.getElementById('realtime-weight-preview');
+        if (rtWeightEl && rtWeightPreviewEl) {
+            rtWeightEl.innerText = totalWeight.toFixed(1);
+            rtWeightPreviewEl.style.display = 'block';
+        }
+
+        // ── คำนวณค่าส่ง Nim Express ─────────────────────────────────────
+        let shippingFee = 0;
+        let shippingFeeLabel = "฿ 0";
+        let shippingSub = "(Nim Express)";
+        const province = document.getElementById('dest_province').value;
+        
+        if (w > 0 && l > 0 && h > 0) {
+            if (isOverSize) {
+                shippingFeeLabel = "ต้องรับเอง";
+                shippingSub = "(เกินขนาดขนส่ง)";
+                
+                document.getElementById('modal-shipping-container').innerHTML = `<span style="color: #ef4444; font-size: 1.1rem; font-weight: 600;">ต้องรับเองที่ DC</span>`;
+                document.getElementById('combinedPrice').innerText = rounded.toLocaleString('th-TH');
+                document.getElementById('summary-shipping').innerHTML = `<span style="color: #ef4444;">ต้องรับเอง</span><span style="font-size: 0.72rem; color: var(--text-muted); display: block; margin-top: 2px;">${shippingSub}</span>`;
+                document.getElementById('summary-combined').innerHTML = `฿ ${rounded.toLocaleString('th-TH')} <span style="font-size: 0.72rem; color: var(--text-muted); display: block; margin-top: 2px;">(ไม่รวมค่าส่ง)</span>`;
+            } else if (!province) {
+                shippingFeeLabel = "รอระบุจังหวัด";
+                shippingSub = "(เลือกในข้อ 6)";
+                
+                document.getElementById('modal-shipping-container').innerHTML = `<span style="color: var(--text-muted); font-size: 1rem;">รอระบุจังหวัด</span>`;
+                document.getElementById('combinedPrice').innerText = rounded.toLocaleString('th-TH');
+                document.getElementById('summary-shipping').innerHTML = `<span style="color: var(--text-muted);">รอระบุจังหวัด</span><span style="font-size: 0.72rem; color: var(--text-muted); display: block; margin-top: 2px;">${shippingSub}</span>`;
+                document.getElementById('summary-combined').innerHTML = `฿ ${rounded.toLocaleString('th-TH')} <span style="font-size: 0.72rem; color: var(--text-muted); display: block; margin-top: 2px;">(ไม่รวมค่าส่ง)</span>`;
+            } else {
+                const vWeight = (w * l * h) / 6000;
+                const chargeableWeight = Math.max(vWeight, totalWeight);
+                let shipBase = 40;
+                if (chargeableWeight <= 1) shipBase = 40;
+                else if (chargeableWeight <= 3) shipBase = 60;
+                else if (chargeableWeight <= 5) shipBase = 80;
+                else if (chargeableWeight <= 10) shipBase = 120;
+                else if (chargeableWeight <= 15) shipBase = 160;
+                else if (chargeableWeight <= 20) shipBase = 200;
+                else if (chargeableWeight <= 25) shipBase = 250;
+                else if (chargeableWeight <= 30) shipBase = 300;
+                else if (chargeableWeight <= 40) shipBase = 400;
+                else if (chargeableWeight <= 50) shipBase = 500;
+                else shipBase = 500 + (chargeableWeight - 50) * 10;
+                
+                const surcharge = PROVINCE_ZONES[province] || 0;
+                shippingFee = Math.round(shipBase) + surcharge + 200; // base + regional surcharge + packaging fee 200 Baht
+                shippingFeeLabel = `฿ ${shippingFee.toLocaleString('th-TH')}`;
+                
+                const combined = rounded + shippingFee;
+                
+                document.getElementById('modal-shipping-container').innerHTML = `฿ <span id="modal-shipping-price">${shippingFee.toLocaleString('th-TH')}</span>`;
+                document.getElementById('combinedPrice').innerText = combined.toLocaleString('th-TH');
+                document.getElementById('summary-shipping').innerHTML = `<span>${shippingFeeLabel}</span><span style="font-size: 0.72rem; color: var(--text-muted); display: block; margin-top: 2px;">(Nim Express: ~${chargeableWeight.toFixed(1)} กก.)</span>`;
+                document.getElementById('summary-combined').innerHTML = `฿ ${combined.toLocaleString('th-TH')} <span style="font-size: 0.72rem; color: var(--text-muted); display: block; margin-top: 2px;">(รวมค่าส่ง)</span>`;
+            }
+        }
+        
+        const warningEl = document.getElementById('shipping-warning');
+        if (warningEl) {
+            warningEl.style.display = isOverSize ? 'block' : 'none';
+        }
+
+        updateBreakdown(steelCost, shelfCost, doorCost, coverCost, powderCost, wCost, lCost, hCost);
+
+        // Draw 3D cabinet sketch preview in the modal
+        drawCabinet();
+    }
+
+    function fmt(n) { return Math.round(n || 0).toLocaleString('th-TH'); }
+    function updateBreakdown(steel, shelf, door, cover, powder, wCost, lCost, hCost) {
+        const el = document.getElementById('breakdown');
+        if (!el) return;
+        
+        const materialTotal = steel + shelf + cover + powder;
+        const markedUpMaterials = materialTotal * PROFIT_MULT;
+        const totalBeforeVat = markedUpMaterials + door;
+        const vatAmount = totalBeforeVat * VAT_RATE;
+        
+        el.innerHTML = `
+            <div class="bd-row"><span>🔩 เหล็กแนวกว้าง</span><span>฿ ${fmt(wCost)}</span></div>
+            <div class="bd-row"><span>🔩 เหล็กแนวยาว</span><span>฿ ${fmt(lCost)}</span></div>
+            <div class="bd-row"><span>🔩 ขาตั้ง (2×1)</span><span>฿ ${fmt(hCost)}</span></div>
+            <div class="bd-row"><span>🪵/🔩 พื้นชั้นวาง</span><span>฿ ${fmt(shelf)}</span></div>
+            ${cover ? `<div class="bd-row"><span>🧱 ปิดข้างและหลัง</span><span>฿ ${fmt(cover)}</span></div>` : ''}
+            ${powder? `<div class="bd-row"><span>🎨 Powder Coat</span><span>฿ ${fmt(powder)}</span></div>` : ''}
+            <div class="bd-row bd-sub"><span>รวมต้นทุนวัสดุ</span><span>฿ ${fmt(materialTotal)}</span></div>
+            <div class="bd-row bd-sub"><span>× กำไรวัสดุ (×3.2)</span><span>฿ ${fmt(markedUpMaterials)}</span></div>
+            ${door  ? `<div class="bd-row" style="color: var(--accent); font-weight: 600;"><span>🚪 ค่าประตู/หน้าบาน (บานแยก)</span><span>฿ ${fmt(door)}</span></div>` : ''}
+            <div class="bd-row bd-sub"><span>ราคารวมก่อน VAT</span><span>฿ ${fmt(totalBeforeVat)}</span></div>
+            <div class="bd-row bd-sub"><span>+ VAT 7%</span><span>฿ ${fmt(vatAmount)}</span></div>
+        `;
+    }
+
+
+    function handleSubmit(actionType) {
+        const w = document.getElementById('dim_w').value || '?';
+        const l = document.getElementById('dim_l').value || '?';
+        const h = document.getElementById('dim_h').value || '?';
+        const steel = document.querySelector('input[name="steel"]:checked');
+        const steelLabel = steel ? steel.closest('.check-item').querySelector('label').innerText : '-';
+        const tiers = document.getElementById('layer_count').value;
+        const door = document.querySelector('input[name="door"]:checked');
+        let doorLabel = door ? door.closest('.check-item').querySelector('label').innerText : '-';
+        if (door && door.value !== 'none') {
+            const countEl = document.querySelector('input[name="doorCount"]:checked');
+            const countLabel = countEl ? countEl.closest('.check-item').querySelector('label').innerText : '';
+            if (countLabel) {
+                doorLabel += ` (${countLabel})`;
+            }
+            // ปิดข้าง ซ้าย-ขวา
+            const cSide = document.querySelector('input[name="coverSide"]:checked');
+            if (cSide && cSide.value !== 'none') {
+                doorLabel += ` [ปิดข้าง: ${cSide.closest('.check-item').querySelector('label').innerText}]`;
+            }
+            // ปิดหลัง
+            const cBack = document.querySelector('input[name="coverBack"]:checked');
+            if (cBack && cBack.value !== 'none') {
+                doorLabel += ` [ปิดหลัง: ${cBack.closest('.check-item').querySelector('label').innerText}]`;
+            }
+            // ปิดบาน (วัสดุหน้าบาน)
+            const cDoor = document.querySelector('input[name="coverDoor"]:checked');
+            if (cDoor && cDoor.value !== 'none') {
+                doorLabel += ` [ปิดบาน: ${cDoor.closest('.check-item').querySelector('label').innerText}]`;
+            }
+        }
+        const color = document.querySelector('input[name="color"]:checked');
+        const colorLabel = color ? color.closest('.check-item').querySelector('label').innerText : '-';
+        const powderColor = document.querySelector('input[name="powderColor"]:checked');
+        const powderLabel = (color && color.id === 'c_powder' && powderColor) ? ` (${powderColor.value})` : '';
+        const totalPrice = document.getElementById('totalPrice').innerText;
+
+        const province = document.getElementById('dest_province').value || '-';
+        const totalSize = parseFloat(w) + parseFloat(l) + parseFloat(h);
+        const isOverSize = totalSize > 315;
+
+        const totalWeightVal = parseFloat(document.getElementById('modal-total-weight').innerText) || 0;
+        const weightDetailVal = document.getElementById('modal-weight-detail').innerText;
+
+        let shippingFeeLabel = "฿0";
+        let combinedPriceLabel = `฿${totalPrice}`;
+        let shippingFee = 0;
+        
+        if (w > 0 && l > 0 && h > 0) {
+            if (isOverSize) {
+                shippingFeeLabel = "เกินขนาดขนส่ง (ต้องรับเองที่ DC ปลายทาง)";
+                combinedPriceLabel = `฿${totalPrice} (ไม่รวมค่าจัดส่ง)`;
+            } else {
+                const vWeight = (w * l * h) / 6000;
+                const chargeableWeight = Math.max(vWeight, totalWeightVal);
+                let shipBase = 40;
+                if (chargeableWeight <= 1) shipBase = 40;
+                else if (chargeableWeight <= 3) shipBase = 60;
+                else if (chargeableWeight <= 5) shipBase = 80;
+                else if (chargeableWeight <= 10) shipBase = 120;
+                else if (chargeableWeight <= 15) shipBase = 160;
+                else if (chargeableWeight <= 20) shipBase = 200;
+                else if (chargeableWeight <= 25) shipBase = 250;
+                else if (chargeableWeight <= 30) shipBase = 300;
+                else if (chargeableWeight <= 40) shipBase = 400;
+                else if (chargeableWeight <= 50) shipBase = 500;
+                else shipBase = 500 + (chargeableWeight - 50) * 10;
+                
+                const surcharge = PROVINCE_ZONES[province] || 0;
+                shippingFee = Math.round(shipBase) + surcharge + 200; // Packaging fee +200
+                shippingFeeLabel = `฿${shippingFee.toLocaleString('th-TH')}`;
+                
+                const productVal = parseInt(totalPrice.replace(/,/g, '')) || 0;
+                combinedPriceLabel = `฿${(productVal + shippingFee).toLocaleString('th-TH')}`;
+            }
+        }
+
+        if (actionType === 'quote') {
+            if (window.location.protocol === 'file:') {
+                alert('⚠️ คำเตือน: คุณกำลังใช้งานระบบผ่านการเปิดไฟล์โดยตรง (ไม่ใช่ผ่าน Server)\n\nหากดำเนินการต่อ ลิงก์สำหรับพิมพ์ใน Google Sheets จะเสียและไม่สามารถกดเปิดได้!\n\nกรุณาปิดหน้าต่างนี้ แล้วดับเบิลคลิกไฟล์ "เริ่มระบบ_ใบเสนอราคา.bat" ในโฟลเดอร์เพื่อรันระบบผ่าน Server อย่างถูกต้องครับ');
+            }
+            const productVal = parseInt(totalPrice.replace(/,/g, '')) || 0;
+            const shippingVal = isOverSize ? 'oversize' : shippingFee;
+            const totalVal = isOverSize ? productVal : (productVal + shippingFee);
+            
+            const urlParams = new URLSearchParams({
+                w: w,
+                l: l,
+                h: h,
+                steel: steelLabel,
+                tiers: tiers,
+                door: doorLabel,
+                color: `${colorLabel}${powderLabel}`,
+                province: province,
+                price: productVal,
+                shipping: shippingVal,
+                total: totalVal,
+                weight: totalWeightVal,
+                weight_detail: weightDetailVal
+            });
+            
+            window.open(`quotation.html?${urlParams.toString()}`, '_blank');
+            return;
+        }
+
+        const sketchLabel = 'ต้องการแบบร่าง 3D ฟรี (มัดจำ 50%)';
+
+        const header = actionType === 'spec' 
+            ? '🏭 ส่งข้อมูลสอบถามแอดมิน/สั่งซื้อ - IRONSERVICE KK' 
+            : '🏭 ขอใบเสนอราคาเบื้องต้น - IRONSERVICE KK';
+            
+        const footer = actionType === 'spec'
+            ? 'สอบถามข้อมูลเพิ่มเติม หรือต้องการสั่งซื้อชิ้นงานนี้ครับ/ค่ะ'
+            : 'กรุณาออกใบเสนอราคาเบื้องต้นและแบบ 3D ให้ด้วยครับ/ค่ะ';
+
+        const msg = encodeURIComponent(
+            `${header}\n\n` +
+            `📐 ขนาด: กว้าง ${w} × ลึก ${l} × สูง ${h} ซม. (รวม ${totalSize} ซม.)\n` +
+            `🔩 เหล็ก: ${steelLabel}\n` +
+            `⚖️ น้ำหนักตู้รวม: ~${totalWeightVal} กก. (${weightDetailVal})\n` +
+            `📦 จำนวนชั้น: ${tiers} ชั้น\n` +
+            `🚪 ประตู: ${doorLabel}\n` +
+            `🎨 สี: ${colorLabel}${powderLabel}\n` +
+            `📐 แบบร่าง 3D: ${sketchLabel}\n` +
+            `📍 ต้นทางจัดส่ง: ขอนแก่น\n` +
+            `📍 ปลายทางจัดส่ง: จ. ${province}\n` +
+            `🚚 ค่าจัดส่ง + แพ็คเกจ: ${shippingFeeLabel} (Nim Express)\n` +
+            `💵 ราคาสินค้า: ฿${totalPrice} (รวม VAT)\n` +
+            `💰 ยอดรวมทั้งสิ้น: ${combinedPriceLabel}\n\n` +
+            `${footer}`
+        );
+
+        window.open(`https://lin.ee/8w8xm7u?text=${msg}`, '_blank');
+    }
+
+    function openModal() {
+        const modal = document.getElementById('result-modal');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('result-modal');
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function closeModalOnOverlay(e) {
+        if (e.target.id === 'result-modal') {
+            closeModal();
+        }
+    }
+
+    function calculateAndShow() {
+        const provinceSelect = document.getElementById('dest_province');
+        if (!provinceSelect.value) {
+            alert('กรุณาเลือกจังหวัดจัดส่ง (ปลายทาง) ในข้อ 6 ก่อนคำนวณราคาครับ');
+            provinceSelect.focus();
+            return;
+        }
+        calculate();
+        openModal();
+    }
+
+    function resetForm() {
+        // Reset dimensions
+        document.getElementById('dim_w').value = '0';
+        document.getElementById('dim_l').value = '0';
+        document.getElementById('dim_h').value = '0';
+
+        // Reset steel (radio s2 is default 1x1)
+        document.getElementById('s2').checked = true;
+
+        // Reset layer count
+        document.getElementById('layer_count').value = '3';
+        generateShelves();
+
+        // Reset door
+        document.getElementById('d_none').checked = true;
+        toggleDoorOptions();
+
+        // Reset cover sub-options to 'none'
+        document.getElementById('cvs_none').checked = true;
+        document.getElementById('cvb_none').checked = true;
+        document.getElementById('cvd_none').checked = true;
+
+        // Reset color
+        document.getElementById('c_white').checked = true;
+        togglePowderOptions();
+
+        // Reset province select
+        document.getElementById('dest_province').value = '';
+
+        // Recalculate background values
+        calculate();
+
+        // Scroll smoothly to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function initUserHeader() {
+        const statusEl = document.getElementById('user-header-status');
+        if (!statusEl) return;
+        
+        const session = JSON.parse(localStorage.getItem('user_session'));
+        if (session) {
+            statusEl.innerHTML = `
+                <span style="color: rgba(255,255,255,0.7);">สวัสดี, <strong style="color: var(--accent);">${session.name || session.username}</strong></span>
+                <a href="dashboard.html" class="back-btn" style="color: var(--accent); font-weight: 600;">📊 แดชบอร์ด</a>
+                <button onclick="handleHeaderLogout()" style="background: none; border: none; color: #f87171; cursor: pointer; font-family: 'Prompt', sans-serif; font-size: 0.85rem; font-weight: 600;">🚪 ออก</button>
+            `;
+        } else {
+            statusEl.innerHTML = `
+                <a href="login.html" class="back-btn" style="color: var(--accent); font-weight: 600;">🔐 เข้าสู่ระบบ</a>
+            `;
+        }
+    }
+
+    function handleHeaderLogout() {
+        localStorage.removeItem('user_session');
+        window.location.reload();
+    }
+
+    function checkFileProtocol() {
+        if (window.location.protocol === 'file:') {
+            const banner = document.createElement('div');
+            banner.style.cssText = 'background: linear-gradient(90deg, #ef4444, #b91c1c); color: white; text-align: center; padding: 12px 20px; font-weight: 500; font-size: 0.95rem; border-bottom: 2px solid #7f1d1d; position: sticky; top: 0; z-index: 9999; box-shadow: 0 4px 15px rgba(0,0,0,0.5); font-family: "Prompt", sans-serif; display: flex; align-items: center; justify-content: center; gap: 10px; line-height: 1.5;';
+            banner.innerHTML = '⚠️ <span style="font-weight: 600;">คุณกำลังเปิดไฟล์โดยตรง (ทำให้ลิงก์ใน Google Sheets กดพิมพ์ไม่ได้)</span> กรุณาดับเบิลคลิกไฟล์ <strong style="text-decoration: underline; color: #fef08a;">เริ่มระบบ_ใบเสนอราคา.bat</strong> เพื่อรันเซิร์ฟเวอร์ก่อนใช้งานครับ';
+            document.body.insertBefore(banner, document.body.firstChild);
+            document.body.style.paddingTop = '0px';
+        }
+    }
+
+    window.onload = function () {
+        checkFileProtocol();
+        generateShelves();
+        calculate();
+        initUserHeader();
+    };
+</script>
+</body>
+</html>

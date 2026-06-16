@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ใบเสนอราคาประเมินเบื้องต้น | หจก.งานเหล็กงานลอฟท์ขอนแก่น</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ca8a04;
+            --primary-hover: #a16207;
+            --text-dark: #1f2937;
+            --text-muted: #4b5563;
+            --border-light: #e5e7eb;
+            --bg-light: #f9fafb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: #f3f4f6;
+            color: var(--text-dark);
+            line-height: 1.5;
+            padding: 40px 16px 120px;
+        }
+
+        /* Container & Page */
+        .page-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 50px 48px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            position: relative;
+            border-top: 8px solid var(--primary);
+        }
+
+        /* Document Header */
+        .doc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border-light);
+            padding-bottom: 24px;
+        }
+
+        .company-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .company-text h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.3;
+            margin-bottom: 4px;
+        }
+
+        .company-text p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .doc-title {
+            text-align: right;
+        }
+
+        .doc-title h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .quote-meta-grid {
+            display: grid;
+            grid-template-columns: auto auto;
+            gap: 4px 16px;
+            font-size: 0.82rem;
+            text-align: left;
+        }
+
+        .meta-label {
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .meta-val {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* Customer & Info section */
+        .info-section {
+            margin-bottom: 30px;
+        }
+
+        .info-block {
+            background-color: var(--bg-light);
+            padding: 16px;
+            border-radius: 6px;
+            border: 1px solid var(--border-light);
+        }
+
+        .info-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--primary);
+            margin-bottom: 8px;
+            border-bottom: 1px solid rgba(202, 138, 4, 0.2);
+            padding-bottom: 4px;
+        }
+
+        /* Editable customer fields */
+        .editable-field {
+            font-size: 0.85rem;
+            min-height: 22px;
+            outline: none;
+            transition: all 0.2s;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--text-dark);
+            border: 1px dashed transparent;
+        }
+
+        .editable-field:hover {
+            background: rgba(202, 138, 4, 0.06);
+            border-color: rgba(202, 138, 4, 0.3);
+            cursor: text;
+        }
+
+        .editable-field:focus {
+            background: #ffffff;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(202, 138, 4, 0.1);
+        }
+
+        .placeholder-text {
+            color: #9ca3af !important;
+            font-style: italic;
+        }
+
+        /* Tables styles */
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            font-size: 0.85rem;
+        }
+
+        .items-table th {
+            background-color: #f1f5f9;
+            color: #334155;
+            font-weight: 600;
+            text-align: left;
+            padding: 10px 12px;
+            border-top: 1px solid var(--border-light);
+            border-bottom: 2px solid #cbd5e1;
+        }
+
+        .items-table td {
+            padding: 14px 12px;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+
+        .spec-list {
+            list-style: none;
+            margin-top: 8px;
+            padding-left: 0;
+        }
+
+        .spec-list li {
+            position: relative;
+            padding-left: 14px;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 3px;
+        }
+
+        .spec-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Summary section */
+        .summary-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 40px;
+        }
+
+        .terms-block {
+            width: 55%;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .terms-title {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+            font-size: 0.82rem;
+        }
+
+        .bank-details {
+            margin-top: 12px;
+            background: var(--bg-light);
+            padding: 10px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--border-light);
+            display: inline-block;
+            width: 100%;
+        }
+
+        .totals-block {
+            width: 40%;
+            font-size: 0.85rem;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .total-row.grand {
+            border-bottom: none;
+            background-color: rgba(202, 138, 4, 0.08);
+            border: 1px solid rgba(202, 138, 4, 0.25);
+            padding: 10px 14px;
+            border-radius: 6px;
+            margin-top: 6px;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--primary);
+        }
+
+        /* Signature section */
+        .signatures-section {
+            display: grid;
+            grid-template-columns: 1fr 120px 1fr;
+            gap: 16px;
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.8rem;
+            align-items: center;
+        }
+
+        .sig-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sig-name-title {
+            font-weight: 600;
+            font-size: 0.82rem;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            min-height: 20px;
+        }
+
+        .sig-line {
+            width: 80%;
+            border-bottom: 1px solid #9ca3af;
+            margin-bottom: 8px;
+            height: 35px;
+        }
+
+        .sig-title {
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        /* Action Bar (Sticky bottom) */
+        .action-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 16px;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            z-index: 999;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            font-family: 'Prompt', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ca8a04 0%, #a16207 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(202, 138, 4, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(202, 138, 4, 0.35);
+        }
+
+        .btn-line {
+            background: linear-gradient(135deg, #06C755 0%, #05B34C 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(6, 199, 85, 0.25);
+        }
+
+        .btn-line:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(6, 199, 85, 0.35);
+        }
+
+        .btn-db {
+            background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+        }
+
+        .btn-db:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* PRINT STYLE RULES */
+        @media print {
+            body {
+                background-color: #ffffff;
+                padding: 0;
+                color: #000000;
+            }
+
+            .page-container {
+                box-shadow: none;
+                padding: 0;
+                border-top: none;
+            }
+
+            .action-bar {
+                display: none !important;
+            }
+
+            .editable-field {
+                border: none !important;
+                background: transparent !important;
+                padding: 0 !important;
+            }
+
+            .placeholder-text {
+                display: none !important;
+            }
+            .placeholder-active::before {
+                display: none !important;
+            }
+
+            .info-block {
+                border: 1px solid #cbd5e1 !important;
+                background-color: #ffffff !important;
+            }
+
+            .items-table th {
+                background-color: #f1f5f9 !important;
+                color: #1e293b !important;
+                border-bottom: 2px solid #94a3b8 !important;
+            }
+
+            .total-row.grand {
+                background-color: #f8fafc !important;
+                border: 1px solid #cbd5e1 !important;
+                color: #000000 !important;
+            }
+            .editable-active-field {
+                border: none !important;
+                background: transparent !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+            }
+        }
+
+        /* Edit mode highlighting styles */
+        .editable-active-field {
+            outline: none;
+            border: 1px dashed var(--primary) !important;
+            background-color: rgba(202, 138, 4, 0.04) !important;
+            padding: 2px 6px !important;
+            border-radius: 4px !important;
+            transition: all 0.2s;
+        }
+        .editable-active-field:hover {
+            background-color: rgba(202, 138, 4, 0.08) !important;
+            cursor: text;
+        }
+        .editable-active-field:focus {
+            background-color: #ffffff !important;
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 0 2px rgba(202, 138, 4, 0.1) !important;
+        }
+
+        /* Placeholder styling for customer details */
+        .editable-field[data-placeholder] {
+            position: relative;
+            min-height: 1.2em;
+        }
+        .editable-field[data-placeholder].placeholder-active::before {
+            content: attr(data-placeholder);
+            color: #9ca3af;
+            font-style: italic;
+            pointer-events: none;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-container">
+        <!-- Document Header -->
+        <div class="doc-header">
+            <div class="company-info">
+                <!-- Shop Official circular logo -->
+                <img src="assets/logo.png" alt="Logo" style="width: 65px; height: 65px; margin-right: 18px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border-light); flex-shrink: 0;">
+                <div class="company-text">
+                    <h1 id="comp-name" style="font-size: 1.15rem; font-weight: 700; color: #0f172a;">ห้างหุ้นส่วนจำกัด งานเหล็กงานลอฟท์ขอนแก่น</h1>
+                    <p id="comp-address">136 ม.15 ตำบลเมืองเก่า อำเภอเมืองขอนแก่น จังหวัดขอนแก่น 40000</p>
+                    <p id="comp-tax">เลขประจำตัวผู้เสียภาษี 0403567000205 (สำนักงานใหญ่)</p>
+                    <p id="comp-phone">เบอร์มือถือ: 063-7409696</p>
+                </div>
+            </div>
+            <div class="doc-title">
+                <h2 id="doc-title-text" style="color: #ca8a04; font-size: 1.5rem;">ใบเสนอราคา</h2>
+                <div class="quote-meta-grid">
+                    <span class="meta-label">เลขที่:</span>
+                    <span class="meta-val" id="quote-no">QTXXXXXXXX</span>
+                    <span class="meta-label">วันที่:</span>
+                    <span class="meta-val" id="quote-date">-</span>
+                    <span class="meta-label">ผู้ขาย:</span>
+                    <span class="meta-val" id="seller-name">Admin</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Grid (Customer & Terms) -->
+        <div class="info-section">
+            <div class="info-block">
+                <div class="info-title">👤 ลูกค้า / Customer</div>
+                <!-- Editable customer details -->
+                <div contenteditable="true" class="editable-field" id="cust-name" data-placeholder="ชื่อลูกค้า / ชื่อบริษัท"></div>
+                <div contenteditable="true" class="editable-field" id="cust-address" style="margin-top: 4px;" data-placeholder="ที่อยู่สำหรับจัดส่ง/ออกเอกสาร"></div>
+                <div contenteditable="true" class="editable-field" id="cust-tax-id" style="margin-top: 4px;" data-placeholder="เลขประจำตัวผู้เสียภาษี"></div>
+                <div contenteditable="true" class="editable-field" id="cust-contact" style="margin-top: 4px;" data-placeholder="เบอร์โทรศัพท์ติดต่อ"></div>
+            </div>
+        </div>
+
+        <!-- Table of Items -->
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th style="width: 8%; text-align: center;">ลำดับ</th>
+                    <th style="width: 54%;">รายการรายละเอียดสินค้า / Details</th>
+                    <th style="width: 10%; text-align: center;">จำนวน</th>
+                    <th style="width: 8%; text-align: center;">หน่วย</th>
+                    <th style="width: 20%; text-align: right;">ราคาต่อหน่วย</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="text-align: center;">1</td>
+                    <td>
+                        <strong id="item-name" style="color: #0f172a; font-size: 0.9rem;">ตู้เหล็กและไม้สไตล์ลอฟท์สั่งทำพิเศษ (Custom Loft Cabinet)</strong>
+                        <ul class="spec-list" id="spec-details">
+                            <!-- JS will inject specs here -->
+                        </ul>
+                    </td>
+                    <td style="text-align: center; font-weight: 500; color: #0f172a;" id="item-qty">1</td>
+                    <td style="text-align: center; color: var(--text-muted);" id="item-unit">ตัว</td>
+                    <td style="text-align: right; font-weight: 600; color: #0f172a;" id="unit-price">฿0</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Summary Area -->
+        <div class="summary-wrapper">
+            <div class="terms-block">
+                <div class="terms-title" id="terms-title">📝 เงื่อนไขการชำระสินค้า / Payment Terms</div>
+                <p id="term-line-1">✅ <strong>งวดที่ 1 ชำระเงินมัดจำสินค้า</strong> = <span id="deposit-1-val" style="font-weight: 700; color: #0f172a;">0</span> บาท (50%)</p>
+                <p id="term-line-2">✅ <strong>งวดที่ 2 ชำระส่วนที่เหลือ</strong> = <span id="deposit-2-val" style="font-weight: 700; color: #0f172a;">0</span> บาท (50%) เมื่อผลิตเสร็จสิ้นถ่ายภาพสินค้าส่งความคืบหน้าให้ลูกค้าก่อนแพ็คจัดส่ง</p>
+                <p id="term-line-3" style="margin-top: 4px; color: var(--text-dark);">(หรือคุณลูกค้าสามารถชำระทั้งหมดได้ค่ะ)</p>
+                <p id="term-line-4">(รับชำระผ่านบัตรเครดิต + 3%)</p>
+                <p id="term-line-5">รอคิวผลิตและส่งออกภายใน 7-14 วันทำการ</p>
+                
+                <div class="bank-details" id="bank-details-box">
+                    <span style="font-weight: 700; color: #ca8a04; display: block; margin-bottom: 4px;">📮 ช่องทางชำระสินค้า 📮</span>
+                    ธนาคารกสิกรไทย (KBANK)<br>
+                    เลขที่บัญชี: <strong style="font-size: 0.95rem; color: #0f172a; letter-spacing: 0.02em;">184-3-37957-1</strong><br>
+                    ชื่อบัญชี: <strong>หจก.งานเหล็กงานลอฟท์ขอนแก่น</strong><br>
+                    <span style="color: #ef4444; font-weight: 600; font-size: 0.72rem; display: block; margin-top: 4px;">⚠️ โอนเข้าบัญชีข้างต้นนี้เพียงบัญชีเดียวเท่านั้น ไม่มีบัญชีชื่อบุคคล ⚠️</span>
+                </div>
+            </div>
+            
+            <div class="totals-block">
+                <div class="total-row">
+                    <span style="color: var(--text-muted);">ราคาสินค้าก่อนภาษีมูลค่าเพิ่ม</span>
+                    <span id="subtotal-val">฿0</span>
+                </div>
+                <div class="total-row">
+                    <span style="color: var(--text-muted);">ภาษีมูลค่าเพิ่ม 7%</span>
+                    <span id="vat-val">฿0</span>
+                </div>
+                <div class="total-row">
+                    <span style="font-weight: 500;">ราคาสินค้ารวม VAT</span>
+                    <span id="product-total-val" style="font-weight: 500;">฿0</span>
+                </div>
+                <div class="total-row">
+                    <span style="color: var(--text-muted);">ค่าจัดส่ง + แพ็คเกจ</span>
+                    <span id="shipping-val" style="font-weight: 500;">฿0</span>
+                </div>
+                <div class="total-row grand">
+                    <span>ยอดเงินสุทธิทั้งสิ้น</span>
+                    <span id="combined-val">฿0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Signature Area -->
+        <div class="signatures-section">
+            <div class="sig-block">
+                <span class="sig-name-title" id="sig-cust-title">ในนาม <span id="sig-cust-name">-</span></span>
+                <div class="sig-line"></div>
+                <span class="sig-title" id="sig-cust-role">ผู้สั่งซื้อสินค้า</span>
+                <span id="sig-cust-date-label" style="font-size: 0.7rem; color: var(--text-muted); margin-top: 4px;">วันที่ _____/_____/_____</span>
+            </div>
+            <div class="sig-block">
+                <img src="assets/logo.png" alt="Stamp" style="width: 80px; height: 80px; opacity: 0.85; border-radius: 50%; object-fit: cover; border: 1px solid var(--border-light);">
+            </div>
+            <div class="sig-block">
+                <span class="sig-name-title" id="sig-seller-title" style="font-size: 0.78rem;">ในนาม ห้างหุ้นส่วนจำกัด งานเหล็กงานลอฟท์ขอนแก่น</span>
+                <div class="sig-line" style="position: relative; display: flex; align-items: center; justify-content: center;">
+                    <!-- Hand signature simulation SVG -->
+                    <svg viewBox="0 0 100 30" width="80" height="24" style="position: absolute; bottom: 4px;">
+                        <path d="M10 20 Q30 3, 50 18 T90 12" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <span class="sig-title" id="sig-seller-role">ผู้อนุมัติ</span>
+                <span id="sig-seller-date-label" style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">วันที่ <span id="sig-date">-</span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sticky Action Bar (Screen Only) -->
+    <div class="action-bar">
+        <button class="btn btn-secondary" onclick="goBack()">
+            🔙 ย้อนกลับ
+        </button>
+        <button class="btn btn-secondary" onclick="editData()">
+            ✏️ แก้ไขข้อมูล
+        </button>
+        <button class="btn btn-secondary" onclick="configureGoogleSheet()" title="ตั้งค่าเชื่อมต่อ Google Sheets">
+            ⚙️ ตั้งค่าชีท
+        </button>
+        <button class="btn btn-db" onclick="saveToExcelDatabase()">
+            💾 บันทึกข้อมูล
+        </button>
+        <button class="btn btn-primary" onclick="printQuote()">
+            🖨️ พิมพ์เอกสาร
+        </button>
+        <button class="btn btn-line" onclick="sendToLine()">
+            💬 ยืนยันข้อมูลสั่งซื้อผ่าน LINE
+        </button>
+    </div>
+
+    <script>
+        // Placeholder state manager for contenteditable customer fields
+        function checkPlaceholder(el) {
+            if (!el) return;
+            const text = el.innerText.replace(/\n/g, '').trim();
+            if (text === '' || el.innerHTML === '<br>') {
+                el.classList.add('placeholder-active');
+            } else {
+                el.classList.remove('placeholder-active');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.location.protocol === 'file:') {
+                const banner = document.createElement('div');
+                banner.style.cssText = 'background: linear-gradient(90deg, #ef4444, #b91c1c); color: white; text-align: center; padding: 12px 20px; font-weight: 500; font-size: 0.95rem; border-bottom: 2px solid #7f1d1d; position: sticky; top: 0; z-index: 9999; box-shadow: 0 4px 15px rgba(0,0,0,0.5); font-family: "Prompt", sans-serif; display: flex; align-items: center; justify-content: center; gap: 10px; line-height: 1.5;';
+                banner.innerHTML = '⚠️ <span style="font-weight: 600;">คุณกำลังเปิดไฟล์โดยตรง (ทำให้ลิงก์ใน Google Sheets กดพิมพ์ไม่ได้)</span> กรุณาดับเบิลคลิกไฟล์ <strong style="text-decoration: underline; color: #fef08a;">เริ่มระบบ_ใบเสนอราคา.bat</strong> เพื่อรันเซิร์ฟเวอร์ก่อนใช้งานครับ';
+                document.body.insertBefore(banner, document.body.firstChild);
+                document.body.style.paddingTop = '0px';
+            }
+            const customerFields = ['cust-name', 'cust-address', 'cust-tax-id', 'cust-contact'];
+            customerFields.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    checkPlaceholder(el);
+                    el.addEventListener('input', () => {
+                        checkPlaceholder(el);
+                        // Update sig name if cust-name changed
+                        if (id === 'cust-name') {
+                            const sigCust = document.getElementById('sig-cust-name');
+                            if (sigCust) {
+                                sigCust.innerText = el.classList.contains('placeholder-active') ? '-' : el.innerText.trim();
+                            }
+                        }
+                    });
+                    el.addEventListener('blur', () => {
+                        checkPlaceholder(el);
+                        if (el.innerText.trim() === '') {
+                            el.innerHTML = '';
+                        }
+                    });
+                    el.addEventListener('focus', () => {
+                        checkPlaceholder(el);
+                    });
+                }
+            });
+        });
+
+        // Check if loading existing quote or calculating new
+        const params = new URLSearchParams(window.location.search);
+        const urlQuoteNo = params.get('quoteNo');
+        const urlName = params.get('name');
+
+        if (urlQuoteNo && urlName) {
+            populateFromFullUrlParams(params);
+        } else if (urlQuoteNo) {
+            loadQuoteFromDatabase(urlQuoteNo);
+        } else {
+            populateFromParams();
+        }
+
+        function populateFromFullUrlParams(params) {
+            const quote = {
+                QuoteNo: params.get('quoteNo'),
+                Date: params.get('date'),
+                Seller: params.get('seller'),
+                CustomerName: params.get('name'),
+                Address: params.get('address'),
+                TaxId: params.get('taxId'),
+                Contact: params.get('contact'),
+                Dimensions: params.get('dimensions'),
+                Steel: params.get('steel'),
+                Tiers: params.get('tiers'),
+                Door: params.get('door'),
+                Color: params.get('color'),
+                Weight: params.get('weight'),
+                Shipping: params.get('shipping'),
+                Total: params.get('total')
+            };
+            renderQuoteDetails(quote);
+        }
+
+        function loadQuoteFromDatabase(quoteNo) {
+            // Check if user is logged in
+            const session = JSON.parse(localStorage.getItem('user_session'));
+            const webhookUrl = localStorage.getItem('google_sheet_webhook_url');
+            
+            if (session && webhookUrl) {
+                // Fetch from Google Sheets backend
+                fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({
+                        action: 'getQuotations',
+                        username: session.username,
+                        role: session.role
+                    })
+                })
+                .then(res => res.json())
+                .then(res => {
+                    if (res.status === 'success' && res.data) {
+                        const quote = res.data.find(q => q.QuoteNo === quoteNo);
+                        if (quote) {
+                            renderQuoteDetails(quote);
+                        } else {
+                            loadFromLocalStorageFallback(quoteNo);
+                        }
+                    } else {
+                        loadFromLocalStorageFallback(quoteNo);
+                    }
+                })
+                .catch(err => {
+                    console.error('Failed to fetch from webhook, trying localStorage fallback:', err);
+                    loadFromLocalStorageFallback(quoteNo);
+                });
+            } else {
+                loadFromLocalStorageFallback(quoteNo);
+            }
+        }
+
+        function loadFromLocalStorageFallback(quoteNo) {
+            const db = JSON.parse(localStorage.getItem('customer_quote_db') || '[]');
+            const quote = db.find(q => q.quoteNo === quoteNo);
+            if (quote) {
+                renderQuoteDetails({
+                    Date: quote.date,
+                    QuoteNo: quote.quoteNo,
+                    CustomerName: quote.name,
+                    Address: quote.address,
+                    TaxId: quote.taxId,
+                    Contact: quote.contact,
+                    Dimensions: quote.dimensions,
+                    Steel: quote.steel,
+                    Tiers: quote.tiers,
+                    Door: quote.door,
+                    Color: quote.color,
+                    Weight: quote.weight,
+                    Shipping: quote.shipping,
+                    Total: quote.total,
+                    Seller: quote.seller
+                });
+            } else {
+                const session = localStorage.getItem('user_session');
+                const webhookUrl = localStorage.getItem('google_sheet_webhook_url');
+                
+                let reasons = [];
+                if (!session) reasons.push('- คุณยังไม่ได้เข้าสู่ระบบ (Login) บน Server พอร์ตใหม่นี้');
+                if (!webhookUrl) reasons.push('- คุณยังไม่ได้ตั้งค่าเชื่อมต่อ Google Sheets บน Server พอร์ตใหม่นี้');
+                
+                let msg = 'ไม่พบข้อมูลใบเสนอราคาเลขที่: ' + quoteNo + '\n\n';
+                if (reasons.length > 0) {
+                    msg += '💡 คำแนะนำสำหรับเซิร์ฟเวอร์พอร์ตใหม่ (localhost:3003):\n' + 
+                           reasons.join('\n') + '\n\n' +
+                           'กรุณาคลิกปุ่ม "ตกลง" แล้วกดปุ่ม "⚙️ ตั้งค่าชีท" ด้านล่างของหน้า เพื่อวางลิงก์ตั้งค่า Google Sheets และดึงข้อมูลเก่ากลับมาแสดงได้ทันทีครับ';
+                } else {
+                    msg += 'ไม่พบข้อมูลนี้ในฐานข้อมูล Google Sheets และความจำเครื่อง\nกรุณาตรวจสอบเลขที่ใบเสนอราคาอีกครั้งครับ';
+                }
+                alert(msg);
+            }
+        }
+
+        function renderQuoteDetails(quote) {
+            document.getElementById('quote-no').innerText = quote.QuoteNo;
+            document.getElementById('quote-date').innerText = quote.Date;
+            document.getElementById('sig-date').innerText = quote.Date;
+            document.getElementById('seller-name').innerText = quote.Seller || 'Admin';
+            
+            const nameEl = document.getElementById('cust-name');
+            nameEl.innerText = quote.CustomerName || '';
+            checkPlaceholder(nameEl);
+            document.getElementById('sig-cust-name').innerText = quote.CustomerName || '-';
+            
+            const addressEl = document.getElementById('cust-address');
+            addressEl.innerText = quote.Address || '';
+            checkPlaceholder(addressEl);
+            
+            const taxEl = document.getElementById('cust-tax-id');
+            taxEl.innerText = quote.TaxId || '';
+            checkPlaceholder(taxEl);
+            
+            const contactEl = document.getElementById('cust-contact');
+            contactEl.innerText = quote.Contact || '';
+            checkPlaceholder(contactEl);
+            
+            // Reconstruct spec list
+            const specListEl = document.getElementById('spec-details');
+            specListEl.innerHTML = `
+                <li id="spec-size">${quote.Dimensions}</li>
+                <li id="spec-steel">${quote.Steel}</li>
+                <li id="spec-tiers">${quote.Tiers}</li>
+                <li id="spec-door">${quote.Door}</li>
+                <li id="spec-color">${quote.Color}</li>
+                <li id="spec-weight">${quote.Weight}</li>
+            `;
+            
+            // Format price numbers
+            const totalVal = parseFloat(quote.Total) || 0;
+            const shippingText = String(quote.Shipping || '0');
+            let shippingFee = 0;
+            let isOverSize = false;
+            
+            if (shippingText.includes('เกินขนาด') || shippingText.toLowerCase().includes('oversize')) {
+                isOverSize = true;
+            } else {
+                shippingFee = parseNumber(shippingText);
+            }
+            
+            const productVal = isOverSize ? totalVal : (totalVal - shippingFee);
+            const subtotal = Math.round(productVal / 1.07);
+            const vat = productVal - subtotal;
+            
+            document.getElementById('unit-price').innerText = `฿${productVal.toLocaleString('th-TH')}`;
+            document.getElementById('subtotal-val').innerText = `฿${subtotal.toLocaleString('th-TH')}`;
+            document.getElementById('vat-val').innerText = `฿${vat.toLocaleString('th-TH')}`;
+            document.getElementById('product-total-val').innerText = `฿${productVal.toLocaleString('th-TH')}`;
+            
+            document.getElementById('shipping-val').innerText = isOverSize ? shippingText : `฿${shippingFee.toLocaleString('th-TH')}`;
+            
+            if (isOverSize) {
+                document.getElementById('combined-val').innerText = `฿${productVal.toLocaleString('th-TH')}*`;
+                
+                if (!document.getElementById('shipping-oversize-note')) {
+                    const totalRowGrand = document.querySelector('.total-row.grand');
+                    const noteSpan = document.createElement('span');
+                    noteSpan.id = 'shipping-oversize-note';
+                    noteSpan.innerText = '*ไม่รวมค่าจัดส่งปลายทาง';
+                    noteSpan.style.display = 'block';
+                    noteSpan.style.fontSize = '0.65rem';
+                    noteSpan.style.color = '#ef4444';
+                    noteSpan.style.textAlign = 'right';
+                    totalRowGrand.parentNode.appendChild(noteSpan);
+                }
+            } else {
+                document.getElementById('combined-val').innerText = `฿${totalVal.toLocaleString('th-TH')}`;
+                const note = document.getElementById('shipping-oversize-note');
+                if (note) note.remove();
+            }
+            
+            const depositPrice = Math.round((isOverSize ? productVal : totalVal) / 2);
+            document.getElementById('deposit-1-val').innerText = depositPrice.toLocaleString('th-TH');
+            document.getElementById('deposit-2-val').innerText = depositPrice.toLocaleString('th-TH');
+        }
+
+        function populateFromParams() {
+            // Set dynamic document dates formatted as DD/MM/YYYY
+            const now = new Date();
+            const dateStr = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
+            document.getElementById('quote-date').innerText = dateStr;
+            document.getElementById('sig-date').innerText = dateStr;
+
+            // Generate Document Number QT-YYYYMM-XXXX
+            const yyyy = now.getFullYear();
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const rand = String(Math.floor(100 + Math.random() * 900)).padStart(3, '0');
+            const quoteNumber = `QT${yyyy}${mm}${rand}`;
+            document.getElementById('quote-no').innerText = quoteNumber;
+
+            const w = params.get('w') || '0';
+            const l = params.get('l') || '0';
+            const h = params.get('h') || '0';
+            const steel = params.get('steel') || '-';
+            const tiers = params.get('tiers') || '0';
+            const door = params.get('door') || '-';
+            const color = params.get('color') || '-';
+            const province = params.get('province') || '-';
+            const price = parseFloat(params.get('price')) || 0;
+            const shipping = params.get('shipping') || '0';
+            const total = parseFloat(params.get('total')) || 0;
+            const weight = params.get('weight') || '0.0';
+            const weightDetail = params.get('weight_detail') || '-';
+
+            // Populate spec list with IDs for individual edit targeting
+            const specListEl = document.getElementById('spec-details');
+            specListEl.innerHTML = `
+                <li id="spec-size">ขนาดชิ้นงาน: กว้าง ${w} × ลึก ${l} × สูง ${h} ซม.</li>
+                <li id="spec-steel">โครงสร้างเหล็กหลัก: ${steel}</li>
+                <li id="spec-tiers">จำนวนชั้นวางของ: ${tiers} ชั้น</li>
+                <li id="spec-door">รูปแบบหน้าบาน/ประตู/ฝาครอบ: ${door}</li>
+                <li id="spec-color">การทำสีโครงเหล็ก: ${color}</li>
+                <li id="spec-weight">น้ำหนักตู้ประมาณการ: ~${weight} กก. (${weightDetail})</li>
+            `;
+
+            // Calculate and format prices
+            const productVal = price;
+            const subtotal = Math.round(productVal / 1.07);
+            const vat = productVal - subtotal;
+            
+            document.getElementById('unit-price').innerText = `฿${productVal.toLocaleString('th-TH')}`;
+            document.getElementById('subtotal-val').innerText = `฿${subtotal.toLocaleString('th-TH')}`;
+            document.getElementById('vat-val').innerText = `฿${vat.toLocaleString('th-TH')}`;
+            document.getElementById('product-total-val').innerText = `฿${productVal.toLocaleString('th-TH')}`;
+
+            // Handle shipping fee render
+            let isOverSize = false;
+            let shippingFeeVal = 0;
+            if (shipping.toLowerCase() === 'oversize') {
+                isOverSize = true;
+                document.getElementById('shipping-val').innerText = 'เกินขนาดขนส่ง (ต้องรับเองที่ DC)';
+                document.getElementById('shipping-val').style.fontSize = '0.75rem';
+                document.getElementById('shipping-val').style.color = '#ef4444';
+                document.getElementById('combined-val').innerText = `฿${productVal.toLocaleString('th-TH')}*`;
+                
+                const totalRowGrand = document.querySelector('.total-row.grand');
+                const noteSpan = document.createElement('span');
+                noteSpan.id = 'shipping-oversize-note';
+                noteSpan.innerText = '*ไม่รวมค่าจัดส่งปลายทาง';
+                noteSpan.style.display = 'block';
+                noteSpan.style.fontSize = '0.65rem';
+                noteSpan.style.color = '#ef4444';
+                noteSpan.style.textAlign = 'right';
+                totalRowGrand.parentNode.appendChild(noteSpan);
+            } else {
+                shippingFeeVal = parseFloat(shipping) || 0;
+                document.getElementById('shipping-val').innerText = `฿${shippingFeeVal.toLocaleString('th-TH')}`;
+                document.getElementById('combined-val').innerText = `฿${total.toLocaleString('th-TH')}`;
+            }
+
+            // Calculate and format dynamic 50% deposits based on the quote total
+            const depositPrice = Math.round((isOverSize ? productVal : total) / 2);
+            document.getElementById('deposit-1-val').innerText = depositPrice.toLocaleString('th-TH');
+            document.getElementById('deposit-2-val').innerText = depositPrice.toLocaleString('th-TH');
+
+            // Auto-fill customer details from session if logged in
+            const session = JSON.parse(localStorage.getItem('user_session'));
+            if (session && session.role === 'customer') {
+                if (session.name) {
+                    const nameEl = document.getElementById('cust-name');
+                    nameEl.innerText = session.name;
+                    checkPlaceholder(nameEl);
+                    document.getElementById('sig-cust-name').innerText = session.name;
+                }
+                if (session.address) {
+                    const addrEl = document.getElementById('cust-address');
+                    addrEl.innerText = session.address;
+                    checkPlaceholder(addrEl);
+                }
+                if (session.taxId) {
+                    const taxEl = document.getElementById('cust-tax-id');
+                    taxEl.innerText = session.taxId;
+                    checkPlaceholder(taxEl);
+                }
+                if (session.phone) {
+                    const contactEl = document.getElementById('cust-contact');
+                    contactEl.innerText = session.phone;
+                    checkPlaceholder(contactEl);
+                }
+            }
+        }
+
+        // Parse formatted price text back to number
+        function parseNumber(text) {
+            const cleaned = text.replace(/[^\d.]/g, '');
+            return parseFloat(cleaned) || 0;
+        }
+
+        // Recalculate VAT 7%, subtotal, total product cost, combined total, and 50% deposits
+        function recalculatePrices() {
+            const qtyText = document.getElementById('item-qty') ? document.getElementById('item-qty').innerText.trim() : '1';
+            const qty = parseNumber(qtyText) || 1;
+            
+            const priceText = document.getElementById('unit-price') ? document.getElementById('unit-price').innerText.trim() : '0';
+            const unitPrice = parseNumber(priceText);
+            
+            const productVal = unitPrice * qty;
+            
+            // Calculate VAT 7%
+            const subtotal = Math.round(productVal / 1.07);
+            const vat = productVal - subtotal;
+            
+            // Get shipping fee
+            const shippingEl = document.getElementById('shipping-val');
+            const shippingText = shippingEl ? shippingEl.innerText.trim() : '0';
+            let shippingFee = 0;
+            let isOverSize = false;
+            
+            if (shippingText.includes('เกินขนาด') || shippingText.toLowerCase().includes('oversize')) {
+                isOverSize = true;
+            } else {
+                shippingFee = parseNumber(shippingText);
+            }
+            
+            const totalVal = productVal + shippingFee;
+            
+            // Format and update DOM
+            if (document.getElementById('subtotal-val')) {
+                document.getElementById('subtotal-val').innerText = `฿${subtotal.toLocaleString('th-TH')}`;
+            }
+            if (document.getElementById('vat-val')) {
+                document.getElementById('vat-val').innerText = `฿${vat.toLocaleString('th-TH')}`;
+            }
+            if (document.getElementById('product-total-val')) {
+                document.getElementById('product-total-val').innerText = `฿${productVal.toLocaleString('th-TH')}`;
+            }
+            
+            // Update combined total
+            const combinedEl = document.getElementById('combined-val');
+            if (combinedEl) {
+                if (isOverSize) {
+                    combinedEl.innerText = `฿${productVal.toLocaleString('th-TH')}*`;
+                } else {
+                    combinedEl.innerText = `฿${totalVal.toLocaleString('th-TH')}`;
+                }
+            }
+            
+            // Update deposits (50%)
+            const depositPrice = Math.round((isOverSize ? productVal : totalVal) / 2);
+            if (document.getElementById('deposit-1-val')) {
+                document.getElementById('deposit-1-val').innerText = depositPrice.toLocaleString('th-TH');
+            }
+            if (document.getElementById('deposit-2-val')) {
+                document.getElementById('deposit-2-val').innerText = depositPrice.toLocaleString('th-TH');
+            }
+        }
+
+        // Attach recalculation event listeners
+        if (document.getElementById('unit-price')) {
+            document.getElementById('unit-price').addEventListener('input', recalculatePrices);
+        }
+        if (document.getElementById('item-qty')) {
+            document.getElementById('item-qty').addEventListener('input', recalculatePrices);
+        }
+        if (document.getElementById('shipping-val')) {
+            document.getElementById('shipping-val').addEventListener('input', recalculatePrices);
+        }
+
+        // Actions
+        function goBack() {
+            window.close();
+            // Fallback if not opened in a new tab
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = 'estimate.html';
+            }
+        }
+
+        let isEditing = false;
+        function editData() {
+            isEditing = !isEditing;
+            const container = document.querySelector('.page-container');
+            const editBtn = document.querySelector('button[onclick="editData()"]');
+            
+            // List of elements allowed to be edited (customer info & product details, excluding prices)
+            const editableElements = [
+                // Customer details
+                document.getElementById('cust-name'),
+                document.getElementById('cust-address'),
+                document.getElementById('cust-tax-id'),
+                document.getElementById('cust-contact'),
+                
+                // Item details (excluding price)
+                document.getElementById('item-name'),
+                document.getElementById('item-qty'),
+                document.getElementById('item-unit'),
+                
+                // Spec list items
+                document.getElementById('spec-size'),
+                document.getElementById('spec-steel'),
+                document.getElementById('spec-tiers'),
+                document.getElementById('spec-door'),
+                document.getElementById('spec-color'),
+                document.getElementById('spec-weight')
+            ];
+
+            if (isEditing) {
+                container.classList.add('edit-active');
+                editBtn.innerHTML = '✔️ เสร็จสิ้นการแก้ไข';
+                editBtn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+                editBtn.style.color = '#ffffff';
+                
+                // Enable editing and add helper styles class
+                editableElements.forEach(el => {
+                    if (el) {
+                        el.setAttribute('contenteditable', 'true');
+                        el.classList.add('editable-active-field');
+                    }
+                });
+                
+                // Show notification toast
+                const toast = document.createElement('div');
+                toast.id = 'edit-toast';
+                toast.style.cssText = 'position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #ca8a04; color: white; padding: 12px 24px; border-radius: 8px; font-size: 0.85rem; font-weight: 500; z-index: 10000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.2);';
+                toast.innerText = '💡 เปิดโหมดแก้ไขแล้ว! คุณสามารถพิมพ์แก้ไขข้อมูลลูกค้าและรายละเอียดสินค้าได้โดยตรง';
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 4000);
+            } else {
+                container.classList.remove('edit-active');
+                editBtn.innerHTML = '✏️ แก้ไขข้อมูล';
+                editBtn.style.background = '';
+                editBtn.style.color = '';
+                
+                // Disable editing and remove helper styles class
+                editableElements.forEach(el => {
+                    if (el) {
+                        // Customer fields remain editable by default
+                        const isCustField = el.id === 'cust-name' || el.id === 'cust-address' || el.id === 'cust-tax-id' || el.id === 'cust-contact';
+                        if (!isCustField) {
+                            el.removeAttribute('contenteditable');
+                        }
+                        el.classList.remove('editable-active-field');
+                    }
+                });
+            }
+        }
+
+        function configureGoogleSheet() {
+            const currentUrl = localStorage.getItem('google_sheet_webhook_url') || '';
+            const newUrl = prompt('กรุณากรอก Google Apps Script Web App URL สำหรับเชื่อมต่อ Google Sheets:\n\n(ตัวอย่าง: https://script.google.com/macros/s/.../exec)', currentUrl);
+            
+            if (newUrl !== null) {
+                const urlVal = newUrl.trim();
+                if (urlVal.includes('docs.google.com/spreadsheets')) {
+                    alert('❌ ไม่สามารถใช้ลิงก์ Google Sheets ตรง ๆ นี้ได้ครับ\n\nเพราะว่าหน้าเว็บทั่วไปไม่มีสิทธิ์เข้าเขียนไฟล์ของคุณโดยตรงจากระบบความปลอดภัย\n\nกรุณาเปิดเมนู "ส่วนขยาย" -> "Apps Script" ในหน้าชีทนั้น แล้วทำตามขั้นตอน Deploy เว็บแอปก่อน และนำลิงก์ "URL เว็บแอป" (ที่ขึ้นต้นด้วย https://script.google.com) มาใส่ในช่องนี้แทนครับ');
+                    return;
+                }
+                
+                localStorage.setItem('google_sheet_webhook_url', urlVal);
+                if (urlVal) {
+                    alert('เชื่อมต่อระบบ Google Sheets เรียบร้อยแล้ว! ข้อมูลจะถูกเซฟส่งไปที่ชีทโดยอัตโนมัติเมื่อกดบันทึกข้อมูล');
+                } else {
+                    alert('ยกเลิกการเชื่อมต่อ Google Sheets (ข้อมูลยังคงเซฟลงเครื่องและดาวน์โหลดเป็น CSV ตามปกติ)');
+                }
+            }
+        }
+
+        function sendToGoogleSheets(webhookUrl, data, silent = false) {
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(res => {
+                // Restore save button state
+                const saveBtn = document.querySelector('button[onclick="saveToExcelDatabase()"]');
+                if (saveBtn) {
+                    saveBtn.disabled = false;
+                    saveBtn.innerHTML = '💾 บันทึกข้อมูล';
+                }
+
+                if (res.status === 'success') {
+                    console.log('Successfully saved to Google Sheets:', res.message);
+                    if (!silent) {
+                        alert('บันทึกข้อมูลสำเร็จ!\n\nข้อความจากระบบ: ' + res.message);
+                    }
+                } else {
+                    console.error('Apps Script error:', res.message);
+                    if (!silent) {
+                        alert('❌ เกิดข้อผิดพลาดจาก Google Sheets: ' + res.message);
+                    }
+                }
+            })
+            .catch(err => {
+                console.error('Network error sending to Google Sheets:', err);
+                const saveBtn = document.querySelector('button[onclick="saveToExcelDatabase()"]');
+                if (saveBtn) {
+                    saveBtn.disabled = false;
+                    saveBtn.innerHTML = '💾 บันทึกข้อมูล';
+                }
+                if (!silent) {
+                    alert('❌ ไม่สามารถเชื่อมต่อกับ Google Sheets ได้ (Network Error)\n\nกรุณาตรวจสอบ URL เว็บแอปของคุณอีกครั้งครับ');
+                }
+            });
+        }
+
+        function printQuote() {
+            window.print();
+        }
+
+        function saveToExcelDatabase(silent = false) {
+            if (window.location.protocol === 'file:') {
+                if (!silent) {
+                    alert('⚠️ คำเตือน: คุณกำลังเปิดหน้าใบเสนอราคานี้จากไฟล์โดยตรง (ไม่ได้ผ่าน Server)\n\nหากบันทึกข้อมูลตอนนี้ ลิงก์สำหรับพิมพ์ใน Google Sheets จะไม่สามารถคลิกเปิดได้!\n\nกรุณาปิดหน้านี้ แล้วดับเบิลคลิกไฟล์ "เริ่มระบบ_ใบเสนอราคา.bat" ในโฟลเดอร์โครงการเพื่อใช้งานผ่าน Server เสมอครับ');
+                }
+            }
+            // Get fields
+            const nameEl = document.getElementById('cust-name');
+            const addrEl = document.getElementById('cust-address');
+            const taxEl = document.getElementById('cust-tax-id');
+            const contactEl = document.getElementById('cust-contact');
+
+            let custName = nameEl.classList.contains('placeholder-active') ? '' : nameEl.innerText.trim();
+            let custAddress = addrEl.classList.contains('placeholder-active') ? '' : addrEl.innerText.trim();
+            let custTaxId = taxEl.classList.contains('placeholder-active') ? '' : taxEl.innerText.trim();
+            let custContact = contactEl.classList.contains('placeholder-active') ? '' : contactEl.innerText.trim();
+
+            if (!custName) {
+                if (!silent) {
+                    alert('กรุณากรอกชื่อลูกค้าหรือชื่อบริษัทก่อนบันทึกข้อมูล');
+                }
+                return;
+            }
+
+            // Extract edited values from the DOM elements
+            const editedQuoteNo = document.getElementById('quote-no').innerText.trim();
+            const editedDate = document.getElementById('quote-date').innerText.trim();
+            const editedSeller = document.getElementById('seller-name').innerText.trim();
+            const editedTotal = parseFloat(document.getElementById('combined-val').innerText.replace(/[^0-9.]/g, '')) || 0;
+            const editedShipping = document.getElementById('shipping-val').innerText.trim();
+            
+            const editedSize = document.getElementById('spec-size') ? document.getElementById('spec-size').innerText.trim() : `ขนาดชิ้นงาน: กว้าง ${w} × ลึก ${l} × สูง ${h} ซม.`;
+            const editedSteel = document.getElementById('spec-steel') ? document.getElementById('spec-steel').innerText.trim() : `โครงสร้างเหล็กหลัก: ${steel}`;
+            const editedTiers = document.getElementById('spec-tiers') ? document.getElementById('spec-tiers').innerText.trim() : `จำนวนชั้นวางของ: ${tiers} ชั้น`;
+            const editedDoor = document.getElementById('spec-door') ? document.getElementById('spec-door').innerText.trim() : `รูปแบบหน้าบาน/ประตู/ฝาครอบ: ${door}`;
+            const editedColor = document.getElementById('spec-color') ? document.getElementById('spec-color').innerText.trim() : `การทำสีโครงเหล็ก: ${color}`;
+            const editedWeight = document.getElementById('spec-weight') ? document.getElementById('spec-weight').innerText.trim() : `น้ำหนักตู้ประมาณการ: ~${weight} กก. (${weightDetail})`;
+
+            // Generate print URL link dynamically with all parameters to support direct load
+            const urlParams = new URLSearchParams({
+                quoteNo: editedQuoteNo,
+                date: editedDate,
+                seller: editedSeller,
+                name: custName,
+                address: custAddress,
+                taxId: custTaxId,
+                contact: custContact,
+                dimensions: editedSize,
+                steel: editedSteel,
+                tiers: editedTiers,
+                door: editedDoor,
+                color: editedColor,
+                weight: editedWeight,
+                shipping: editedShipping,
+                total: editedTotal
+            });
+            const printUrl = window.location.origin + window.location.pathname + '?' + urlParams.toString();
+
+            // Get user session for owner and status fields
+            const session = JSON.parse(localStorage.getItem('user_session'));
+            const ownerField = session ? session.username : 'guest';
+            let existingStatus = 'รอชำระมัดจำ';
+
+            // Prepare data row
+            const rowData = {
+                date: editedDate,
+                quoteNo: editedQuoteNo,
+                name: custName,
+                address: custAddress,
+                taxId: custTaxId,
+                contact: custContact,
+                dimensions: editedSize,
+                steel: editedSteel,
+                tiers: editedTiers,
+                door: editedDoor,
+                color: editedColor,
+                weight: editedWeight,
+                shipping: editedShipping,
+                total: editedTotal,
+                seller: editedSeller,
+                owner: ownerField,
+                status: existingStatus,
+                printUrl: printUrl
+            };
+
+            // Get existing database from localStorage to preserve status
+            let db = JSON.parse(localStorage.getItem('customer_quote_db') || '[]');
+            const existingQuote = db.find(item => item.quoteNo === editedQuoteNo);
+            if (existingQuote && existingQuote.status) {
+                rowData.status = existingQuote.status;
+            }
+
+            // Avoid duplicates
+            db = db.filter(item => item.quoteNo !== editedQuoteNo);
+            db.push(rowData);
+            localStorage.setItem('customer_quote_db', JSON.stringify(db));
+
+            // Auto-send to Google Sheets if webhook URL is configured
+            const sheetWebhookUrl = localStorage.getItem('google_sheet_webhook_url');
+            if (sheetWebhookUrl) {
+                if (!silent) {
+                    const saveBtn = document.querySelector('button[onclick="saveToExcelDatabase()"]');
+                    if (saveBtn) {
+                        saveBtn.disabled = true;
+                        saveBtn.innerText = '⏳ กำลังบันทึกข้อมูล...';
+                    }
+                }
+                sendToGoogleSheets(sheetWebhookUrl, {
+                    action: 'saveQuotation',
+                    ...rowData
+                }, silent);
+            } else {
+                if (!silent) {
+                    alert('บันทึกข้อมูลลงเบราว์เซอร์สำเร็จเรียบร้อยแล้ว!\n\n(หากต้องการให้ส่งข้อมูลลง Google Sheets อัตโนมัติ กรุณากดตั้งค่าเชื่อมต่อผ่านปุ่ม "⚙️ ตั้งค่าชีท" ครับ)');
+                }
+            }
+        }
+
+        function sendToLine() {
+            // Get customer name if edited
+            const nameEl = document.getElementById('cust-name');
+            let custNameVal = nameEl.classList.contains('placeholder-active') ? '-' : nameEl.innerText.trim();
+            
+            const editedQuoteNo = document.getElementById('quote-no').innerText.trim();
+            const editedTotalLabel = document.getElementById('combined-val').innerText.trim();
+            const editedShippingLabel = document.getElementById('shipping-val').innerText.trim();
+            const editedPriceLabel = document.getElementById('unit-price').innerText.trim();
+
+            const editedItemName = document.getElementById('item-name') ? document.getElementById('item-name').innerText.trim() : 'ตู้เหล็กและไม้สไตล์ลอฟท์สั่งทำพิเศษ';
+            const editedItemQty = document.getElementById('item-qty') ? document.getElementById('item-qty').innerText.trim() : '1';
+            const editedItemUnit = document.getElementById('item-unit') ? document.getElementById('item-unit').innerText.trim() : 'ตัว';
+
+            const sizeLabel = document.getElementById('spec-size') ? document.getElementById('spec-size').innerText.trim() : `ขนาดชิ้นงาน: กว้าง ${w} × ลึก ${l} × สูง ${h} ซม.`;
+            const steelLabel = document.getElementById('spec-steel') ? document.getElementById('spec-steel').innerText.trim() : `โครงสร้างเหล็กหลัก: ${steel}`;
+            const tiersLabel = document.getElementById('spec-tiers') ? document.getElementById('spec-tiers').innerText.trim() : `จำนวนชั้นวางของ: ${tiers} ชั้น`;
+            const doorLabel = document.getElementById('spec-door') ? document.getElementById('spec-door').innerText.trim() : `รูปแบบหน้าบาน/ประตู/ฝาครอบ: ${door}`;
+            const colorLabel = document.getElementById('spec-color') ? document.getElementById('spec-color').innerText.trim() : `การทำสีโครงเหล็ก: ${color}`;
+            const weightLabel = document.getElementById('spec-weight') ? document.getElementById('spec-weight').innerText.trim() : `น้ำหนักตู้ประมาณการ: ~${weight} กก.`;
+            const sketchLabel = 'ต้องการแบบร่าง 3D ฟรี (มัดจำ 50%)';
+
+            const msg = encodeURIComponent(
+                `🏭 ยืนยันขอใบเสนอราคาอย่างเป็นทางการ\n` +
+                `📄 เลขที่อ้างอิง: ${editedQuoteNo}\n` +
+                `👤 ลูกค้า: ${custNameVal}\n\n` +
+                `🛍️ สินค้า: ${editedItemName}\n` +
+                `🔢 จำนวน: ${editedItemQty} ${editedItemUnit}\n` +
+                `📐 ${sizeLabel}\n` +
+                `🔩 ${steelLabel}\n` +
+                `⚖️ ${weightLabel}\n` +
+                `📦 ${tiersLabel}\n` +
+                `🚪 ${doorLabel}\n` +
+                `🎨 ${colorLabel}\n` +
+                `📐 แบบร่าง 3D: ${sketchLabel}\n` +
+                `📍 ต้นทางจัดส่ง: ขอนแก่น\n` +
+                `📍 ปลายทางจัดส่ง: จ. ${province}\n` +
+                `🚚 ค่าจัดส่ง + แพ็คเกจ: ${editedShippingLabel} (Nim Express)\n` +
+                `💵 ราคาสินค้า: ${editedPriceLabel} (รวม VAT)\n` +
+                `💰 ยอดรวมทั้งสิ้น: ${editedTotalLabel}\n\n` +
+                `กรุณาออกใบเสนอราคาอย่างเป็นทางการและจองคิวผลิตให้ด้วยครับ/ค่ะ`
+            );
+
+            window.open(`https://lin.ee/8w8xm7u?text=${msg}`, '_blank');
+        }
+    </script>
+</body>
+</html>
